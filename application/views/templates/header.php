@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html lang="de-CH">
+<head>
+	<title>MLStorytelling<?php if ($this->ion_auth->logged_in() || $this->router->class == "admin") { ?> (StoryAdmin)<?php } ?></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="img/ico/favicon.ico" rel="icon" type="image/x-icon" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>img/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>img/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>img/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>img/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="<?php echo base_url(); ?>img/ico/favicon.png">
+	
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-theme.min.css">
+	<?php if ($this->router->class == "page") { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/layout.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
+	<?php } ?>
+	</head>
+	<body>
+	
+	<?php if ($this->ion_auth->logged_in() || $this->router->class == "admin") { ?>
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<?php if ($this->ion_auth->logged_in()) { ?>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<?php } ?>
+				<a href="<?php echo base_url(); ?>" class="navbar-brand"><span class="glyphicon glyphicon-book"></span> StoryAdmin</a>
+			</div>
+			
+			<?php if ($this->ion_auth->logged_in()) { ?>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-left">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> <?php echo lang('menu_story');?> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><?php echo anchor('page/overview', '<span class="glyphicon glyphicon-map-marker"></span> '.lang('menu_story_overview')) ?></li>
+							<li><?php echo anchor('page/list_all', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')) ?></li>
+							<li class="divider"></li>
+							<li><a data-toggle="modal" data-target="#addPageModal"><span class="glyphicon glyphicon-plus"></span> <?php echo lang('menu_story_add_page'); ?></a></li>
+							<li class="divider"></li>
+							<li><?php echo anchor('page/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')) ?></li>
+						</ul>
+					</li>
+					<?php if($this->router->class == "page" && $this->router->method == "show") { ?>
+					<li><?php echo anchor('page/edit_page/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')) ?></li>
+					<li><?php echo anchor('/', '<span class="glyphicon glyphicon-trash"></span> '.lang('menu_delete_page')) ?></li>
+					<?php } ?>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<?php if ($this->ion_auth->is_admin()) { ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <?php echo lang('menu_system');?> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><?php echo anchor('admin/', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_system_user_management')) ?></li>
+							<li class="divider"></li>
+							<li><?php echo anchor('#', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_system_settings')) ?></li>
+						</ul>
+					</li>
+					<?php } ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo lang('menu_account');?> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><?php echo anchor('admin/edit_user/'.$this->ion_auth->user()->row()->id, '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_account_profile')) ?></li>
+							<li class="divider"></li>
+							<li><?php echo anchor('admin/logout', '<span class="glyphicon glyphicon-log-out"></span> '.lang('menu_account_logout')) ?></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+			<?php } ?>
+		</div><!-- /.container-fluid -->
+	</nav>
+	<?php } ?>
+	
+	<?php if ($this->ion_auth->logged_in()) { ?>
+	<div class="modal fade" id="addPageModal" tabindex="-1" role="dialog" aria-labelledby="addPageModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="addPageModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+	
+	<section class="container">
+
+
