@@ -52,7 +52,7 @@
 					</li>
 					<?php if($this->router->class == "page" && $this->router->method == "show") { ?>
 					<li><?php echo anchor('page/edit_page/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')) ?></li>
-					<li><?php echo anchor('/', '<span class="glyphicon glyphicon-trash"></span> '.lang('menu_delete_page')) ?></li>
+					<li><a data-toggle="modal" data-target="#deletePageModal"><span class="glyphicon glyphicon-trash"></span> <?php echo lang('menu_delete_page'); ?></a></li>
 					<?php } ?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -95,6 +95,24 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="deletePageModal" tabindex="-1" role="dialog" aria-labelledby="deletePageModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="deletePageModalLabel">Seite löschen?</h4>
+				</div>
+				<div class="modal-body">
+					Seite wirklich löschen
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Delete</button>
 				</div>
 			</div>
 		</div>
