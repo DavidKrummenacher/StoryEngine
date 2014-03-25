@@ -18,7 +18,8 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function get_options($id) {
-		$query = $this->db->get_where('story_options', array('source' => $id));
+		// TODO: Implement option filtering
+		$query = $this->db->get_where('story_options', array('source_page' => $id));
 		return $query->result_array();
 	}
 	
@@ -48,7 +49,14 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function delete_all() {
-		$this->db->empty_table('story_images');
+		$this->db->empty_table('story_page_images');
+		// TODO: Delete images
+		$this->db->empty_table('story_option_icons');
+		// TODO: Delete icons
+		$this->db->empty_table('story_option_conditions');
+		$this->db->empty_table('story_option_rolls');
+		$this->db->empty_table('story_option_targets');
+		$this->db->empty_table('story_option_consequences');
 		$this->db->empty_table('story_options');
 		$this->db->empty_table('story_pages');
 	}
