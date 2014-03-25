@@ -24,7 +24,13 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function get_relations() {
-		$query = $this->db->get('story_options');
+		$this->db->select('*');
+		$this->db->from('story_options');
+		$this->db->join('story_pages','story_pages.id = story_options.source_page');
+		$this->db->join('story_option_targets','story_option_targets.option = story_options.id');
+		
+		$query = $this->db->get();
+		
 		return $query->result_array();
 	}
 	
