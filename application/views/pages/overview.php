@@ -1,9 +1,11 @@
 <h1>Overview of all pages</h1>
 
-<div id="graph-data" >
+<div id="graph-data" class="hidden">
 <ul>
-<?php foreach ($relations as $relation) { ?>
-<?php echo "<li name=" . $relation['source_page'] . " class=" . $relation['description'] . ">" . $relation['target_page'] . "</li>";  ?>
+<?php foreach ($relations as $relation) { 
+	
+?>
+<li name="<?= $relation['source_page'] ?>" title="<?= $relation['description'] ?>"><?= $relation['target_page'] ?></li>
 <?php } ?>
 </ul>
 </div>
