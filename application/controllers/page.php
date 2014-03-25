@@ -53,8 +53,10 @@ class Page extends CI_Controller {
 	
 	public function overview() {
 		// TODO: Implement overview
+		$this->data['relations'] = $this->pages_model->get_relations();
+		
 		$this->load->view('templates/header');
-		$this->load->view('pages/overview');
+		$this->load->view('pages/overview',$this->data);
 		$this->load->view('templates/footer');
 	}
 	
