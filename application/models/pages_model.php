@@ -23,6 +23,12 @@ class Pages_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_relations() {
+		$query = $this->db->get('story_options');
+		return $query->result_array();
+	}
+	
+	
 	public function create_page($title, $content) {
 		$data = array(
 			'title' => $title,
