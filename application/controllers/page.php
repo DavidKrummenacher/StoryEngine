@@ -24,9 +24,7 @@ class Page extends CI_Controller {
 		$this->data['page'] = $this->pages_model->get_page($id);
 		$this->data['options'] = $this->pages_model->get_options($id);
 		
-		$this->load->view('templates/header', $this->data);
-		$this->load->view('pages/view', $this->data);
-		$this->load->view('templates/footer', $this->data);
+		$this->_render_page('pages/view', $this->data);
 	}
 	
 	public function option($id) {
@@ -38,38 +36,46 @@ class Page extends CI_Controller {
 	}
 	
 	public function create_page() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+
 		// TODO: Implement redirect to new page in edit mode
 		$this->pages_model->create_page('Blah', 'blah blab blah');
 		redirect('page/show_all', 'refresh');
 	}
 	
 	public function edit_page($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
 		// TODO: Implement update
 	}
 	
 	public function delete_page($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
 		// TODO: Implement delete
 	}
 	
 	public function overview() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
 		// TODO: Implement overview
 		$this->data['relations'] = $this->pages_model->get_relations();
 		
-		$this->load->view('templates/header');
-		$this->load->view('pages/overview',$this->data);
-		$this->load->view('templates/footer');
+		$this->_render_page('pages/overview',$this->data);
 	}
 	
 	public function list_all() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
 		// TODO: Implement pagination and searching
 		$this->data['pages'] = $this->pages_model->get_pages();
 		
-		$this->load->view('templates/header');
-		$this->load->view('pages/list', $this->data);
-		$this->load->view('templates/footer');
+		$this->_render_page('pages/list', $this->data);
 	}
 	
 	public function search($term = null) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
 		// TODO: Implement searching
 		$this->data['results'] = null;
 		
@@ -77,16 +83,25 @@ class Page extends CI_Controller {
 			$this->data['results'] = 'Derp';
 		}
 		
-		$this->load->view('templates/header');
-		$this->load->view('pages/search', $this->data);
-		$this->load->view('templates/footer');
+		$this->_render_page('pages/search', $this->data);
 	}
 	
 	public function settings() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
+		
 		// TODO: Fix settings
 		// TODO: Implement settings
-		$this->load->view('templates/header');
-		$this->load->view('pages/settings');
-		$this->load->view('templates/footer');
+		$this->_render_page('pages/settings', $this->data);
+	}
+	
+	function _render_page($view, $data = null, $render = false) {
+		$this->viewdata = (empty($data)) ? $this->data: $data;
+		
+		$view_html = $this->load->view('templates/header', $this->viewdata);
+		$view_html .= $this->load->view($view, $this->viewdata, $render);
+		$view_html .= $this->load->view('templates/footer', $this->viewdata);
+		
+		if (!$render) return $view_html;
 	}
 }

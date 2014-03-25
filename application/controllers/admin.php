@@ -96,64 +96,33 @@ class Admin extends CI_Controller {
 	}
 
 	//activate the user
-	function activate($id, $code=false) {
-		if ($code !== false) {
-			$activation = $this->ion_auth->activate($id, $code);
-		} else if ($this->ion_auth->is_admin()) {
-			$activation = $this->ion_auth->activate($id);
-		}
-
-		if ($activation) {
-			//redirect them to the auth page
-			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("admin", 'refresh');
-		} else {
-			//redirect them to the forgot password page
-			$this->session->set_flashdata('message', $this->ion_auth->errors());
-			redirect("admin/forgot_password", 'refresh');
-		}
+	function activate($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
+		
+		$this->ion_auth->activate($id);
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect("admin", 'refresh');
 	}
 
 	//deactivate the user
-	function deactivate($id = NULL) {
-		$id = $this->config->item('use_mongodb', 'ion_auth') ? (string) $id : (int) $id;
-
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
-		$this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
-
-		if ($this->form_validation->run() == FALSE) {
-			// insert csrf check
-			$this->data['csrf'] = $this->_get_csrf_nonce();
-			$this->data['user'] = $this->ion_auth->user($id)->row();
-
-			$this->_render_page('admin/deactivate_user', $this->data);
-		} else {
-			// do we really want to deactivate?
-			if ($this->input->post('confirm') == 'yes') {
-				// do we have a valid request?
-				if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
-					show_error($this->lang->line('error_csrf'));
-				}
-
-				// do we have the right userlevel?
-				if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin()) {
-					$this->ion_auth->deactivate($id);
-				}
-			}
-
-			//redirect them back to the auth page
-			redirect('admin', 'refresh');
-		}
+	function deactivate($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
+		if ($this->ion_auth->user()->row()->id == $id) { show_error('You cannot deactivate yourself!'); }
+		
+		if ($this->ion_auth->user()->row()->id == $id) { redirect('error', 'refresh'); }
+		$this->ion_auth->deactivate($id);
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect('admin', 'refresh');
 	}
 
 	//create a new user
 	function create_user() {
 		$this->data['title'] = "Create User";
 
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
-			redirect('admin', 'refresh');
-		}
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 
 		//validate form input
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
@@ -237,9 +206,8 @@ class Admin extends CI_Controller {
 	function edit_user($id) {
 		$this->data['title'] = "Edit User";
 
-		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id))) {
-			redirect('admin', 'refresh');
-		}
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if ((!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id))) { show_error('You need admin rights to do this!'); }
 
 		$user = $this->ion_auth->user($id)->row();
 		$groups=$this->ion_auth->groups()->result_array();
@@ -349,6 +317,17 @@ class Admin extends CI_Controller {
 		$this->_render_page('admin/edit_user', $this->data);
 	}
 
+	function delete_user($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
+		if ($this->ion_auth->user()->row()->id == $id) { show_error('You cannot delete yourself!'); }
+		
+		$this->ion_auth->delete_user($id);
+		
+		$this->session->set_flashdata('message', $this->ion_auth->messages());
+		redirect("admin", 'refresh');
+	}
+
 	function _get_csrf_nonce() {
 		$this->load->helper('string');
 		$key   = random_string('alnum', 8);
@@ -361,23 +340,19 @@ class Admin extends CI_Controller {
 
 	function _valid_csrf_nonce() {
 		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-			$this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue'))
-		{
+			$this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
 			return TRUE;
-		}
-		else
-		{
+		} else {
 			return FALSE;
 		}
 	}
 
-	function _render_page($view, $data=null, $render=false) {
-
+	function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		
-		$this->load->view('templates/header');
-		$view_html = $this->load->view($view, $this->viewdata, $render);
-		$this->load->view('templates/footer');
+		$view_html = $this->load->view('templates/header', $this->viewdata);
+		$view_html .= $this->load->view($view, $this->viewdata, $render);
+		$view_html .= $this->load->view('templates/footer', $this->viewdata);
 		
 		if (!$render) return $view_html;
 	}
