@@ -100,6 +100,7 @@
 		</div>
 	</div>
 	
+	<?php if($this->router->class == "page" && $this->router->method == "show") { ?>
 	<div class="modal fade" id="deletePageModal" tabindex="-1" role="dialog" aria-labelledby="deletePageModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -117,6 +118,7 @@
 			</div>
 		</div>
 	</div>
+	<?php } ?>
 	<?php } ?>
 	
 	<section class="container">
