@@ -36,7 +36,7 @@ class Admin extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('admin/index', $this->data);
+			$this->_render_page('admin/userlist', $this->data);
 		}
 	}
 

@@ -1,12 +1,12 @@
 <h1><?php echo lang('index_heading');?></h1>
 <p><?php echo lang('index_subheading');?></p>
 
-						<?php if ($message != "") { ?>
-						<div class="alert alert-info">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<?php echo $message;?>
-						</div>
-						<?php } ?>
+<?php if ($message != "") { ?>
+<div class="alert alert-info">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<?php echo $message;?>
+</div>
+<?php } ?>
 
 <table class="table table-condensed">
 	<tr>
