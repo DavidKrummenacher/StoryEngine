@@ -13,12 +13,27 @@ class Settings_model extends CI_Model {
 		return $result['value'];
 	}
 	
-	public function get_setting($key) {
+	
+	public function get_story_setting($key) {
 		$query = $this->db->get_where('story_settings', array('key' => $key));
 		return $query->row_array();
 	}
 	
-	public function set_setting($key, $value) {
+	public function get_story_settings($key = null) {
+			if($key != null)
+			{
+				$query = $this->db->get_where('story_settings',array('key' => $key));
+				$row = $query->row(); 
+				return $row->value;
+			} else {
+				$query = $this->db->get('story_settings');
+				return $query->result_array();
+			}
+			
+		}
+	
+	public function set_story_setting($key, $value) {
+		// TODO: Make this work...
 		$data = array(
 			'key' => $key,
 			'value' => $value
@@ -27,4 +42,6 @@ class Settings_model extends CI_Model {
 		$this->db->where('key', $key);
 		$this->db->update('story_settings', array('value' => $value));
 	}
+	
+	
 }

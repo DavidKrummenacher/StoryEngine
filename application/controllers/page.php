@@ -69,12 +69,12 @@ class Page extends CI_Controller {
 	public function list_all() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
-		// TODO: Grab "per_page" config-var from settings
+		// TODO: Grab "per_page" config-var from ADMIN-settings instead of story_settings
 		//Pagination configs
 		$config = array();
         $config['base_url'] = base_url() . "index.php/page/list_all";
         $config['total_rows'] = $this->pages_model->get_total_pagecount();
-        $config['per_page'] = 2;
+        $config['per_page'] =  $this->settings_model->get_story_settings('pages_per_page');
         $config['uri_segment'] = 3;
 		
 		
@@ -128,9 +128,20 @@ class Page extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		
+		if ($this->input->post() != null)
+			{
+			$p = $this->input->post();
+			foreach($p as $key=>$value)
+				{   
+					$this->settings_model->set_story_setting($key,$value);
+				}
+				
+			$this->data['flash'] = $this->lang->line('settings_saved');
+			}
+		
 		// TODO: Fix settings
 		// TODO: Implement settings
-		$this->data['settings'] = null; // Dummy data to prevent php error
+		$this->data['settings'] = $this->settings_model->get_story_settings();
 		$this->_render_page('pages/settings', $this->data);
 	}
 	

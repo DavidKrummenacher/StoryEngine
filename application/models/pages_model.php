@@ -53,7 +53,7 @@ class Pages_model extends CI_Model {
 		$this->db->insert('story_pages', $data);
 	}
 	
-	public function update_page($id, $tite, $content) {
+	public function update_page($id, $titel, $content) {
 		$data = array(
 			'title' => $title,
 			'content' => $content
@@ -97,4 +97,6 @@ class Pages_model extends CI_Model {
 			
 			return $this->db->count_all_results();
 		}
+	
+
 }
