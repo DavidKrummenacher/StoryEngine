@@ -17,3 +17,5 @@ $lang['menu_system_settings']			= 'Settings';
 $lang['menu_account']					= 'My account';
 $lang['menu_account_profile']			= 'Edit profile';
 $lang['menu_account_logout']			= 'Logout';
+
+$lang['settings_saved']					= 'Settings succesfully saved.';
