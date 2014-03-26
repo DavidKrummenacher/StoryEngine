@@ -19,6 +19,7 @@ class Admin extends CI_Controller {
 		$this->lang->load('auth');
 		$this->lang->load('storyengine');
 		$this->load->helper('language');
+		$this->load->model('settings_model');
 	}
 
 	//redirect if needed, otherwise display the user list
@@ -334,6 +335,7 @@ class Admin extends CI_Controller {
 		
 		// TODO: Fix settings
 		// TODO: Implement settings
+		$this->data['settings'] = null; // Dummy data to prevent php error
 		$this->_render_page('admin/settings', $this->data);
 	}
 

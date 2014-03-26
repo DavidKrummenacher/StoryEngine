@@ -21,6 +21,7 @@ class Page extends CI_Controller {
 	public function show($id) {
 		// TODO: Implement page handling
 		// TODO: Implement option filtering (story_options_conditions), maybe inside pages_model
+		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get_page($id);
 		$this->data['options'] = $this->pages_model->get_options($id);
 		
@@ -97,6 +98,7 @@ class Page extends CI_Controller {
 		
 		// TODO: Fix settings
 		// TODO: Implement settings
+		$this->data['settings'] = null; // Dummy data to prevent php error
 		$this->_render_page('pages/settings', $this->data);
 	}
 	
