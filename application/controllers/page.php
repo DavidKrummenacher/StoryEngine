@@ -76,6 +76,7 @@ class Page extends CI_Controller {
 	
 	
 	public function search($term = null) {
+    if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 
 		$this->data['results'] = null;
 		$term = $this->input->post('searchterm',TRUE);
