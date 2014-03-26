@@ -24,7 +24,11 @@ class Settings_model extends CI_Model {
 			{
 				$query = $this->db->get_where('story_settings',array('key' => $key));
 				$row = $query->row(); 
-				return $row->value;
+				if($row) {
+					return $row->value;
+				} else {
+					return false;
+				}
 			} else {
 				$query = $this->db->get('story_settings');
 				return $query->result_array();

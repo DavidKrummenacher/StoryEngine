@@ -74,7 +74,7 @@ class Page extends CI_Controller {
 		$config = array();
         $config['base_url'] = base_url() . "index.php/page/list_all";
         $config['total_rows'] = $this->pages_model->get_total_pagecount();
-        $config['per_page'] =  $this->settings_model->get_story_settings('pages_per_page');
+        $config['per_page'] =  ($this->settings_model->get_story_settings('pages_per_page') != FALSE) ? $this->settings_model->get_story_settings('pages_per_page') : 10;
         $config['uri_segment'] = 3;
 		
 		
