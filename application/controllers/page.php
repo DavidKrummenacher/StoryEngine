@@ -73,18 +73,23 @@ class Page extends CI_Controller {
 		$this->_render_page('pages/list', $this->data);
 	}
 	
+	
 	public function search($term = null) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-		
-		// TODO: Implement searching
+
 		$this->data['results'] = null;
+		$term = $this->input->post('searchterm',TRUE);
 		
 		if ($term != null) {
-			$this->data['results'] = 'Derp';
+			$this->data['results'] = $this->pages_model->search_page($term);
+		} else {
+			redirect('page/list_all', 'refresh');
 		}
 		
-		$this->_render_page('pages/search', $this->data);
+		$this->load->view('templates/header');
+		$this->load->view('pages/search', $this->data);
+		$this->load->view('templates/footer');
 	}
+	
 	
 	public function settings() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }

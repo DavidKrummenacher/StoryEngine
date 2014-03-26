@@ -1,4 +1,4 @@
-<h1>List of all pages</h1>
+<h1>Search Pages</h1>
 <form action ="<?= base_url()?>index.php/page/search" method="post" id="searchform">
 <div class="input-group">
 	<input type="search" class="form-control" placeholder="Search" name="searchterm">
@@ -16,7 +16,7 @@
 		<th>Options</th>
 		<th width="80px">Actions</th>
 	</tr>
-	<?php foreach ($pages as $page) { ?>
+	<?php foreach ($results as $page) { ?>
 		<tr>
 			<td><?php echo $page['id']; ?></td>
 			<td><?php echo $page['title']; ?></td>

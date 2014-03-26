@@ -75,4 +75,27 @@ class Pages_model extends CI_Model {
 		$this->db->empty_table('story_options');
 		$this->db->empty_table('story_pages');
 	}
+	
+	public function search_page($searchterm)
+		{
+			$this->db->select('*');
+			
+			$this->db->from('story_pages');
+			$this->db->like('title',$searchterm);
+			
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+	
+	public function get_search_count($searchterm)
+		{
+			$this->db-select('COUNT(id) ss cnt');
+			$this->db->from('story_pages');
+			$this->db->like('title',$searchterm);
+			
+			$query = $this->db->get();
+			return $query->row_array();
+		}
+		
+	
 }
