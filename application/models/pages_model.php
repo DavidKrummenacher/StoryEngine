@@ -7,15 +7,25 @@ class Pages_model extends CI_Model {
 		$this->load->database();
 	}
 	
-	public function get_pages() {
+	public function get_pages($start = null, $limit = null) {
+		if($limit != null && $start == null) {
+        	$this->db->limit($limit);
+		} else if ($limit != null && $start != 0) {
+	        $this->db->limit($limit, $start);
+			}
 		$query = $this->db->get('story_pages');
 		return $query->result_array();
 	}
+	
 	
 	public function get_page($id) {
 		$query = $this->db->get_where('story_pages', array('id' => $id));
 		return $query->row_array();
 	}
+	
+	public function get_total_pagecount() {
+		return $this->db->count_all_results('story_pages');
+		}
 	
 	public function get_options($id) {
 		// TODO: Implement option filtering
@@ -24,15 +34,11 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function get_relations() {
-		$this->db->select('*');
-		
-		$this->db->from('story_option_targets');
+	
 		$this->db->join('story_options','story_options.id == story_option_targets.option');
 		$this->db->join('story_pages','story_pages.id = story_option_targets.target_page');
-		
-
-		
-		$query = $this->db->get();
+			
+		$query = $this->db->get('story_option_targets');
 		
 		return $query->result_array();
 	}
@@ -78,24 +84,17 @@ class Pages_model extends CI_Model {
 	
 	public function search_page($searchterm)
 		{
-			$this->db->select('*');
-			
-			$this->db->from('story_pages');
+	
 			$this->db->like('title',$searchterm);
-			
-			$query = $this->db->get();
+			$query = $this->db->get('story_pages');
 			return $query->result_array();
 		}
 	
 	public function get_search_count($searchterm)
-		{
-			$this->db-select('COUNT(id) ss cnt');
-			$this->db->from('story_pages');
-			$this->db->like('title',$searchterm);
+		{	
+			$this->db->like('title', $searchterm);
+			$this->db->from('story_pages');			
 			
-			$query = $this->db->get();
-			return $query->row_array();
+			return $this->db->count_all_results();
 		}
-		
-	
 }

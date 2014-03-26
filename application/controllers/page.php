@@ -5,7 +5,9 @@ class Page extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('ion_auth');
+		$this->load->library('pagination');
 		$this->load->helper('text');
+		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
 		$this->load->model('pages_model');
 		
@@ -38,7 +40,6 @@ class Page extends CI_Controller {
 	
 	public function create_page() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-
 		// TODO: Implement redirect to new page in edit mode
 		$this->pages_model->create_page('Blah', 'blah blab blah');
 		redirect('page/show_all', 'refresh');
@@ -68,10 +69,40 @@ class Page extends CI_Controller {
 	public function list_all() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
-		// TODO: Implement pagination and searching
-		$this->data['pages'] = $this->pages_model->get_pages();
+		// TODO: Grab "per_page" config-var from settings
+		//Pagination configs
+		$config = array();
+        $config['base_url'] = base_url() . "index.php/page/list_all";
+        $config['total_rows'] = $this->pages_model->get_total_pagecount();
+        $config['per_page'] = 2;
+        $config['uri_segment'] = 3;
 		
-		$this->_render_page('pages/list', $this->data);
+		
+		$config['first_link']  = FALSE;
+		$config['last_link'] = FALSE;
+		$config['next_link'] = FALSE;
+		$config['prev_link']  = FALSE;
+		
+		$config['cur_tag_open'] = '<li class="active">';
+		$config['cur_tag_close'] = '</li>';
+		
+		//get current page
+		$config['cur_page'] = ($this->uri->segment($config["uri_segment"])) ? $this->uri->segment($config["uri_segment"]) : 0;
+		
+ 		//Ini pagination lib
+        $this->pagination->initialize($config);
+		
+		
+		$this->data['pages'] = $this->pages_model->get_pages($config['cur_page'],$config['per_page']);
+		
+		//Add Links to data array
+
+        $this->data['pagination'] = create_list($this->pagination);
+ 
+		
+		$this->load->view('templates/header');
+		$this->load->view('pages/list', $this->data);
+		$this->load->view('templates/footer');
 	}
 	
 	

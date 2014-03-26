@@ -34,3 +34,5 @@
 		</tr>
 	<?php } ?>
 </table>
+
+<?php if($pagination) { ?>  <ul class="pagination pagination-lg"><?php echo $pagination; } ?> </ul>
