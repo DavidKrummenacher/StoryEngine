@@ -327,6 +327,15 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('message', $this->ion_auth->messages());
 		redirect("admin", 'refresh');
 	}
+	
+	public function settings() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
+		
+		// TODO: Fix settings
+		// TODO: Implement settings
+		$this->_render_page('admin/settings', $this->data);
+	}
 
 	function _get_csrf_nonce() {
 		$this->load->helper('string');

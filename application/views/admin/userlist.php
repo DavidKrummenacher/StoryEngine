@@ -47,4 +47,4 @@
 	<?php endforeach;?>
 </table>
 
-<p><?php echo anchor('admin/create_user', lang('index_create_user_link'))?> | <?php echo anchor('admin/create_group', lang('index_create_group_link'))?></p>
+<p><?php echo anchor('admin/create_user', '<span class="glyphicon glyphicon-plus"></span> '.lang('index_create_user_link'), 'class="btn btn-default"'); ?></p>
