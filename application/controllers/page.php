@@ -52,7 +52,7 @@ class Page extends CI_Controller {
 		$this->data['page'] = $this->pages_model->get_page($id);
 		$this->data['options'] = $this->pages_model->get_options($id);
 		$this->data['icons'] = $this->pages_model->get_icons();
-		
+		$this->data['targets'] = $this->pages_model->get_targets($id);
 		$this->_render_page('pages/edit_page',$this->data);
 
 	}

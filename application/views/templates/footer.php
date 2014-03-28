@@ -9,7 +9,7 @@
        	<script src="<?php echo base_url(); ?>js/iconselect/iconselect.js"></script>
 
        	<script src="<?php echo base_url(); ?>js/iconselect/iscroll.js"></script>
-		<script src="<?php echo base_url(); ?>js/iconselect-handler.js"></script>
+		<script src="<?php echo base_url(); ?>js/edit_page-handler.js"></script>
     
     <?php } ?>
 	

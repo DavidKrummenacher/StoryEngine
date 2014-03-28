@@ -23,9 +23,7 @@
                 <div class="form-group">
                         <label for="page_content" class="col-sm-2 control-label">Content</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="page_content">
-                                <?php echo $page['content']; ?>
-                            </textarea>
+                            <textarea class="form-control" rows="12" name="page_content"><?php echo $page['content']; ?></textarea>
                         </div>
                 </div>
                 
@@ -34,38 +32,69 @@
 			<?php if ($options) { 
 			$optioncount = 0;
 			?>
-	            <fieldset>
+	            <fieldset id="options-fields">
 				
 				<?php //Iterate through Options
-				foreach($options as $option) { 
-				$optioncount++;?>
+				foreach($targets as $option) { 
+				?>
  
                 
-                    <div class="form-group">
+                    <div class="form-group extraOption">
 
-                        <label for="page_desc" class="col-sm-2 control-label">
+                        <label for="page_desc<?php echo $optioncount; ?>" class="col-sm-2 control-label">
                             <em><?php echo $option['id']; ?></em> | <?php echo lang('form_label_page_display_text'); ?>
                          </label>
                          
                         
                          <div class="col-sm-2">
-                           	<input type="text" class="form-control" name="page_desc" value="<?php echo $option['text']; ?>"/>                                
+                           	<input type="text" class="form-control" name="page_desc<?php echo $optioncount; ?>" value="<?php echo $option['text']; ?>"/>                                
                          </div>
-                         <div class="col-sm-2">
+                         <div class="col-sm-1">
                           <div id="my-icon-select_<?php echo $optioncount; ?>" ></div>
-           				<input type="text" id="selected-text_<?php echo $optioncount; ?>" name="selected-text_<?php echo $optioncount; ?>" style="display:none;">
-                    </div>
+           				<input type="text" id="selected-text_<?php echo $optioncount; ?>" name="selected-text_<?php echo $optioncount; ?>" style="display:none;" value="<?php echo $option['icon'];?>">
+                    	 </div>
+                          <div class="col-sm-2">
+                           	<input type="text" class="form-control" name="option_target<?php echo $optioncount; ?>" value="<?php echo $option['target_page']; ?>"/>                                
+                         </div>
                      </div>
                         
-				<?php } ?>
+				<?php $optioncount++; } ?>
                             </fieldset>
 
 				<div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-offset-2 col-sm-2">
                       <button type="submit" class="btn btn-default"><?php echo lang('menu_system_save'); ?></button>
+                    </div>
+                    <div class="col-sm-2">
+                      <button type="button" id="addRow" class="btn btn-default"><?php echo lang('form_label_page_add_option'); ?></button>
                     </div>
                   </div>   
             </form>
+            
+            <!-- Option Template -->
+            <div class="hidden">
+                <div class="extraOptionTemplate">
+                     <div class="form-group">
+
+                        <label for="page_desc" class="col-sm-2 control-label">
+                            <em>&nbsp;</em> | <?php echo lang('form_label_page_display_text'); ?>
+                         </label>
+                         
+                        
+                         <div class="col-sm-2">
+                           	<input type="text" class="form-control" name="page_desc" placeholder="<?php echo lang('form_label_page_display_text'); ?>"/>                                
+                         </div>
+                         <div class="col-sm-1">
+                          <div id="my-icon-select_" ></div>
+           					<input type="text" name="selected-text_" id="selected-text_" style="display:none;">
+                    	 </div>
+                         
+                          <div class="col-sm-2">
+                           	<input type="text" class="form-control" name="option_target" placeholder="Target-Page"/>                                
+                         </div>
+                     </div>
+                </div>
+            </div>
 			<?php } ?>
 			<?php } else { ?>
 			<h1>Sorry :(</h1>
@@ -79,7 +108,7 @@
 function iniIconSelect()
 {
 	
-for(var i = 1; i <= <?php echo $optioncount; ?>;i++)
+for(var i = 0; i < <?php echo $optioncount; ?>;i++)
 	{
 	selectedText = $('#selectedText_'+i);
 		$('#my-icon-select_'+i).change(function() {
@@ -87,9 +116,9 @@ for(var i = 1; i <= <?php echo $optioncount; ?>;i++)
 			}); //end on.Change()
 			
 		iconSelect = new IconSelect("my-icon-select_"+i, 
-                {'selectedIconWidth':23,
-                'selectedIconHeight':23,
-                'selectedBoxPadding':1,
+                {'selectedIconWidth':20,
+                'selectedIconHeight':20,
+                'selectedBoxPadding':2,
                 'iconsWidth':48,
                 'iconsHeight':48,
                 'boxIconSpace':1,

@@ -33,6 +33,21 @@ class Pages_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_targets($id) {
+		/*$OptionArray = "";
+		
+		$i = 0;
+		foreach($optionid as $option) {
+			$OptionArray[$i] = $option['id'];
+			$i++;
+			}
+		*/
+		$this->db->join('story_option_targets','story_option_targets.option = story_options.id');
+		$query = $this->db->get_where('story_options',array('source_page' => $id));		
+		
+		return $query->result_array();
+	}
+	
 	public function get_icons() {
 		$query = $this->db->get('story_option_icons');
 		
