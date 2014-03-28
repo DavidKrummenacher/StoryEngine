@@ -29,10 +29,11 @@
                 
               
             </div>
-			<?php if ($options) { 
+		            <fieldset id="options-fields">
+
+    		<?php if ($options) { 
 			$optioncount = 0;
 			?>
-	            <fieldset id="options-fields">
 				
 				<?php //Iterate through Options
 				foreach($targets as $option) { 
@@ -58,9 +59,15 @@
                          </div>
                      </div>
                         
-				<?php $optioncount++; } ?>
+				<?php $optioncount++; } 
+				
+					} else {
+						?>
+                        <div class="form-group extraOption"></div>
+                        <?php
+						}?>
                             </fieldset>
-
+				
 				<div class="form-group">
                     <div class="col-sm-offset-2 col-sm-2">
                       <button type="submit" class="btn btn-default"><?php echo lang('menu_system_save'); ?></button>
@@ -95,13 +102,8 @@
                      </div>
                 </div>
             </div>
-			<?php } ?>
-			<?php } else { ?>
-			<h1>Sorry :(</h1>
-			<p>There are no pages available or the start page isn't set correctly.</p>
-			<?php } ?>
-			
-<script type="text/javascript"> 
+            
+            <script type="text/javascript"> 
 	var iconSelect;
     var selectedText;
 	
@@ -132,6 +134,41 @@ for(var i = 0; i < <?php echo $optioncount; ?>;i++)
 	}
 }
 
+</script>
+			<?php } else { ?>
+			<h1>Sorry :(</h1>
+			<p>There are no pages available or the start page isn't set correctly.</p>
+			<?php } ?>
+<script type="text/javascript">
+
+	var iconSelect;
+    var selectedText;
+	
+function iniIconSelect()
+{
+	var i = 0;
+	selectedText = $('#selectedText_'+i);
+		$('#my-icon-select_'+i).change(function() {
+		  selectedText.value = iconSelect.getSelectedValue();
+			}); //end on.Change()
+			
+		iconSelect = new IconSelect("my-icon-select_"+i, 
+                {'selectedIconWidth':20,
+                'selectedIconHeight':20,
+                'selectedBoxPadding':2,
+                'iconsWidth':48,
+                'iconsHeight':48,
+                'boxIconSpace':1,
+                'vectoralIconNumber':2,
+                'horizontalIconNumber':6});
+				
+		IconSelect.COMPONENT_ICON_FILE_PATH = "../../../img/controls/arrow.png";
+		var icons = [];
+		icons = fetchIcons();
+		iconSelect.refresh(icons);	
+	
+}
+
 
 function fetchIcons() {
    
@@ -144,4 +181,4 @@ function fetchIcons() {
 <?php } ?>
 	return icons;
 }
-</script>
+</script>			

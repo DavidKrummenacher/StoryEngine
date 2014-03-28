@@ -8,8 +8,10 @@
 	
   $(document).ready(function(){
    		//Ini IconSelect to fetch Icon Data
-   		iniIconSelect();
-
+   		if($('.extraOption').length > 1) {
+		iniIconSelect();
+		}
+		
 		$(document).ready(function () {
      /*
 	 $('<div/>', {
