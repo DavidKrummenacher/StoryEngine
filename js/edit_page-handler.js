@@ -5,10 +5,11 @@
 //
 (function($){
 	
-	
   $(document).ready(function(){
+	  
+	  var lock = false;
    		//Ini IconSelect to fetch Icon Data
-   		if($('.extraOption').length > 1) {
+   		if($('.extraOption').length > 0) {
 		iniIconSelect();
 		}
 		
@@ -18,8 +19,10 @@
          'class' : 'extraOption', html: GetHtml()
      }).appendTo('#options-fields');
 	 */
-	 
+	
      $('#addRow').click(function () {
+		  if(lock == false) {
+			lock = true;
            $('<div/>', {
                'class' : 'extraOption', html: GetHtml()
      }).hide().appendTo('#options-fields').slideDown('slow','swing',function() {
@@ -40,10 +43,10 @@
 			icons = fetchIcons();
 			
 			NewiconSelect.refresh(icons);	
-			
+			lock = false;
 			//End Ini
 			});
-         
+		  }
      });
 		 })
 		 function GetHtml()

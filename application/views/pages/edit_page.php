@@ -31,8 +31,9 @@
             </div>
 		            <fieldset id="options-fields">
 
-    		<?php if ($options) { 
+    		<?php
 			$optioncount = 0;
+			 if ($options) { 
 			?>
 				
 				<?php //Iterate through Options
@@ -54,16 +55,36 @@
                           <div id="my-icon-select_<?php echo $optioncount; ?>" ></div>
            				<input type="text" id="selected-text_<?php echo $optioncount; ?>" name="selected-text_<?php echo $optioncount; ?>" style="display:none;" value="<?php echo $option['icon'];?>">
                     	 </div>
-                          <div class="col-sm-2">
-                           	<input type="text" class="form-control" name="option_target<?php echo $optioncount; ?>" value="<?php echo $option['target_page']; ?>"/>                                
+                         <div class="input-group col-sm-2">                            
+                                 <span class="input-group-addon"><?php echo lang('form_label_page_target_page'); ?></span>
+                           	<input type="text" class="form-control" name="option_target<?php echo $optioncount; ?>" value="<?php echo $option['target_page']; ?>"/>
                          </div>
                      </div>
                         
 				<?php $optioncount++; } 
 				
 					} else {
+						$optioncount=1;
 						?>
-                        <div class="form-group extraOption"></div>
+                        <div class="form-group extraOption">
+
+                        <label for="page_desc0" class="col-sm-2 control-label">
+                            <em>&nbsp;</em> | <?php echo lang('form_label_page_display_text'); ?>
+                         </label>
+                         
+                        
+                         <div class="col-sm-2">
+                           	<input type="text" class="form-control" name="page_desc0" placeholder="<?php echo lang('form_label_page_display_text'); ?>"/>                                
+                         </div>
+                         <div class="col-sm-1">
+                          <div id="my-icon-select_0"></div>
+           				<input type="text" id="selected-text_0" name="selected-text_0" style="display:none;">
+                    	 </div>
+                         <div class="input-group col-sm-2">                            
+                                 <span class="input-group-addon"><?php echo lang('form_label_page_target_page'); ?></span>
+                           	<input type="text" class="form-control" name="option_target0" placeholder="#Page ID"/>
+                         </div>
+                     </div>
                         <?php
 						}?>
                             </fieldset>
@@ -96,14 +117,15 @@
            					<input type="text" name="selected-text_" id="selected-text_" style="display:none;">
                     	 </div>
                          
-                          <div class="col-sm-2">
-                           	<input type="text" class="form-control" name="option_target" placeholder="Target-Page"/>                                
+                          <div class="input-group col-sm-2">                            
+                                 <span class="input-group-addon"><?php echo lang('form_label_page_target_page'); ?></span>
+                           	<input type="text" class="form-control" name="option_target" placeholder="#Page ID"/>
                          </div>
                      </div>
                 </div>
             </div>
             
-            <script type="text/javascript"> 
+<script type="text/javascript"> 
 	var iconSelect;
     var selectedText;
 	
@@ -141,33 +163,7 @@ for(var i = 0; i < <?php echo $optioncount; ?>;i++)
 			<?php } ?>
 <script type="text/javascript">
 
-	var iconSelect;
-    var selectedText;
 	
-function iniIconSelect()
-{
-	var i = 0;
-	selectedText = $('#selectedText_'+i);
-		$('#my-icon-select_'+i).change(function() {
-		  selectedText.value = iconSelect.getSelectedValue();
-			}); //end on.Change()
-			
-		iconSelect = new IconSelect("my-icon-select_"+i, 
-                {'selectedIconWidth':20,
-                'selectedIconHeight':20,
-                'selectedBoxPadding':2,
-                'iconsWidth':48,
-                'iconsHeight':48,
-                'boxIconSpace':1,
-                'vectoralIconNumber':2,
-                'horizontalIconNumber':6});
-				
-		IconSelect.COMPONENT_ICON_FILE_PATH = "../../../img/controls/arrow.png";
-		var icons = [];
-		icons = fetchIcons();
-		iconSelect.refresh(icons);	
-	
-}
 
 
 function fetchIcons() {
@@ -176,7 +172,7 @@ function fetchIcons() {
 
 <?php foreach($icons as $icon) { ?>
 	
-	 icons.push({'iconFilePath':'<?php echo base_url().$icon['desktop_uri']; ?>', 'iconValue':'1'});
+	 icons.push({'iconFilePath':'<?php echo base_url().$icon['desktop_uri']; ?>', 'iconValue':'<?php echo $icon['id']; ?>'});
 	
 <?php } ?>
 	return icons;
