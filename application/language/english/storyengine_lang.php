@@ -17,6 +17,7 @@ $lang['menu_system_save']				= 'Save';
 
 $lang['form_label_page_display_text']	= "Display";
 $lang['form_label_page_add_option']		= "Add Option";
+$lang['form_label_page_target_page']	= "Target Page";
 
 
 $lang['menu_account']					= 'My account';
