@@ -49,6 +49,9 @@ class Page extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		// TODO: Implement update
+		$this->data['page'] = $this->pages_model->get_page($id);
+		$this->_render_page('pages/edit_page',$this->data);
+
 	}
 	
 	public function delete_page($id) {

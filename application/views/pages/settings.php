@@ -4,7 +4,7 @@ if(isset($flash)) {?>
 <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span> <?php echo $flash ?></div>
 <?php }
 ?>
-<form action ="<?= base_url()?>index.php/page/settings" method="post" id="story_set">
+<form action ="<?php echo base_url()?>index.php/page/settings" method="post" id="story_set">
 
 <?php foreach($settings as $set) {?>
 <div class="form-group">

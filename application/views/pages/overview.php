@@ -5,7 +5,7 @@
 <?php foreach ($relations as $relation) { 
 	
 ?>
-<li name="<?= $relation['source_page'] ?>" title="<?= $relation['description'] ?>"><?= $relation['target_page'] ?></li>
+<li name="<?php echo $relation['source_page'] ?>" title="<?php echo $relation['description'] ?>"><?php echo $relation['target_page'] ?></li>
 <?php } ?>
 </ul>
 </div>
