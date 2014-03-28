@@ -13,6 +13,9 @@ $lang['menu_delete_page']				= 'Delete page';
 $lang['menu_system']					= 'System';
 $lang['menu_system_user_management']	= 'User management';
 $lang['menu_system_settings']			= 'Settings';
+$lang['menu_system_save']				= 'Save';
+
+$lang['form_label_page_display_text']	= "Display";
 
 $lang['menu_account']					= 'My account';
 $lang['menu_account_profile']			= 'Edit profile';

@@ -33,6 +33,12 @@ class Pages_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_icons() {
+		$query = $this->db->get('story_option_icons');
+		
+		return $query->result_array();
+		}
+	
 	public function get_relations() {
 	
 		$this->db->join('story_options','story_options.id = story_option_targets.option');
@@ -42,6 +48,7 @@ class Pages_model extends CI_Model {
 		
 		return $query->result_array();
 	}
+	
 	
 	
 	public function create_page($title, $content) {

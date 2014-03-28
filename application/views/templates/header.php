@@ -18,6 +18,12 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/layout.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
 	<?php } ?>
+    
+    <?php if($this->router->class == "page" && $this->router->method == "edit_page") { ?>
+    <!-- Iconpicker stuff -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/iconselect.css">
+    <?php } ?>
+
 	</head>
 	<body>
 	
