@@ -18,14 +18,14 @@
 		<th width="80px"><?php echo lang('index_action_th');?></th>
 	</tr>
 	<?php foreach ($users as $user):?>
-		<tr<?php if(!$user->active) { echo ' class="error"'; };?>>
+		<tr<?php if(!$user->active) { echo ' class="danger "'; };?>>
 			<td><?php echo $user->username;?></td>
 			<td><?php echo $user->first_name;?></td>
 			<td><?php echo $user->last_name;?></td>
 			<td><?php echo $user->email;?></td>
 			<td>
 				<?php foreach ($user->groups as $group):?>
-					<?php echo anchor("admin/edit_group/".$group->id, $group->description) ;?><br />
+					<?php echo $group->description; ?><br />
                 <?php endforeach?>
 			</td>
 			<td>
@@ -40,11 +40,32 @@
 					?>
 				</div>
 			</td>
-			
-			
-			
 		</tr>
 	<?php endforeach;?>
 </table>
 
 <p><?php echo anchor('admin/create_user', '<span class="glyphicon glyphicon-plus"></span> '.lang('index_create_user_link'), 'class="btn btn-default"'); ?></p>
+
+<?php foreach ($users as $user):?>
+<?php if ($this->ion_auth->user()->row()->id != $user->id) { ?>
+<div class="modal fade" id="deleteModal<?php echo $user->id; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModal<?php echo $user->id; ?>Label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="deleteModal<?php echo $user->id; ?>Label">Benutzer löschen: (<?php echo $user->username; ?>)</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					Benutzer wirklich löschen?
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
+				<?php echo anchor('admin/delete_user/'.$user->id, 'Löschen', 'class="btn btn-primary"'); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<?php endforeach;?>

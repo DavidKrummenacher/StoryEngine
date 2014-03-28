@@ -1,4 +1,4 @@
-<h1><?php echo lang('edit_user_heading');?></h1>
+<h1><?php echo lang('edit_user_heading').' ('.$user->username.')';?></h1>
 <p><?php echo lang('edit_user_subheading');?></p>
 
 <div id="infoMessage"><?php echo $message;?></div>
@@ -17,16 +17,10 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="company" class="col-sm-2 control-label"><?php echo lang('edit_user_company_label');?></label>
-		<div class="col-sm-10">
-			<?php echo form_input($company, '', 'class="form-control"');?>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="phone" class="col-sm-2 control-label"><?php echo lang('edit_user_phone_label');?></label>
-		<div class="col-sm-10">
-			<?php echo form_input($phone, '', 'class="form-control"');?>
-		</div>
+		<label for="email" class="col-sm-2 control-label"><?php echo lang('create_user_email_label');?></label>
+        <div class="col-sm-10">
+        	<?php echo form_input($email, '', 'class="form-control"');?>
+        </div>
 	</div>
 	<div class="form-group">
 		<label for="password" class="col-sm-2 control-label"><?php echo lang('edit_user_password_label');?></label>
@@ -41,13 +35,19 @@
 		</div>
 	</div>
 
-	<?php if ($this->ion_auth->is_admin()): ?>
+	<?php if ($this->ion_auth->is_admin()):  ?>
+	<?php //TODO: don't allow making yourself not an admin ?>
 
 	<!--<h3><?php echo lang('edit_user_groups_heading');?></h3>-->
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><?php echo lang('edit_user_groups_heading');?></label>
 		<div class="col-sm-10">
-		<?php $first = TRUE; foreach ($groups as $group): ?>
+		<?php
+			$first = TRUE;
+			foreach ($groups as $group):
+				// TODO: Find better solution for 'don't let administrators make themselfs not an administrator anymore'-hack
+				if ($user->id == $this->ion_auth->user()->row()->id && $group['name'] == $this->config->item('admin_group', 'ion_auth')) { continue; };
+		?>
 			<div class="checkbox">
 				<label>
 					<?php
@@ -62,7 +62,7 @@
 						}
 					?>
 					<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?>>
-					<?php echo $group['name'];?>
+					<?php echo $group['description'];?>
 				</label>
 			</div>
 		<?php if ($first == TRUE) { ?>

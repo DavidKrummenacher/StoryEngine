@@ -5,6 +5,12 @@
 
 <?php echo form_open("admin/create_user", 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
+		<label for="username" class="col-sm-2 control-label">Username</label>
+        <div class="col-sm-10">
+        	<?php echo form_input($username, '', 'class="form-control"');?>
+        </div>
+	</div>
+	<div class="form-group">
 		<label for="first_name" class="col-sm-2 control-label"><?php echo lang('create_user_fname_label');?></label>
         <div class="col-sm-10">
         	<?php echo form_input($first_name, '', 'class="form-control"');?>
@@ -17,21 +23,9 @@
         </div>
 	</div>
 	<div class="form-group">
-		<label for="company" class="col-sm-2 control-label"><?php echo lang('create_user_company_label');?></label>
-        <div class="col-sm-10">
-        	<?php echo form_input($company, '', 'class="form-control"');?>
-        </div>
-	</div>
-	<div class="form-group">
 		<label for="email" class="col-sm-2 control-label"><?php echo lang('create_user_email_label');?></label>
         <div class="col-sm-10">
         	<?php echo form_input($email, '', 'class="form-control"');?>
-        </div>
-	</div>
-	<div class="form-group">
-		<label for="phone" class="col-sm-2 control-label"><?php echo lang('create_user_phone_label');?></label>
-        <div class="col-sm-10">
-        	<?php echo form_input($phone, '', 'class="form-control"');?>
         </div>
 	</div>
 	<div class="form-group">
