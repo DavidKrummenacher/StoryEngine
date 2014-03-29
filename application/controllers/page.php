@@ -25,6 +25,10 @@ class Page extends CI_Controller {
 		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get_page($id);
 		
+		// Apply consequences (story_page_consequences)
+		$consequences = $this->pages_model->get_consequences_for_page($id);
+		foreach ($consequences as $consequence) { _apply_consequences($consequence); }
+		
 		// Option filtering
 		$options = array();
 		$options_for_page = $this->pages_model->get_options($id);
@@ -66,12 +70,15 @@ class Page extends CI_Controller {
 		
 		// Apply consequences (story_option_consequences)
 		$consequences = $this->pages_model->get_consequences_for_option($id);
-		foreach ($consequences as $consequence) {
-			// TODO: Apply consequences
-		}
+		foreach ($consequences as $consequence) { _apply_consequences($consequence); }
 		
 		// Redirect to page
 		redirect('page/show/'.$target['target_page']);
+	}
+	
+	private function _apply_consequences($consequence) {
+		// TODO: Apply consequences
+		
 	}
 	
 	public function create_page() {

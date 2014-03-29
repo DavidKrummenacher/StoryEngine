@@ -27,6 +27,11 @@ class Pages_model extends CI_Model {
 		return $this->db->count_all_results('story_pages');
 		}
 	
+	public function get_consequences_for_page($id) {
+		$query = $this->db->get_where('story_page_consequences', array('page' => $id));
+		return $query->result_array();
+	}
+	
 	public function get_options($id) {
 		$query = $this->db->get_where('story_options', array('source_page' => $id));
 		return $query->result_array();
