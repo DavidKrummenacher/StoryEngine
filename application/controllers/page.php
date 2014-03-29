@@ -33,9 +33,27 @@ class Page extends CI_Controller {
 	public function option($id) {
 		// TODO: Implement option handling
 		// Roll (story_option_rolls)
+		$success = true;
+		$checks = $this->pages_model->get_checks_for_option($id);
+		foreach ($checks as $check) {
+			if (success) {
+				// TODO: Check for failure
+			}
+			if (!success) { break; }
+		}
+		
 		// Choose random page based on success (story_option_targets)
+		$targets = $this->pages_model->get_targets_for_option($id, !$success);
+		$target = $targets[array_rand($targets)];
+		
 		// Apply consequences (story_option_consequences)
+		$consequences = $this->pages_model->get_consequences_for_option($id);
+		foreach ($consequences as $consequence) {
+			// TODO: Apply consequences
+		}
+		
 		// Redirect to page
+		redirect('page/show/'.$target['target_page']);
 	}
 	
 	public function create_page() {

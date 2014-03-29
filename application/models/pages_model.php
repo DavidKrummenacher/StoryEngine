@@ -28,8 +28,27 @@ class Pages_model extends CI_Model {
 		}
 	
 	public function get_options($id) {
-		// TODO: Implement option filtering
 		$query = $this->db->get_where('story_options', array('source_page' => $id));
+		return $query->result_array();
+	}
+	
+	public function get_conditions_for_option($id) {
+		$query = $this->db->get_where('story_option_conditions', array('option' => $id));
+		return $query->result_array();
+	}
+	
+	public function get_targets_for_option($id, $fail) {
+		$query = $this->db->get_where('story_option_targets', array('option' => $id, 'fail' => $fail));
+		return $query->result_array();
+	}
+	
+	public function get_checks_for_option($id) {
+		$query = $this->db->get_where('story_option_checks', array('option' => $id));
+		return $query->result_array();
+	}
+	
+	public function get_consequences_for_option($id) {
+		$query = $this->db->get_where('story_option_consequences', array('option' => $id));
 		return $query->result_array();
 	}
 	
@@ -88,7 +107,6 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function delete_page($id) {
-		// TODO: Make FKs casading deletion
 		$this->db->delete('story_pages', array('id' => $id));
 	}
 	
