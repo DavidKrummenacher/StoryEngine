@@ -1,5 +1,5 @@
 
-			<?php if ($page['title'] || $page['content']) { ?>
+			<?php if ($page) { ?>
 			<?php if ($this->ion_auth->logged_in()) { ?><p><i>(<?php echo $page['title']; ?>)</i></p><?php } ?>
 			<p>
 				<?php echo $page['content']; ?>

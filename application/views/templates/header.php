@@ -56,7 +56,7 @@
 							<li><?php echo anchor('page/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')) ?></li>
 						</ul>
 					</li>
-					<?php if($this->router->class == "page" && $this->router->method == "show") { ?>
+					<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
 					<li><?php echo anchor('page/edit_page/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')) ?></li>
 					<li><a data-toggle="modal" data-target="#deletePageModal"><span class="glyphicon glyphicon-trash"></span> <?php echo lang('menu_delete_page'); ?></a></li>
 					<?php } ?>
