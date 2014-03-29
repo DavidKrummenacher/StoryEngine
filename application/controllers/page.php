@@ -59,8 +59,9 @@ class Page extends CI_Controller {
 	
 	public function delete_page($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if ($id == $this->settings_model->get_value('start_page')) { show_error('You cannot delete the current start page.'); }
 		
-		// TODO: Implement delete
+		$this->pages_model->delete_page($id);
 	}
 	
 	public function overview() {

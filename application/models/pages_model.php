@@ -66,28 +66,29 @@ class Pages_model extends CI_Model {
 	
 	
 	
-	public function create_page($title, $content) {
+	public function create_page($title, $content, $description = null) {
 		$data = array(
 			'title' => $title,
 			'content' => $content
 		);
+		if ($description) $data['description'] = $description;
 		
 		$this->db->insert('story_pages', $data);
 	}
 	
-	public function update_page($id, $titel, $content) {
+	public function update_page($id, $titel, $content, $description = null) {
 		$data = array(
 			'title' => $title,
 			'content' => $content
 		);
+		if ($description) $data['description'] = $description;
 		
 		$this->db->where('id', $id);
 		$this->db->update('story_pages', $data);
 	}
 	
 	public function delete_page($id) {
-		$this->db->delete('story_images', array('page' => $id));
-		$this->db->delete('story_options', array('from' => $id));
+		// TODO: Make FKs casading deletion
 		$this->db->delete('story_pages', array('id' => $id));
 	}
 	
