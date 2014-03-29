@@ -22,10 +22,27 @@ class Page extends CI_Controller {
 	
 	public function show($id) {
 		// TODO: Implement page handling
-		// TODO: Implement option filtering (story_options_conditions), maybe inside pages_model
 		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get_page($id);
-		$this->data['options'] = $this->pages_model->get_options($id);
+		
+		// Option filtering
+		$options = array();
+		$options_for_page = $this->pages_model->get_options($id);
+		foreach ($options_for_page as $option) {
+			$conditions = $this->pages_model->get_conditions_for_option($option['id']);
+			
+			$conditions_met = true;
+			foreach ($conditions as $condition) {
+				// TODO: Check conditions
+				// Check conditions
+				
+				
+				if (!$conditions_met) { break; }
+			}
+			
+			if ($conditions_met) { array_push($options, $option); }
+		}
+		$this->data['options'] = $options;
 		
 		$this->_render_page('pages/view', $this->data);
 	}
@@ -36,9 +53,10 @@ class Page extends CI_Controller {
 		$success = true;
 		$checks = $this->pages_model->get_checks_for_option($id);
 		foreach ($checks as $check) {
-			if (success) {
-				// TODO: Check for failure
-			}
+			// TODO: Check for failure
+			// Check for failure
+			
+			
 			if (!success) { break; }
 		}
 		
