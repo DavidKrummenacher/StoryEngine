@@ -98,6 +98,7 @@ class Pages_model extends CI_Model {
 		if ($description) $data['description'] = $description;
 		
 		$this->db->insert('story_pages', $data);
+		return $this->db->insert_id();
 	}
 	
 	public function update_page($id, $title, $content, $description = null) {

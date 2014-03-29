@@ -6,6 +6,7 @@ class Page extends CI_Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('pagination');
+		$this->load->library('form_validation');
 		$this->load->helper('text');
 		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
@@ -82,11 +83,46 @@ class Page extends CI_Controller {
 		
 	}
 	
-	public function create_page() {
+	public function add_page() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-		// TODO: Implement redirect to new page in edit mode
-		$this->pages_model->create_page('Blah', 'blah blab blah');
-		redirect('page/show_all', 'refresh');
+		
+		//validate form input
+		$this->form_validation->set_rules('page_title', 'Title', 'required');
+		$this->form_validation->set_rules('page_content', 'Content', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$title = $this->input->post('page_title');
+			$desc = $this->input->post('page_desc');
+			$content = $this->input->post('page_content');
+			
+			$id = $this->pages_model->create_page($title, $content, $desc);
+			redirect('page/edit_page/'.$id);
+		} else {
+			//display the add page form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+			$this->data['page_title'] = array(
+				'name'  => 'page_title',
+				'id'    => 'page_title',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('page_title'),
+			);
+			$this->data['page_desc'] = array(
+				'name'  => 'page_desc',
+				'id'    => 'page_desc',
+				'type'  => 'text',
+				'value' => $this->input->post('page_desc'),
+			);
+			$this->data['page_content'] = array(
+				'name'  => 'page_content',
+				'id'    => 'page_content',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('page_content'),
+			);
+
+			$this->_render_page('pages/add_page', $this->data);
+		}
 	}
 	
 	public function edit_page($id) {
