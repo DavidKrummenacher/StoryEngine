@@ -61,6 +61,13 @@ class Page extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if ($id == $this->settings_model->get_value('start_page')) { show_error('You cannot delete the current start page.'); }
 		
+		// Delete image on server
+		$page = $this->pages_model->get_page($id);
+		$image = $this->pages_model->get_page_image($page['image']);
+		if (file_exists('../img/desktop/'.$image['desktop_uri'])) { unlink ('../img/desktop/'.$image['desktop_uri']); }
+		if (file_exists('../img/mobile/'.$image['mobile_uri'])) { unlink ('../img/mobile/'.$image['mobile_uri']); }
+		
+		// Delete page
 		$this->pages_model->delete_page($id);
 	}
 	

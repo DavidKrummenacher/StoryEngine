@@ -76,7 +76,7 @@ class Pages_model extends CI_Model {
 		$this->db->insert('story_pages', $data);
 	}
 	
-	public function update_page($id, $titel, $content, $description = null) {
+	public function update_page($id, $title, $content, $description = null) {
 		$data = array(
 			'title' => $title,
 			'content' => $content
@@ -90,6 +90,43 @@ class Pages_model extends CI_Model {
 	public function delete_page($id) {
 		// TODO: Make FKs casading deletion
 		$this->db->delete('story_pages', array('id' => $id));
+	}
+	
+	public function get_page_images() {
+		$query = $this->db->get('story_page_images');
+		return $query->result_array();
+	}
+	
+	public function get_page_image($id) {
+		$query = $this->db->get_where('story_page_images', array('id' => $id));
+		return $query->row_array();
+	}
+	
+	public function create_page_image($name, $description, $desktop_uri, $mobile_uri) {
+		$data = array(
+			'name' => $name,
+			'description' => $description,
+			'desktop_uri' => $desktop_uri,
+			'mobile_uri' => $mobile_uri
+		);
+		
+		$this->db->insert('story_page_images', $data);
+	}
+	
+	public function update_page_image($id, $name, $description, $desktop_uri, $mobile_uri) {
+		$data = array(
+			'name' => $name,
+			'description' => $description,
+			'desktop_uri' => $desktop_uri,
+			'mobile_uri' => $mobile_uri
+		);
+		
+		$this->db->where('id', $id);
+		$this->db->update('story_page_images', $data);
+	}
+	
+	public function delete_page_image($id) {
+		$this->db->delete('story_page_images', array('id' => $id));
 	}
 	
 	public function delete_all() {

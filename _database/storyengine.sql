@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `story_options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `source_page` int(11) NOT NULL,
   `order` int(11) NOT NULL,
-  `icon` int(11) NOT NULL,
+  `icon` int(11) DEFAULT NULL,
   `text` varchar(120) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
@@ -290,6 +290,7 @@ CREATE TABLE IF NOT EXISTS `story_pages` (
   `title` varchar(120) NOT NULL,
   `description` varchar(250) DEFAULT NULL,
   `content` text NOT NULL,
+  `image` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
@@ -318,7 +319,6 @@ CREATE TABLE IF NOT EXISTS `story_page_consequences` (
 DROP TABLE IF EXISTS `story_page_images`;
 CREATE TABLE IF NOT EXISTS `story_page_images` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `page` int(11) NOT NULL,
   `name` varchar(120) NOT NULL,
   `description` varchar(250) DEFAULT NULL,
   `desktop_uri` varchar(250) DEFAULT NULL,
@@ -351,7 +351,7 @@ INSERT INTO `story_settings` (`key`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Constraints der exportierten Tabellen
+-- Constraints der Tabellen
 --
 
 --
@@ -360,3 +360,62 @@ INSERT INTO `story_settings` (`key`, `value`) VALUES
 ALTER TABLE `auth_users_groups`
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `auth_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `auth_groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_achievements`
+--
+ALTER TABLE `story_achievements`
+  ADD CONSTRAINT `fk_story_achievements_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_achievements_comparison` FOREIGN KEY (`comparison`) REFERENCES `story_attribute_comparisons` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_options`
+--
+ALTER TABLE `story_options`
+  ADD CONSTRAINT `fk_story_options_page` FOREIGN KEY (`source_page`) REFERENCES `story_pages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_options_icon` FOREIGN KEY (`icon`) REFERENCES `story_option_icons` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_option_checks`
+--
+ALTER TABLE `story_option_checks`
+  ADD CONSTRAINT `fk_story_option_checks_option` FOREIGN KEY (`option`) REFERENCES `story_options` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_checks_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_checks_comparison` FOREIGN KEY (`comparison`) REFERENCES `story_attribute_comparisons` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_option_conditions`
+--
+ALTER TABLE `story_option_conditions`
+  ADD CONSTRAINT `fk_story_option_conditions_option` FOREIGN KEY (`option`) REFERENCES `story_options` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_conditions_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_conditions_comparison` FOREIGN KEY (`comparison`) REFERENCES `story_attribute_comparisons` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_option_consequences`
+--
+ALTER TABLE `story_option_consequences`
+  ADD CONSTRAINT `fk_story_option_consequences_option` FOREIGN KEY (`option`) REFERENCES `story_options` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_consequences_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_consequences_operator` FOREIGN KEY (`operator`) REFERENCES `story_attribute_operators` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_option_targets`
+--
+ALTER TABLE `story_option_targets`
+  ADD CONSTRAINT `fk_story_option_targets_option` FOREIGN KEY (`option`) REFERENCES `story_options` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_option_targets_target` FOREIGN KEY (`target_page`) REFERENCES `story_pages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_pages`
+--
+ALTER TABLE `story_pages`
+  ADD CONSTRAINT `fk_story_pages_image` FOREIGN KEY (`image`) REFERENCES `story_page_images` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_page_consequences`
+--
+ALTER TABLE `story_page_consequences`
+  ADD CONSTRAINT `fk_story_page_consequences_page` FOREIGN KEY (`page`) REFERENCES `story_pages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_page_consequences_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_page_consequences_operator` FOREIGN KEY (`operator`) REFERENCES `story_attribute_operators` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
