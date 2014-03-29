@@ -345,6 +345,8 @@ CREATE TABLE IF NOT EXISTS `story_settings` (
 
 INSERT INTO `story_settings` (`key`, `value`) VALUES
 ('start_page', 1);
+INSERT INTO `story_settings` (`key`, `value`) VALUES
+('pages_per_page', 10);
 
 -- --------------------------------------------------------
 
