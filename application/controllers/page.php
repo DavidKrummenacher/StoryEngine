@@ -115,6 +115,8 @@ class Page extends CI_Controller {
 		
 		// Delete page
 		$this->pages_model->delete_page($id);
+		
+		redirect('page/list_all', 'refresh');
 	}
 	
 	public function overview() {
