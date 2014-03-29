@@ -112,6 +112,14 @@ class Pages_model extends CI_Model {
 	}
 	
 	public function delete_page($id) {
+		$option_targets = $this->db->get_where('story_option_targets', array('target_page' => $id));	
+		foreach ($option_targets->result_array() as $option_target) {
+			$options = $this->db->get_where('story_option_targets', array('option' => $option_target['option']));
+			if ($options->num_rows() == 1) {
+				$this->db->delete('story_options', array('id' => $option_target['option']));
+			}
+		}
+		
 		$this->db->delete('story_pages', array('id' => $id));
 	}
 	
