@@ -25,7 +25,7 @@ class Admin extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-		elseif (!$this->ion_auth->is_admin()) { return show_error('You must be an administrator to view this page.'); }
+		elseif (!$this->ion_auth->is_admin()) { show_error('You must be an administrator to view this page.'); }
 		else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
