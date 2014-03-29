@@ -36,3 +36,25 @@
 </table>
 
 <?php if($pagination) { ?>  <ul class="pagination pagination-lg"><?php echo $pagination; } ?> </ul>
+
+<?php foreach ($pages as $page) { ?>
+<div class="modal fade" id="deleteModal<?php echo $page['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModal<?php echo $page['id']; ?>Label" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="deleteModal<?php echo $page['id']; ?>Label">Seite löschen: (<?php echo $page['id'].' - '.$page['title']; ?>)</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					Seite wirklich löschen?
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
+				<?php echo anchor('page/delete_page/'.$page['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php };?>
