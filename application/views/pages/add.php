@@ -4,26 +4,26 @@
 
 <?php echo form_open("page/add", 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
-		<label for="page_title" class="col-sm-2 control-label">Page Title</label>
+		<label for="title" class="col-sm-2 control-label">Page Title</label>
 		<div class="col-sm-10">
-			<?php echo form_input($page_title, '', 'class="form-control"');?>
+			<?php echo form_input($title, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="page_desc" class="col-sm-2 control-label">Description</label>
+		<label for="description" class="col-sm-2 control-label">Description</label>
 		<div class="col-sm-10">
-			<?php echo form_input($page_desc, '', 'class="form-control"');?>
+			<?php echo form_input($description, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="page_content" class="col-sm-2 control-label">Content</label>
+		<label for="content" class="col-sm-2 control-label">Content</label>
 		<div class="col-sm-10">
-			<?php echo form_textarea($page_content, '', 'rows="12" class="form-control"');?>
+			<?php echo form_textarea($content, '', 'rows="12" class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-2">
-			<?php echo form_submit('submit', lang('menu_system_save'), 'class="btn btn-default"');?>
+			<?php echo form_submit('submit', 'Add page', 'class="btn btn-default"');?>
 		</div>
 	</div>
 <?php echo form_close();?>

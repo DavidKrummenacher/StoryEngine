@@ -57,38 +57,38 @@ class Page extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		$this->form_validation->set_rules('page_title', 'Title', 'required');
-		$this->form_validation->set_rules('page_content', 'Content', 'required');
+		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('content', 'Content', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
-			$title = $this->input->post('page_title');
-			$desc = $this->input->post('page_desc');
-			$content = $this->input->post('page_content');
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+			$content = $this->input->post('content');
 			
-			$id = $this->pages_model->create($title, $desc, $content);
+			$id = $this->pages_model->create($title, $description, $content);
 			redirect('page/edit/'.$id);
 		} else {
 			//display the add page form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-			$this->data['page_title'] = array(
-				'name'  => 'page_title',
-				'id'    => 'page_title',
+			$this->data['title'] = array(
+				'name'  => 'title',
+				'id'    => 'title',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('page_title'),
+				'value' => $this->form_validation->set_value('title'),
 			);
-			$this->data['page_desc'] = array(
-				'name'  => 'page_desc',
-				'id'    => 'page_desc',
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
 				'type'  => 'text',
-				'value' => $this->input->post('page_desc'),
+				'value' => $this->input->post('description'),
 			);
-			$this->data['page_content'] = array(
-				'name'  => 'page_content',
-				'id'    => 'page_content',
+			$this->data['content'] = array(
+				'name'  => 'content',
+				'id'    => 'content',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('page_content'),
+				'value' => $this->form_validation->set_value('content'),
 			);
 
 			$this->_render_page('pages/add', $this->data);
@@ -98,13 +98,49 @@ class Page extends CI_Controller {
 	public function edit($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
-		// TODO: Implement update
-		$this->data['page'] = $this->pages_model->get($id);
-		$this->data['options'] = $this->options_model->get_options_for_page($id);
-		$this->data['icons'] = $this->options_model->get_icons();
-		$this->data['targets'] = $this->options_model->get_targets($id);
-		$this->_render_page('pages/edit',$this->data);
-
+		//validate form input
+		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('content', 'Content', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+			$content = $this->input->post('content');
+			
+			$this->pages_model->update($id, $title, $description, $content);
+			redirect('page/show/'.$id);
+		} else {
+			//display the add page form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$page = $this->pages_model->get($id);
+			$this->data['page'] = $page;
+			
+			$this->data['title'] = array(
+				'name'  => 'title',
+				'id'    => 'title',
+				'type'  => 'text',
+				'value' => ($this->input->post('title')) ? $this->input->post('title') : $page['title'],
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => ($this->input->post('description')) ? $this->input->post('description') : $page['description'],
+			);
+			$this->data['content'] = array(
+				'name'  => 'content',
+				'id'    => 'content',
+				'type'  => 'text',
+				'value' => ($this->input->post('content')) ? $this->input->post('content') : $page['content'],
+			);
+			
+			$this->data['options'] = $this->options_model->get_options_for_page($id);
+			$this->data['icons'] = $this->options_model->get_icons();
+			$this->data['targets'] = $this->options_model->get_targets($id);
+			$this->_render_page('pages/edit',$this->data);
+		}
 	}
 	
 	public function delete($id) {
