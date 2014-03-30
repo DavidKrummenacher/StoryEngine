@@ -107,6 +107,11 @@ class Option extends CI_Controller {
 			$option = $this->options_model->get($id);
 			$this->data['option'] = $option;
 			
+			$this->data['conditions'] = $this->options_model->get_conditions_for_option($id);
+			$this->data['targets'] = $this->options_model->get_targets_for_option($id);
+			$this->data['checks'] = $this->options_model->get_checks_for_option($id);
+			$this->data['consequences'] = $this->options_model->get_consequences_for_option($id);
+			
 			$this->data['order'] = array(
 				'name'  => 'order',
 				'id'    => 'order',
