@@ -30,10 +30,10 @@ class Options_model extends CI_Model {
 		);
 		
 		$this->db->insert('story_options', $data);
+		return $this->db->insert_id();
 	}
-	public function update($id, $page, $order, $icon, $text) {
+	public function update($id, $order, $icon, $text) {
 		$data = array(
-			'source_page' => $page,
 			'order' => $order,
 			'icon' => $icon,
 			'text' => $text
@@ -60,9 +60,8 @@ class Options_model extends CI_Model {
 		
 		$this->db->insert('story_option_conditions', $data);
 	}
-	public function update_condition($id, $option, $attribute, $comparison, $value) {
+	public function update_condition($id, $attribute, $comparison, $value) {
 		$data = array(
-			'option' => $option,
 			'attribute' => $attribute,
 			'comparison' => $comparison,
 			'value' => $value
@@ -92,9 +91,8 @@ class Options_model extends CI_Model {
 		
 		$this->db->insert('story_option_targets', $data);
 	}
-	public function update_target($id, $option, $target_page, $fail) {
+	public function update_target($id, $target_page, $fail) {
 		$data = array(
-			'option' => $option,
 			'target_page' => $target_page,
 			'fail' => $fail
 		);
@@ -125,9 +123,8 @@ class Options_model extends CI_Model {
 		
 		$this->db->insert('story_option_checks', $data);
 	}
-	public function update_check($id, $option, $attribute, $comparison, $value, $random) {
+	public function update_check($id, $attribute, $comparison, $value, $random) {
 		$data = array(
-			'option' => $option,
 			'attribute' => $attribute,
 			'comparison' => $comparison,
 			'value' => $value,
@@ -159,9 +156,8 @@ class Options_model extends CI_Model {
 		
 		$this->db->insert('story_option_consequences', $data);
 	}
-	public function update_consequence($id, $option, $attribute, $operator, $value) {
+	public function update_consequence($id, $attribute, $operator, $value) {
 		$data = array(
-			'option' => $option,
 			'attribute' => $attribute,
 			'operator' => $operator,
 			'value' => $value

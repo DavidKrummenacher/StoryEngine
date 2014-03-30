@@ -45,88 +45,89 @@ class Option extends CI_Controller {
 		redirect('page/show/'.$target['target_page']);
 	}
 
-	public function add() {
+	public function add($page) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		/*$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('value', 'Default value', 'required');
+		$this->form_validation->set_rules('order', 'Order', 'required');
+		$this->form_validation->set_rules('text', 'Text', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
-			$name = $this->input->post('name');
-			$description = $this->input->post('description');
-			$value = $this->input->post('value');
+			$order = $this->input->post('order');
+			$icon = $this->input->post('icon');
+			$text = $this->input->post('text');
 			
-			$this->attributes_model->create($name, $description, $value);
-			redirect('attribute');
+			$id = $this->options_model->create($page, $order, $icon, $text);
+			redirect('option/edit/'.$id);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
-			$this->data['name'] = array(
-				'name'  => 'name',
-				'id'    => 'name',
+			$this->data['order'] = array(
+				'name'  => 'order',
+				'id'    => 'order',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('name'),
+				'value' => $this->form_validation->set_value('order'),
 			);
-			$this->data['description'] = array(
-				'name'  => 'description',
-				'id'    => 'description',
+			$this->data['icon'] = array(
+				'name'  => 'icon',
+				'id'    => 'icon',
 				'type'  => 'text',
-				'value' => $this->input->post('description'),
+				'value' => $this->input->post('icon'),
 			);
-			$this->data['value'] = array(
-				'name'  => 'value',
-				'id'    => 'value',
+			$this->data['text'] = array(
+				'name'  => 'text',
+				'id'    => 'text',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('value'),
+				'value' => $this->form_validation->set_value('text'),
 			);
 			
 			$this->_render_page('options/add', $this->data);
-		}*/
+		}
 	}
 	public function edit($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		/*$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('value', 'Default value', 'required');
+		$this->form_validation->set_rules('order', 'Order', 'required');
+		$this->form_validation->set_rules('text', 'Text', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
-			$name = $this->input->post('name');
-			$description = $this->input->post('description');
-			$value = $this->input->post('value');
+			$order = $this->input->post('order');
+			$icon = $this->input->post('icon');
+			$text = $this->input->post('text');
 			
-			$this->attributes_model->update($id, $name, $description, $value);
-			redirect('attribute');
+			$this->options_model->update($id, $order, $icon, $text);
+			$option = $this->options_model->update($id);
+			redirect('page/edit/'.$option['source_page']);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
-			$attribute = $this->attributes_model->get($id);
-			$this->data['attribute'] = $attribute;
+			$option = $this->options_model->get($id);
+			$this->data['option'] = $option;
 			
-			$this->data['name'] = array(
-				'name'  => 'name',
-				'id'    => 'name',
+			$this->data['order'] = array(
+				'name'  => 'order',
+				'id'    => 'order',
 				'type'  => 'text',
-				'value' => ($this->input->post('name')) ? $this->input->post('name') : $attribute['name'],
+				'value' => ($this->input->post('order')) ? $this->input->post('order') : $option['order'],
 			);
-			$this->data['description'] = array(
-				'name'  => 'description',
-				'id'    => 'description',
+			$this->data['icon'] = array(
+				'name'  => 'icon',
+				'id'    => 'icon',
 				'type'  => 'text',
-				'value' => ($this->input->post('description')) ? $this->input->post('description') : $attribute['description'],
+				'value' => ($this->input->post('icon')) ? $this->input->post('icon') : $option['icon'],
 			);
-			$this->data['value'] = array(
-				'name'  => 'value',
-				'id'    => 'value',
+			$this->data['text'] = array(
+				'name'  => 'text',
+				'id'    => 'text',
 				'type'  => 'text',
-				'value' => ($this->input->post('value')) ? $this->input->post('value') : $attribute['value'],
+				'value' => ($this->input->post('text')) ? $this->input->post('text') : $option['text'],
 			);
 			
 			$this->_render_page('options/edit', $this->data);
-		}*/
+		}
 	}
 	public function delete($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
