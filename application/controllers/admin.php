@@ -37,7 +37,7 @@ class Admin extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('admin/userlist', $this->data);
+			$this->_render_page('admin/list', $this->data);
 		}
 	}
 
@@ -120,7 +120,7 @@ class Admin extends CI_Controller {
 	}
 
 	//create a new user
-	function create_user() {
+	function add() {
 		$this->data['title'] = "Create User";
 
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
@@ -191,12 +191,12 @@ class Admin extends CI_Controller {
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
 
-			$this->_render_page('admin/create_user', $this->data);
+			$this->_render_page('admin/add', $this->data);
 		}
 	}
 
 	//edit a user
-	function edit_user($id) {
+	function edit($id) {
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
@@ -299,10 +299,10 @@ class Admin extends CI_Controller {
 			'type' => 'password'
 		);
 
-		$this->_render_page('admin/edit_user', $this->data);
+		$this->_render_page('admin/edit', $this->data);
 	}
 
-	function delete_user($id) {
+	function delete($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		if ($this->ion_auth->user()->row()->id == $id) { show_error('You cannot delete yourself!'); }

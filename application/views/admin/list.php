@@ -35,7 +35,7 @@
 							if ($user->active) { echo anchor('admin/deactivate/'.$user->id, '<span class="glyphicon glyphicon-thumbs-down"></span>', 'class="btn btn-default btn-xs" title="Deaktivieren"'); }
 							else { echo anchor('admin/activate/'. $user->id, '<span class="glyphicon glyphicon-thumbs-up"></span>', 'class="btn btn-default btn-xs" title="Aktivieren"'); }
 						}
-						echo anchor("admin/edit_user/".$user->id, '<span class="glyphicon glyphicon-pencil"></span>', 'class="btn btn-default btn-xs" title="Bearbeiten"');
+						echo anchor("admin/edit/".$user->id, '<span class="glyphicon glyphicon-pencil"></span>', 'class="btn btn-default btn-xs" title="Bearbeiten"');
 						if ($this->ion_auth->user()->row()->id != $user->id) { echo '<a class="btn btn-default btn-xs" title="Löschen" data-toggle="modal" href="#deleteModal'.$user->id.'"><span class="glyphicon glyphicon-trash"></span></a>'; }
 					?>
 				</div>
@@ -44,7 +44,7 @@
 	<?php endforeach;?>
 </table>
 
-<p><?php echo anchor('admin/create_user', '<span class="glyphicon glyphicon-plus"></span> '.lang('index_create_user_link'), 'class="btn btn-default"'); ?></p>
+<p><?php echo anchor('admin/add', '<span class="glyphicon glyphicon-plus"></span> '.lang('index_create_user_link'), 'class="btn btn-default"'); ?></p>
 
 <?php foreach ($users as $user):?>
 <?php if ($this->ion_auth->user()->row()->id != $user->id) { ?>
@@ -62,7 +62,7 @@
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('admin/delete_user/'.$user->id, 'Löschen', 'class="btn btn-primary"'); ?>
+				<?php echo anchor('admin/delete/'.$user->id, 'Löschen', 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

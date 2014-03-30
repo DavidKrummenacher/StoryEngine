@@ -1,5 +1,5 @@
 
-			<?php if ($page['title'] || $page['content']) { ?>
+			<?php if ($page) { ?>
 			<?php if ($this->ion_auth->logged_in()) { ?>
 			<div class="row">
 				<div class="col-xs-12">
@@ -26,7 +26,7 @@
 			<div class="list-group">
 				<?php foreach($options as $option) { ?>
 				
-				<a href="<?php echo base_url().'index.php/page/option/'.$option['id']; ?>" class="list-group-item">
+				<a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="list-group-item">
 					<span class="glyphicon glyphicon-chevron-right"></span>
 					<?php echo $option['text']; ?>
 				</a>

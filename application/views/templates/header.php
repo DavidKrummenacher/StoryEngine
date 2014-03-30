@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
 	<?php } ?>
     
-    <?php if($this->router->class == "page" && $this->router->method == "edit_page") { ?>
+    <?php if($this->router->class == "page" && $this->router->method == "edit") { ?>
     <!-- Iconpicker stuff -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/iconselect.css">
     <?php } ?>
@@ -48,17 +48,17 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> <?php echo lang('menu_story');?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><?php echo anchor('page/overview', '<span class="glyphicon glyphicon-map-marker"></span> '.lang('menu_story_overview')); ?></li>
-							<li><?php echo anchor('page/list_all', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')); ?></li>
+							<li><?php echo anchor('story/overview', '<span class="glyphicon glyphicon-map-marker"></span> '.lang('menu_story_overview')); ?></li>
+							<li><?php echo anchor('story/list_pages', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')); ?></li>
 							<li class="divider"></li>
-							<li><?php echo anchor('page/add_page', '<span class="glyphicon glyphicon-plus"></span> '.lang('menu_story_add_page')); ?></a></li>
+							<li><?php echo anchor('page/add', '<span class="glyphicon glyphicon-plus"></span> '.lang('menu_story_add_page')); ?></a></li>
 							<li><?php echo anchor('attribute', '<span class="glyphicon glyphicon-tasks"></span> Manage attributes'); ?></a></li>
 							<li class="divider"></li>
-							<li><?php echo anchor('page/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
+							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>
 					</li>
 					<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
-					<li><?php echo anchor('page/edit_page/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')); ?></li>
+					<li><?php echo anchor('page/edit/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')); ?></li>
 					<?php if($page['id'] != $this->settings_model->get_value('start_page')) { ?>
 					<li><a data-toggle="modal" data-target="#deletePageModal"><span class="glyphicon glyphicon-trash"></span> <?php echo lang('menu_delete_page'); ?></a></li>
 					<?php } ?>
@@ -78,7 +78,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo lang('menu_account');?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><?php echo anchor('admin/edit_user/'.$this->ion_auth->user()->row()->id, '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_account_profile')); ?></li>
+							<li><?php echo anchor('admin/edit/'.$this->ion_auth->user()->row()->id, '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_account_profile')); ?></li>
 							<li class="divider"></li>
 							<li><?php echo anchor('admin/logout', '<span class="glyphicon glyphicon-log-out"></span> '.lang('menu_account_logout')); ?></li>
 						</ul>
@@ -107,7 +107,7 @@
 				</div>
 				<div class="modal-footer">
 					<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-					<?php echo anchor('page/delete_page/'.$page['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+					<?php echo anchor('page/delete/'.$page['id'], 'Löschen', 'class="btn btn-primary"'); ?>
 				</div>
 			</div>
 		</div>

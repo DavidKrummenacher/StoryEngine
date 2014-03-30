@@ -20,21 +20,19 @@ class Settings_model extends CI_Model {
 	}
 	
 	public function get_story_settings($key = null) {
-			if($key != null)
-			{
-				$query = $this->db->get_where('story_settings',array('key' => $key));
-				$row = $query->row(); 
-				if($row) {
-					return $row->value;
-				} else {
-					return false;
-				}
+		if($key != null) {
+			$query = $this->db->get_where('story_settings',array('key' => $key));
+			$row = $query->row(); 
+			if($row) {
+				return $row->value;
 			} else {
-				$query = $this->db->get('story_settings');
-				return $query->result_array();
+				return false;
 			}
-			
-		}
+		} else {
+			$query = $this->db->get('story_settings');
+			return $query->result_array();
+		}	
+	}
 	
 	public function set_story_setting($key, $value) {
 		// TODO: Make this work...
@@ -46,6 +44,4 @@ class Settings_model extends CI_Model {
 		$this->db->where('key', $key);
 		$this->db->update('story_settings', array('value' => $value));
 	}
-	
-	
 }

@@ -3,7 +3,7 @@
 			<?php if ($page['title'] || $page['content']) { ?>
 			<?php if ($this->ion_auth->logged_in()) { ?>
             <?php } ?>
-            <form action ="<?php echo base_url()?>index.php/page/edit_page/<?php echo $page['id']; ?>" method="post" id="edit_page" role="form" class="form-horizontal">
+            <form action ="<?php echo base_url()?>index.php/page/edit/<?php echo $page['id']; ?>" method="post" id="edit_page" role="form" class="form-horizontal">
 
             <div class="form-group">
                 <div class="form-group">

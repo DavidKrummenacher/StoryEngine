@@ -2,7 +2,7 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<?php echo form_open("page/add_page", 'class="form-horizontal" role="form"');?>
+<?php echo form_open("page/add", 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
 		<label for="page_title" class="col-sm-2 control-label">Page Title</label>
 		<div class="col-sm-10">
