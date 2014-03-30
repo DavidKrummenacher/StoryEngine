@@ -104,7 +104,7 @@ class Options_model extends CI_Model {
 		$this->db->delete('story_option_targets', array('id' => $id));
 	}
 	public function get_targets_for_option($option, $fail = null) {
-		if ($fail)
+		if ($fail != null)
 			$query = $this->db->get_where('story_option_targets', array('option' => $option, 'fail' => $fail));
 		else
 			$query = $this->db->get_where('story_option_targets', array('option' => $option));
