@@ -136,7 +136,7 @@ class Option extends CI_Controller {
 		$page = $option['source_page'];
 		
 		$this->options_model->delete($id);
-		redirect('edit/page/'.$page);
+		redirect('page/edit/'.$page);
 	}
 	
 	public function add_condition() {}
