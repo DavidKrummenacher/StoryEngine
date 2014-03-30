@@ -85,7 +85,6 @@ class Option extends CI_Controller {
 			$this->_render_page('options/add', $this->data);
 		}*/
 	}
-	
 	public function edit($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
@@ -129,7 +128,6 @@ class Option extends CI_Controller {
 			$this->_render_page('options/edit', $this->data);
 		}*/
 	}
-	
 	public function delete($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
@@ -139,6 +137,26 @@ class Option extends CI_Controller {
 		$this->options_model->delete($id);
 		redirect('edit/page/'.$page);
 	}
+	
+	public function add_condition() {}
+	public function edit_condition() {}
+	public function delete_condition() {}
+	
+	public function add_target() {}
+	public function edit_target() {}
+	public function delete_target() {}
+	
+	public function add_check() {}
+	public function edit_check() {}
+	public function delete_check() {}
+	
+	public function add_consequence() {}
+	public function edit_consequence() {}
+	public function delete_consequence() {}
+	
+	public function add_icon() {}
+	public function edit_icon() {}
+	public function delete_icon() {}
 	
 	function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;

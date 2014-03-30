@@ -178,6 +178,8 @@ class Options_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	// TODO: Implement option icon CRUD
+	
 	public function get_targets($id) {
 		/*$OptionArray = "";
 		
