@@ -1,5 +1,7 @@
 <h1>Edit Attribute</h1>
 
+<div id="infoMessage"><?php echo $message;?></div>
+
 <?php echo form_open('attribute/edit/'.$attribute['id'], 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
 		<label for="name" class="col-sm-2 control-label">Name</label>
