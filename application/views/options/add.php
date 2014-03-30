@@ -2,7 +2,7 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<?php echo form_open('option/add', 'class="form-horizontal" role="form"');?>
+<?php echo form_open(uri_string(), 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
 		<label for="order" class="col-sm-2 control-label">Order</label>
 		<div class="col-sm-10">
