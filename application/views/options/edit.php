@@ -106,7 +106,6 @@
 				<th>Attribute</th>
 				<th>Comparison</th>
 				<th>Value</th>
-				<th>Is random?</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($checks as $check):?>
@@ -114,8 +113,7 @@
 					<td><?php echo $check['id'];?></td>
 					<td><?php echo $check['attribute_name'];?></td>
 					<td><?php echo $check['comparison_name'];?></td>
-					<td><?php echo $check['value'];?></td>
-					<td><?php echo ($check['random']) ? 'True' : 'False';?></td>
+					<td><?php echo ($check['random']) ? 'Random (0 - '.$check['value'].')' : $check['value'];?></td>
 					<td>
 						<div class="btn-group">
 							<?php
