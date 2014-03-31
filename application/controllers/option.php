@@ -277,8 +277,6 @@ class Option extends CI_Controller {
 			
 			$helper = $this->options_model->get_target($id);
 			$option = $helper['option'];
-			
-			$this->options_model->delete_target($id);
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -420,15 +418,42 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('operator', 'Operator', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$operator = $this->input->post('operator');
+			$value = $this->input->post('value');
+			
+			$this->options_model->create_consequence($option, $attribute, $operator, $value);
 			
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('attribute'),
+			);
+			$this->data['operators'] = $this->attributes_model->get_attribute_operators();
+			$this->data['operator'] = array(
+				'name'  => 'operator',
+				'id'    => 'operator',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('operator'),
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('value'),
+			);
 			
 			$this->_render_page('options/consequences/add', $this->data);
 		}
@@ -437,19 +462,47 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('operator', 'Operator', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$operator = $this->input->post('operator');
+			$value = $this->input->post('value');
+			
+			$this->options_model->update_consequence($id, $attribute, $operator, $value);
 			
 			$helper = $this->options_model->get_consequence($id);
 			$option = $helper['option'];
-			
-			$this->options_model->delete_consequence($id);
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$consequence = $this->options_model->get_consequence($id);
+			$this->data['consequence'] = $consequence;
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => ($this->input->post('attribute')) ? $this->input->post('attribute') : $consequence['attribute'],
+			);
+			$this->data['operators'] = $this->attributes_model->get_attribute_operators();
+			$this->data['operator'] = array(
+				'name'  => 'operator',
+				'id'    => 'operator',
+				'type'  => 'text',
+				'value' => ($this->input->post('operator')) ? $this->input->post('operator') : $consequence['operator'],
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => ($this->input->post('value')) ? $this->input->post('value') : $consequence['value'],
+			);
 			
 			$this->_render_page('options/consequences/edit', $this->data);
 		}

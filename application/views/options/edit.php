@@ -141,7 +141,7 @@
 				<tr>
 					<td><?php echo $consequence['id'];?></td>
 					<td><?php echo $consequence['attribute_name'];?></td>
-					<td><?php echo $consequence['operators_name'];?></td>
+					<td><?php echo $consequence['operator_name'];?></td>
 					<td><?php echo $consequence['value'];?></td>
 					<td>
 						<div class="btn-group">
