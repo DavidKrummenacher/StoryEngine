@@ -10,6 +10,7 @@ class Option extends CI_Controller {
 		$this->load->helper('text');
 		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
+		$this->load->model('attributes_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -149,14 +150,42 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('comparison', 'Comparison', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$comparison = $this->input->post('comparison');
+			$value = $this->input->post('value');
 			
+			$this->options_model->create_condition($option, $attribute, $comparison, $value);
+			
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('attribute'),
+			);
+			$this->data['comparisons'] = $this->attributes_model->get_attribute_comparisons();
+			$this->data['comparison'] = array(
+				'name'  => 'comparison',
+				'id'    => 'comparison',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('comparison'),
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('value'),
+			);
 			
 			$this->_render_page('options/conditions/add', $this->data);
 		}
@@ -165,14 +194,47 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('comparison', 'Comparison', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$comparison = $this->input->post('comparison');
+			$value = $this->input->post('value');
 			
+			$this->options_model->update_condition($id, $attribute, $comparison, $value);
+			
+			$helper = $this->options_model->get_condition($id);
+			$option = $helper['option'];
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$condition = $this->options_model->get_condition($id);
+			$this->data['condition'] = $condition;
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => ($this->input->post('attribute')) ? $this->input->post('attribute') : $condition['attribute'],
+			);
+			$this->data['comparisons'] = $this->attributes_model->get_attribute_comparisons();
+			$this->data['comparison'] = array(
+				'name'  => 'comparison',
+				'id'    => 'comparison',
+				'type'  => 'text',
+				'value' => ($this->input->post('comparison')) ? $this->input->post('comparison') : $condition['comparison'],
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => ($this->input->post('value')) ? $this->input->post('value') : $condition['value'],
+			);
 			
 			$this->_render_page('options/conditions/edit', $this->data);
 		}
