@@ -4,7 +4,7 @@
 
 <?php echo form_open(uri_string(), 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
-		<label for="order" class="col-sm-2 control-label">Attribute</label>
+		<label for="attribute" class="col-sm-2 control-label">Attribute</label>
 		<div class="col-sm-10">
 			<select name="attribute" id="attribute" class="form-control">
 				<?php foreach ($attributes as $a) { ?>
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="icon" class="col-sm-2 control-label">Comparison</label>
+		<label for="comparison" class="col-sm-2 control-label">Comparison</label>
 		<div class="col-sm-10">
 			<select name="comparison" id="comparison" class="form-control">
 				<?php foreach ($comparisons as $c) { ?>
@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="text" class="col-sm-2 control-label">Value</label>
+		<label for="value" class="col-sm-2 control-label">Value</label>
 		<div class="col-sm-10">
 			<?php echo form_input($value, '', 'class="form-control"');?>
 		</div>
