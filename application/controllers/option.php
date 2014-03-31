@@ -54,7 +54,7 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			$order = $this->input->post('order');
-			$icon = $this->input->post('icon');
+			$icon = ($this->input->post('icon') == 'null') ? null : $this->input->post('icon');
 			$text = $this->input->post('text');
 			
 			$id = $this->options_model->create($page, $order, $icon, $text);
@@ -69,6 +69,7 @@ class Option extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('order'),
 			);
+			$this->data['icons'] = $this->options_model->get_icons();
 			$this->data['icon'] = array(
 				'name'  => 'icon',
 				'id'    => 'icon',
@@ -94,12 +95,11 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			$order = $this->input->post('order');
-			$icon = $this->input->post('icon');
+			$icon = ($this->input->post('icon') == 'null') ? null : $this->input->post('icon');
 			$text = $this->input->post('text');
 			
 			$this->options_model->update($id, $order, $icon, $text);
-			$option = $this->options_model->update($id);
-			redirect('page/edit/'.$option['source_page']);
+			redirect('option/edit/'.$id);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -118,6 +118,7 @@ class Option extends CI_Controller {
 				'type'  => 'text',
 				'value' => ($this->input->post('order')) ? $this->input->post('order') : $option['order'],
 			);
+			$this->data['icons'] = $this->options_model->get_icons();
 			$this->data['icon'] = array(
 				'name'  => 'icon',
 				'id'    => 'icon',
