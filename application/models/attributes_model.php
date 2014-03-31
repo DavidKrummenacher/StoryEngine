@@ -17,7 +17,7 @@ class Attributes_model extends CI_Model {
 		return $query->row_array();
 	}
 	
-	public function create($name, $descripiton, $value) {
+	public function create($name, $description, $value) {
 		$data = array(
 			'name' => $name,
 			'description' => $description,
@@ -40,5 +40,25 @@ class Attributes_model extends CI_Model {
 	
 	public function delete($id) {
 		$this->db->delete('story_attributes', array('id' => $id));
+	}
+	
+	public function get_attribute_comparisons() {
+		$query = $this->db->get('story_attribute_comparisons');
+		return $query->result_array();
+	}
+	
+	public function get_attribute_comaprison($id) {
+		$query = $this->db->get_where('story_attribute_comaparisons', array('id' => $id));
+		return $query->row_array();
+	}
+	
+	public function get_attribute_operators() {
+		$query = $this->db->get('story_attribute_operators');
+		return $query->result_array();
+	}
+	
+	public function get_attribute_operator($id) {
+		$query = $this->db->get_where('story_attribute_operators', array('id' => $id));
+		return $query->row_array();
 	}
 }
