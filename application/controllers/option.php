@@ -145,7 +145,7 @@ class Option extends CI_Controller {
 		redirect('page/edit/'.$page);
 	}
 	
-	public function add_condition() {
+	public function add_condition($option) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -161,7 +161,7 @@ class Option extends CI_Controller {
 			$this->_render_page('options/conditions/add', $this->data);
 		}
 	}
-	public function edit_condition() {
+	public function edit_condition($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -177,11 +177,17 @@ class Option extends CI_Controller {
 			$this->_render_page('options/conditions/edit', $this->data);
 		}
 	}
-	public function delete_condition() {
+	public function delete_condition($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		$helper = $this->options_model->get_condition($id);
+		$option = $helper['option'];
+		
+		$this->options_model->delete_condition($id);
+		redirect('option/edit/'.$option);
 	}
 	
-	public function add_target() {
+	public function add_target($option) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -197,7 +203,7 @@ class Option extends CI_Controller {
 			$this->_render_page('options/targets/add', $this->data);
 		}
 	}
-	public function edit_target() {
+	public function edit_target($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -213,11 +219,17 @@ class Option extends CI_Controller {
 			$this->_render_page('options/targets/edit', $this->data);
 		}
 	}
-	public function delete_target() {
+	public function delete_target($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		$helper = $this->options_model->get_target($id);
+		$option = $helper['option'];
+		
+		$this->options_model->delete_target($id);
+		redirect('option/edit/'.$option);
 	}
 	
-	public function add_check() {
+	public function add_check($option) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -233,7 +245,7 @@ class Option extends CI_Controller {
 			$this->_render_page('options/checks/add', $this->data);
 		}
 	}
-	public function edit_check() {
+	public function edit_check($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -249,11 +261,17 @@ class Option extends CI_Controller {
 			$this->_render_page('options/checks/edit', $this->data);
 		}
 	}
-	public function delete_check() {
+	public function delete_check($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		$helper = $this->options_model->get_check($id);
+		$option = $helper['option'];
+		
+		$this->options_model->delete_check($id);
+		redirect('option/edit/'.$option);
 	}
 	
-	public function add_consequence() {
+	public function add_consequence($option) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -269,7 +287,7 @@ class Option extends CI_Controller {
 			$this->_render_page('options/consequences/add', $this->data);
 		}
 	}
-	public function edit_consequence() {
+	public function edit_consequence($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
@@ -285,8 +303,14 @@ class Option extends CI_Controller {
 			$this->_render_page('options/consequences/edit', $this->data);
 		}
 	}
-	public function delete_consequence() {
+	public function delete_consequence($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		$helper = $this->options_model->get_consequence($id);
+		$option = $helper['option'];
+		
+		$this->options_model->delete_consequence($id);
+		redirect('option/edit/'.$option);
 	}
 	
 	public function add_icon() {
