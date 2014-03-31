@@ -55,8 +55,8 @@
 			<?php foreach ($conditions as $condition):?>
 				<tr>
 					<td><?php echo $condition['id'];?></td>
-					<td><?php echo $condition['story_attributes.name'];?></td>
-					<td><?php echo $condition['story_attribute_comparisons.name'];?></td>
+					<td><?php echo $condition['attribute_name'];?></td>
+					<td><?php echo $condition['comparison_name'];?></td>
 					<td><?php echo $condition['value'];?></td>
 					<td>
 						<div class="btn-group">
@@ -112,8 +112,8 @@
 			<?php foreach ($checks as $check):?>
 				<tr>
 					<td><?php echo $check['id'];?></td>
-					<td><?php echo $check['story_attributes.name'];?></td>
-					<td><?php echo $check['story_attribute_comparisons.name'];?></td>
+					<td><?php echo $check['attribute_name'];?></td>
+					<td><?php echo $check['comparison_name'];?></td>
 					<td><?php echo $check['value'];?></td>
 					<td><?php echo ($check['random']) ? 'True' : 'False';?></td>
 					<td>
@@ -142,8 +142,8 @@
 			<?php foreach ($consequences as $consequence):?>
 				<tr>
 					<td><?php echo $consequence['id'];?></td>
-					<td><?php echo $consequence['story_attributes.name'];?></td>
-					<td><?php echo $consequence['story_attribute_operators.name'];?></td>
+					<td><?php echo $consequence['attribute_name'];?></td>
+					<td><?php echo $consequence['operators_name'];?></td>
 					<td><?php echo $consequence['value'];?></td>
 					<td>
 						<div class="btn-group">

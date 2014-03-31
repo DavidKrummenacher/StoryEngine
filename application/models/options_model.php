@@ -74,6 +74,20 @@ class Options_model extends CI_Model {
 		$this->db->delete('story_option_conditions', array('id' => $id));
 	}
 	public function get_conditions_for_option($option) {
+		$this->db->select('
+			story_option_conditions.id,
+			story_option_conditions.option,
+			story_option_conditions.attribute,
+			story_option_conditions.comparison,
+			story_option_conditions.value,
+			story_attributes.id AS attributes_id,
+			story_attributes.name AS attribute_name,
+			story_attributes.description AS attribute_description,
+			story_attributes.value AS attribute_value,
+			story_attribute_comparisons.id AS comparison_id,
+			story_attribute_comparisons.name AS comparison_name,
+			story_attribute_comparisons.description AS comparison_description
+		');
 		$this->db->join('story_attributes','story_attributes.id = story_option_conditions.attribute');
 		$this->db->join('story_attribute_comparisons','story_attribute_comparisons.id = story_option_conditions.comparison');
 		$query = $this->db->get_where('story_option_conditions', array('option' => $option));
@@ -106,6 +120,17 @@ class Options_model extends CI_Model {
 		$this->db->delete('story_option_targets', array('id' => $id));
 	}
 	public function get_targets_for_option($option, $fail = null) {
+		$this->db->select('
+			story_option_targets.id,
+			story_option_targets.option,
+			story_option_targets.target_page,
+			story_option_targets.fail,
+			story_pages.id AS page_id,
+			story_pages.title,
+			story_pages.description,
+			story_pages.content,
+			story_pages.image
+		');
 		$this->db->join('story_pages','story_pages.id = story_option_targets.target_page');
 		if ($fail != null)
 			$query = $this->db->get_where('story_option_targets', array('option' => $option, 'fail' => $fail));
@@ -144,6 +169,21 @@ class Options_model extends CI_Model {
 		$this->db->delete('story_option_checks', array('id' => $id));
 	}
 	public function get_checks_for_option($option) {
+		$this->db->select('
+			story_option_checks.id,
+			story_option_checks.option,
+			story_option_checks.attribute,
+			story_option_checks.comparison,
+			story_option_checks.value,
+			story_option_checks.random,
+			story_attributes.id AS attributes_id,
+			story_attributes.name AS attribute_name,
+			story_attributes.description AS attribute_description,
+			story_attributes.value AS attribute_value,
+			story_attribute_comparisons.id AS comparison_id,
+			story_attribute_comparisons.name AS comparison_name,
+			story_attribute_comparisons.description AS comparison_description
+		');
 		$this->db->join('story_attributes','story_attributes.id = story_option_checks.attribute');
 		$this->db->join('story_attribute_comparisons','story_attribute_comparisons.id = story_option_checks.comparison');
 		$query = $this->db->get_where('story_option_checks', array('option' => $option));
@@ -178,6 +218,20 @@ class Options_model extends CI_Model {
 		$this->db->delete('story_option_consequences', array('id' => $id));
 	}
 	public function get_consequences_for_option($option) {
+		$this->db->select('
+			story_option_consequences.id,
+			story_option_consequences.option,
+			story_option_consequences.attribute,
+			story_option_consequences.operator,
+			story_option_consequences.value,
+			story_attributes.id AS attributes_id,
+			story_attributes.name AS attribute_name,
+			story_attributes.description AS attribute_description,
+			story_attributes.value AS attribute_value,
+			story_attribute_operators.id AS operator_id,
+			story_attribute_operators.name AS operator_name,
+			story_attribute_operators.description AS operator_description
+		');
 		$this->db->join('story_attributes','story_attributes.id = story_option_consequences.attribute');
 		$this->db->join('story_attribute_operators','story_attribute_operators.id = story_option_consequences.operator');
 		$query = $this->db->get_where('story_option_consequences', array('option' => $option));
