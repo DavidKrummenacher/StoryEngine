@@ -5,7 +5,7 @@
 //
 
 (function($){
-
+	
   var Renderer = function(canvas){
     var canvas = $(canvas).get(0)
     var ctx = canvas.getContext("2d");
@@ -63,6 +63,11 @@
           ctx.moveTo(pt1.x, pt1.y)
           ctx.lineTo(pt2.x, pt2.y)
           ctx.stroke()
+		  
+		ctx.fillStyle = "black";
+        ctx.font = 'italic 2vw sans-serif';
+        ctx.fillText (edge.data.label, (pt1.x + pt2.x) / 2, (pt1.y + pt2.y) / 2);
+
 		 
 		  if(edge.data.direction == 1) {
 			  var headlen = 50;   // length of head in pixels
@@ -98,7 +103,6 @@
 			ctx.fillText (edge.data.direction, (pt1.x + pt2.x) / 2, (pt1.y + pt2.y) / 2);
 		*/
         })
-
         particleSystem.eachNode(function(node, pt){
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
@@ -118,7 +122,7 @@
 		  
 
 			 //Write label 
-			ctx.font = "italic small-caps bold 4vw sans-serif"
+			ctx.font = "italic small-caps bold 3vw sans-serif"
 			
 			
 			ctx.strokeStyle = 'white';
@@ -129,8 +133,8 @@
 			ctx.fillStyle = 'black';
 			ctx.fillText(node.data.label, pt.x+32, pt.y);
 			
-        })    			
-      },
+        })   			
+      } ,
       
       initMouseHandling:function(){
         // no-nonsense drag and drop (thanks springy.js)
@@ -190,13 +194,14 @@
  
 	
   $(document).ready(function(){
-    var sys = arbor.ParticleSystem(1000, 800, 0.99) // create the system with sensible repulsion/stiffness/friction
+    var sys = arbor.ParticleSystem(20, 600, 0.8) // create the system with sensible repulsion/stiffness/friction
     sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 	
 	//Placeholder Array for color implementation
 	//TODO: Implement color...somehow in a smart way would be nice...
-	var ColorArr = new Array("blue","cyan","green","yellow","orange","purple");
+	//var ColorArr = new Array("blue","cyan","green","yellow","orange","purple");
+	var ColorArr = new Array("black");
 	
 	var SingleNode = new Array($('#graph-data ul').children('li').length);
 	
@@ -209,6 +214,11 @@
 	// LABEL = $(this).attr('title');
 	
 	//iterate through nodes (every node only ONCE)
+	
+	//Ini 1st Node, because 1st Node doesnt have to be a target
+	sys.addNode(1,{color:"#00FF00",label:"1. Start"});
+			//SingleNode[index] = target;
+	
 	$('#graph-data ul').children('li').each(function(index, element) {
 		
 		var source = $(this).attr('name');
@@ -216,10 +226,10 @@
 		
 		
 		var ColorInt = index % ColorArr.length;
-		if(target == 1) { NodeColor = "#ff0000";} else {NodeColor = ColorArr[ColorInt]}
+		if( $(this).attr('title') == "Non-existent") { NodeColor = "#ff0000";} else {NodeColor = ColorArr[ColorInt]}
 		
-    	if($.inArray(target,SingleNode) == -1) {
-			sys.addNode(target,{color:NodeColor,label:$(this).attr('title')});
+    	if($.inArray(target,SingleNode) == -1 ) {
+			sys.addNode(target,{color:NodeColor,label:$(this).text()+"."+$(this).attr('title')});
 			SingleNode[index] = target;
 		}
 		
@@ -230,13 +240,17 @@
 	$('#graph-data ul').children('li').each(function(index, element) {
 		var source = $(this).attr('name');
 		var target = $(this).text();
+		var color = "#000000";
 		
-		sys.addEdge(source,target,{direction:1,color:sys.getNode(source).data.color});
+		if(sys.getNode(target).data.color == "#ff0000") {color = "#ff0000"; status = "Error";} else {color = sys.getNode(source).data.color; status = "i.O.";}
+		sys.addEdge(source,target,{direction:1,color:color,label:status});
+		
 	});
-
+	
+	
 	
 
-  })
+	})
   
 
 })(this.jQuery)

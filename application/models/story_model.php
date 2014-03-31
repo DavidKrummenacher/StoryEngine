@@ -23,7 +23,7 @@ class Story_model extends CI_Model {
 	
 	public function get_relations() {
 		$this->db->join('story_options','story_options.id = story_option_targets.option');
-		$this->db->join('story_pages','story_pages.id = story_option_targets.target_page');
+		$this->db->join('story_pages','story_pages.id = story_option_targets.target_page','left');
 			
 		$query = $this->db->get('story_option_targets');
 		
