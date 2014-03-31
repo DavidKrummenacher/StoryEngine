@@ -46,12 +46,18 @@
 	<div class="tab-pane active" id="conditions">
 		<table class="table table-condensed">
 			<tr>
-				<th>Condition</th>
+				<th>Id</th>
+				<th>Attribute</th>
+				<th>Comparison</th>
+				<th>Value</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($conditions as $condition):?>
 				<tr>
 					<td><?php echo $condition['id'];?></td>
+					<td><?php echo $condition['attribute'];?></td>
+					<td><?php echo $condition['comparison'];?></td>
+					<td><?php echo $condition['value'];?></td>
 					<td>
 						<div class="btn-group">
 							<?php
@@ -69,12 +75,16 @@
 	<div class="tab-pane" id="targets">
 		<table class="table table-condensed">
 			<tr>
+				<th>Id</th>
 				<th>Target</th>
+				<th>Is fail page?</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($targets as $target):?>
 				<tr>
+					<td><?php echo $target['id'];?></td>
 					<td><?php echo $target['target_page'];?></td>
+					<td><?php echo ($target['fail']) ? 'True' : 'False';?></td>
 					<td>
 						<div class="btn-group">
 							<?php
@@ -92,12 +102,20 @@
 	<div class="tab-pane" id="checks">
 		<table class="table table-condensed">
 			<tr>
-				<th>Check</th>
+				<th>Id</th>
+				<th>Attribute</th>
+				<th>Comparison</th>
+				<th>Value</th>
+				<th>Is random?</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($checks as $check):?>
 				<tr>
 					<td><?php echo $check['id'];?></td>
+					<td><?php echo $check['attribute'];?></td>
+					<td><?php echo $check['comparison'];?></td>
+					<td><?php echo $check['value'];?></td>
+					<td><?php echo ($check['random']) ? 'True' : 'False';?></td>
 					<td>
 						<div class="btn-group">
 							<?php
@@ -115,12 +133,18 @@
 	<div class="tab-pane" id="consequences">
 		<table class="table table-condensed">
 			<tr>
-				<th>Consequence</th>
+				<th>Id</th>
+				<th>Attribute</th>
+				<th>Operator</th>
+				<th>Value</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($consequences as $consequence):?>
 				<tr>
 					<td><?php echo $consequence['id'];?></td>
+					<td><?php echo $consequence['attribute'];?></td>
+					<td><?php echo $consequence['operator'];?></td>
+					<td><?php echo $consequence['value'];?></td>
 					<td>
 						<div class="btn-group">
 							<?php
