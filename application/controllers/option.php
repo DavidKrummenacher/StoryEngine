@@ -258,6 +258,7 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -274,6 +275,11 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			
+			$helper = $this->options_model->get_target($id);
+			$option = $helper['option'];
+			
+			$this->options_model->delete_target($id);
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -295,14 +301,50 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('comparison', 'Comparison', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$comparison = $this->input->post('comparison');
+			$value = $this->input->post('value');
+			$random = (bool) $this->input->post('random');
 			
+			$this->options_model->create_check($option, $attribute, $comparison, $value, $random);
+			
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('attribute'),
+			);
+			$this->data['comparisons'] = $this->attributes_model->get_attribute_comparisons();
+			$this->data['comparison'] = array(
+				'name'  => 'comparison',
+				'id'    => 'comparison',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('comparison'),
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('value'),
+			);
+			$this->data['random'] = array(
+				'name'  => 'random',
+				'id'    => 'random',
+				'type'  => 'checkbox',
+				'checked' => $this->form_validation->set_value('random'),
+				'value' => 'random',
+			);
 			
 			$this->_render_page('options/checks/add', $this->data);
 		}
@@ -311,14 +353,55 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('comparison', 'Comparison', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$comparison = $this->input->post('comparison');
+			$value = $this->input->post('value');
+			$random = (bool) $this->input->post('random');
 			
+			$this->options_model->update_check($id, $attribute, $comparison, $value, $random);
+			
+			$helper = $this->options_model->get_check($id);
+			$option = $helper['option'];
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$check = $this->options_model->get_check($id);
+			$this->data['check'] = $check;
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => ($this->input->post('attribute')) ? $this->input->post('attribute') : $check['attribute'],
+			);
+			$this->data['comparisons'] = $this->attributes_model->get_attribute_comparisons();
+			$this->data['comparison'] = array(
+				'name'  => 'comparison',
+				'id'    => 'comparison',
+				'type'  => 'text',
+				'value' => ($this->input->post('comparison')) ? $this->input->post('comparison') : $check['comparison'],
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => ($this->input->post('value')) ? $this->input->post('value') : $check['value'],
+			);
+			$this->data['random'] = array(
+				'name'  => 'random',
+				'id'    => 'random',
+				'type'  => 'checkbox',
+				'checked' => ($this->input->post('random')) ? $this->input->post('random') : $check['random'],
+				'value' => 'random',
+			);
 			
 			$this->_render_page('options/checks/edit', $this->data);
 		}
@@ -342,6 +425,7 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -358,6 +442,11 @@ class Option extends CI_Controller {
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
 			
+			$helper = $this->options_model->get_consequence($id);
+			$option = $helper['option'];
+			
+			$this->options_model->delete_consequence($id);
+			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
