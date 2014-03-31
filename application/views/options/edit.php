@@ -77,14 +77,14 @@
 			<tr>
 				<th>Id</th>
 				<th>Target</th>
-				<th>Is fail page?</th>
+				<th>Page type</th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($targets as $target):?>
 				<tr>
 					<td><?php echo $target['id'];?></td>
 					<td><?php echo $target['target_page'].' - '.$target['title'];?></td>
-					<td><?php echo ($target['fail']) ? 'True' : 'False';?></td>
+					<td><?php echo ($target['fail']) ? '<span class="glyphicon glyphicon-thumbs-down"></span> Fail page' : '<span class="glyphicon glyphicon-thumbs-up"></span> Success page';?></td>
 					<td>
 						<div class="btn-group">
 							<?php
