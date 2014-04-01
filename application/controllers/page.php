@@ -9,7 +9,7 @@ class Page extends CI_Controller {
 		$this->load->helper('text');
 		$this->load->model('settings_model');
 		$this->load->model('pages_model');
-		$this->load->model('page_images_model');
+		$this->load->model('assets_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -25,7 +25,7 @@ class Page extends CI_Controller {
 		// TODO: Implement page handling
 		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get($id);
-		$this->data['image'] = $this->page_images_model->get($this->data['page']['image']);
+		$this->data['image'] = $this->assets_model->get_page_image($this->data['page']['image']);
 		
 		// TODO: Apply consequences (story_page_consequences)
 		$consequences = $this->pages_model->get_consequences($id);
@@ -137,7 +137,7 @@ class Page extends CI_Controller {
 			);
 			
 			$this->data['options'] = $this->options_model->get_options_for_page($id);
-			$this->data['icons'] = $this->options_model->get_icons();
+			$this->data['icons'] = $this->assets_model->get_icons();
 			$this->data['targets'] = $this->options_model->get_targets($id);
 			$this->_render_page('pages/edit',$this->data);
 		}

@@ -12,6 +12,7 @@ class Option extends CI_Controller {
 		$this->load->model('settings_model');
 		$this->load->model('attributes_model');
 		$this->load->model('pages_model');
+		$this->load->model('assets_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -71,7 +72,7 @@ class Option extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('order'),
 			);
-			$this->data['icons'] = $this->options_model->get_icons();
+			$this->data['icons'] = $this->assets_model->get_icons();
 			$this->data['icon'] = array(
 				'name'  => 'icon',
 				'id'    => 'icon',
@@ -120,7 +121,7 @@ class Option extends CI_Controller {
 				'type'  => 'text',
 				'value' => ($this->input->post('order')) ? $this->input->post('order') : $option['order'],
 			);
-			$this->data['icons'] = $this->options_model->get_icons();
+			$this->data['icons'] = $this->assets_model->get_icons();
 			$this->data['icon'] = array(
 				'name'  => 'icon',
 				'id'    => 'icon',
@@ -555,42 +556,6 @@ class Option extends CI_Controller {
 		
 		$this->options_model->delete_consequence($id);
 		redirect('option/edit/'.$option);
-	}
-	
-	public function add_icon() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-		
-		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
-		
-		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
-			
-		} else {
-			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-			
-			$this->_render_page('options/icons/add', $this->data);
-		}
-	}
-	public function edit_icon() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
-		
-		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
-		
-		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
-			
-		} else {
-			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-			
-			$this->_render_page('options/icons/edit', $this->data);
-		}
-	}
-	public function delete_icon() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 	}
 	
 	function _render_page($view, $data = null, $render = false) {

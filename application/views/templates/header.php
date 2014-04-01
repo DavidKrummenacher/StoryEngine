@@ -52,7 +52,9 @@
 							<li><?php echo anchor('story/list_pages', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')); ?></li>
 							<li class="divider"></li>
 							<li><?php echo anchor('page/add', '<span class="glyphicon glyphicon-plus"></span> '.lang('menu_story_add_page')); ?></a></li>
+							<li class="divider"></li>
 							<li><?php echo anchor('attribute', '<span class="glyphicon glyphicon-tasks"></span> Manage attributes'); ?></a></li>
+							<li><?php echo anchor('asset', '<span class="glyphicon glyphicon-picture"></span> Manage assets'); ?></a></li>
 							<li class="divider"></li>
 							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>

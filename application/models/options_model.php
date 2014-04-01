@@ -254,9 +254,4 @@ class Options_model extends CI_Model {
 		
 		return $query->result_array();
 	}
-	
-	public function get_icons() {
-		$query = $this->db->get('story_option_icons');
-		return $query->result_array();
-	}
 }

@@ -1,4 +1,4 @@
-<h1>Edit icon for option</h1>
+<h1>Edit page image</h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
