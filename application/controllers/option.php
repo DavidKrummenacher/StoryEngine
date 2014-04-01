@@ -11,6 +11,7 @@ class Option extends CI_Controller {
 		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
 		$this->load->model('attributes_model');
+		$this->load->model('pages_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -253,15 +254,33 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('target_page', 'Target', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$target_page = $this->input->post('target_page');
+			$fail = (bool) $this->input->post('fail');
+			
+			$this->options_model->create_target($option, $target_page, $fail);
 			
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['pages'] = $this->pages_model->get_all();
+			$this->data['target_page'] = array(
+				'name'  => 'target_page',
+				'id'    => 'target_page',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('target_page'),
+			);
+			$this->data['fail'] = array(
+				'name'  => 'fail',
+				'id'    => 'fail',
+				'type'  => 'checkbox',
+				'checked' => $this->form_validation->set_value('fail'),
+				'value' => 'fail',
+			);
 			
 			$this->_render_page('options/targets/add', $this->data);
 		}
@@ -270,10 +289,13 @@ class Option extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('target_page', 'Target', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$target_page = $this->input->post('target_page');
+			$fail = (bool) $this->input->post('fail');
+			
+			$this->options_model->update_target($id, $target_page, $fail);
 			
 			$helper = $this->options_model->get_target($id);
 			$option = $helper['option'];
@@ -281,6 +303,24 @@ class Option extends CI_Controller {
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$target = $this->options_model->get_target($id);
+			$this->data['target'] = $target;
+			
+			$this->data['pages'] = $this->pages_model->get_all();
+			$this->data['target_page'] = array(
+				'name'  => 'target_page',
+				'id'    => 'target_page',
+				'type'  => 'text',
+				'value' => ($this->input->post('target_page')) ? $this->input->post('target_page') : $target['target_page'],
+			);
+			$this->data['fail'] = array(
+				'name'  => 'fail',
+				'id'    => 'fail',
+				'type'  => 'checkbox',
+				'checked' => ($this->input->post('fail')) ? $this->input->post('fail') : $target['fail'],
+				'value' => 'fail',
+			);
 			
 			$this->_render_page('options/targets/edit', $this->data);
 		}
