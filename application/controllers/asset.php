@@ -11,6 +11,16 @@ class Asset extends CI_Controller {
 		$this->load->model('assets_model');
 		
 		$this->lang->load('storyengine');
+		
+		$dir_page_images_desktop = 'assets/page_images/desktop';
+		$dir_page_images_mobile = 'assets/page_images/mobile/';
+		$page_images_width_desktop = 1170; // TODO: Fix width, maybe with settings
+		$page_images_width_mobile = 724; // TODO: Fix width, maybe with settings
+		
+		$dir_icons_desktop = 'assets/icons/desktop/';
+		$dir_icons_mobile = 'assets/icons/mobile/';
+		$icons_width_desktop = 48; // TODO: Fix width, maybe with settings
+		$icons_width_mobile = 32; // TODO: Fix width, maybe with settings
 	}
 	
 	public function index() {
@@ -27,14 +37,39 @@ class Asset extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$name = $this->input->post('name');
+			$description = $this->input->post('description');
 			
+			$filename = $this->_upload_single_file(
+				$dir_page_images_desktop,
+				$dir_page_images_mobile,
+				$page_images_width_desktop,
+				$page_images_width_mobile
+			);
+			$desktop_uri = $filename;
+			$mobile_uri = $filename;
+			
+			$this->assets_model->create_page_image($name, $description, $desktop_uri, $mobile_uri);
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['name'] = array(
+				'name'  => 'name',
+				'id'    => 'name',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('name'),
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => $this->input->post('description'),
+			);
 			
 			$this->_render_page('assets/images/add', $this->data);
 		}
@@ -59,34 +94,101 @@ class Asset extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$image = $this->assets_model->get_page_image($id);
+			$name = $this->input->post('name');
+			$description = $this->input->post('description');
+			$desktop_uri = $image['desktop_uri'];
+			$mobile_uri = $image['mobile_uri'];
 			
+			$filename = $this->_upload_single_file(
+				$dir_page_images_desktop,
+				$dir_page_images_mobile,
+				$page_images_width_desktop,
+				$page_images_width_mobile,
+				$image
+			);
+			if ($filename != null) {
+				$desktop_uri = $filename;
+				$mobile_uri = $filename;
+			}
+			
+			$this->assets_model->update_page_image($id, $name, $description, $desktop_uri, $mobile_uri);
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$image = $this->assets_model->get_page_image($id);
+			$this->data['image'] = $image;
+			
+			$this->data['name'] = array(
+				'name'  => 'name',
+				'id'    => 'name',
+				'type'  => 'text',
+				'value' => ($this->input->post('name')) ? $this->input->post('name') : $image['name'],
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => ($this->input->post('description')) ? $this->input->post('description') : $image['description'],
+			);
 			
 			$this->_render_page('assets/images/edit', $this->data);
 		}
 	}
 	public function delete_page_image($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		// delete files
+		$img = $this->assets_model->get_page_image($id);
+		if (file_exists($dir_page_images_desktop.$img['desktop_uri'])) { unlink ($dir_page_images_desktop.$img['desktop_uri']); }
+		if (file_exists($dir_page_images_mobile.$img['mobile_uri'])) { unlink ($dir_page_images_mobile.$img['mobile_uri']); }
+		
+		$this->assets_model->delete_page_image($id);
+		redirect('asset');
 	}
 	
 	public function add_icon() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$name = $this->input->post('name');
+			$description = $this->input->post('description');
 			
+			$filename = $this->_upload_single_file(
+				$dir_icons_desktop,
+				$dir_icons_mobile,
+				$icons_width_desktop,
+				$icons_width_mobile
+			);
+			$desktop_uri = $filename;
+			$mobile_uri = $filename;
+			
+			$this->assets_model->create_icon($name, $description, $desktop_uri, $mobile_uri);
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['name'] = array(
+				'name'  => 'name',
+				'id'    => 'name',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('name'),
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => $this->input->post('description'),
+			);
 			
 			$this->_render_page('assets/icons/add', $this->data);
 		}
@@ -111,20 +213,108 @@ class Asset extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
 		
 		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$icon = $this->assets_model->get_icon($id);
+			$name = $this->input->post('name');
+			$description = $this->input->post('description');
+			$desktop_uri = $icon['desktop_uri'];
+			$mobile_uri = $icon['mobile_uri'];
 			
+			$filename = $this->_upload_single_file(
+				$dir_icons_desktop,
+				$dir_icons_mobile,
+				$icons_width_desktop,
+				$icons_width_mobile,
+				$icon
+			);
+			if ($filename != null) {
+				$desktop_uri = $filename;
+				$mobile_uri = $filename;
+			}
+			
+			$this->assets_model->update_icon($id, $name, $description, $desktop_uri, $mobile_uri);
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$icon = $this->assets_model->get_icon($id);
+			$this->data['icon'] = $icon;
+			
+			$this->data['name'] = array(
+				'name'  => 'name',
+				'id'    => 'name',
+				'type'  => 'text',
+				'value' => ($this->input->post('name')) ? $this->input->post('name') : $icon['name'],
+			);
+			$this->data['description'] = array(
+				'name'  => 'description',
+				'id'    => 'description',
+				'type'  => 'text',
+				'value' => ($this->input->post('description')) ? $this->input->post('description') : $icon['description'],
+			);
 			
 			$this->_render_page('assets/icons/edit', $this->data);
 		}
 	}
 	public function delete_icon($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		// delete files
+		$icon = $this->assets_model->get_icon($id);
+		if (file_exists($dir_icons_desktop.$icon['desktop_uri'])) { unlink ($dir_icons_desktop.$icon['desktop_uri']); }
+		if (file_exists($dir_icons_mobile.$icon['mobile_uri'])) { unlink ($dir_icons_mobile.$icon['mobile_uri']); }
+		
+		$this->assets_model->delete_icon($id);
+		redirect('asset');
+	}
+	
+	function _upload_single_file($dir_desktop, $dir_mobile, $desktop_width, $mobile_width, $prev = null) {
+		//upload stuff
+		$upconfig['upload_path'] = $dir_desktop;
+		$upconfig['allowed_types'] = 'jpg|jpeg|png|gif';
+		$upconfig['max_size'] = '2048';
+		$upconfig['encrypt_name'] = true;
+		
+		$this->load->library('upload', $upconfig);
+		
+		$filename = null;
+		if (!isset($_FILES['userfile'])) { return $filename; }
+		
+		if ($this->upload->do_upload('userfile')) {
+			// get filename
+			$uploaddata = array('upload_data' => $this->upload->data());
+			$filename = $uploaddata['upload_data']['file_name'];
+			
+			// delete previous
+			if ($prev != null) {
+				if ($prev['desktop_uri'] && file_exists($dir_desktop.$prev['desktop_uri'])) { unlink ($dir_desktop.$prev['desktop_uri']); }
+				if ($prev['mobile_uri'] && file_exists($dir_mobile.$prev['mobile_uri'])) { unlink ($dir_mobile.$prev['mobile_uri']); }
+			}
+			
+			// copy to mobile
+			copy($dir_desktop.$filename, $dir_mobile.$filename);
+			
+			// resize desktop image
+			$res_config['image_library'] = 'gd2';
+			$res_config['source_image'] = $dir_desktop.$filename;
+			$res_config['width'] = $desktop_width; // TODO: Fix width, maybe with settings
+			$res_config['master_dim'] = 'width';
+			$this->load->library('image_lib', $res_config);
+			$this->image_lib->resize();
+			
+			// resize mobile image
+			$res_config['source_image'] = $dir_mobile.$filename;
+			$res_config['width'] = $mobile_width; // TODO: Fix width, maybe with settings
+			$this->image_lib->initialize($res_config);
+			$this->image_lib->resize();
+		} else {
+			$this->session->set_flashdata('message', 'Upload failed!');
+		}
+		
+		return $filename;
 	}
 	
 	function _render_page($view, $data = null, $render = false) {
