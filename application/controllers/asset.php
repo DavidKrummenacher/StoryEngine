@@ -12,13 +12,13 @@ class Asset extends CI_Controller {
 		
 		$this->lang->load('storyengine');
 		
-		$dir_page_images_desktop = '../assets/page_images/desktop/';
-		$dir_page_images_mobile = '../assets/page_images/mobile/';
+		$dir_page_images_desktop = './assets/page_images/desktop/';
+		$dir_page_images_mobile = './assets/page_images/mobile/';
 		$page_images_width_desktop = 1170; // TODO: Fix width, maybe with settings
 		$page_images_width_mobile = 724; // TODO: Fix width, maybe with settings
 		
-		$dir_icons_desktop = '../assets/icons/desktop/';
-		$dir_icons_mobile = '../assets/icons/mobile/';
+		$dir_icons_desktop = './assets/icons/desktop/';
+		$dir_icons_mobile = './assets/icons/mobile/';
 		$icons_width_desktop = 48; // TODO: Fix width, maybe with settings
 		$icons_width_mobile = 32; // TODO: Fix width, maybe with settings
 	}
@@ -285,7 +285,7 @@ class Asset extends CI_Controller {
 		$filename = null;
 		if (!isset($_FILES['userfile']) || empty($_FILES['userfile']['name'])) { return $filename; }
 		
-		if ($this->upload->do_upload()) {
+		if ($this->upload->do_upload('userfile')) {
 			// get filename
 			$uploaddata = array('upload_data' => $this->upload->data());
 			$filename = $uploaddata['upload_data']['file_name'];
