@@ -12,7 +12,7 @@ class Asset extends CI_Controller {
 		
 		$this->lang->load('storyengine');
 		
-		$dir_page_images_desktop = '../assets/page_images/desktop';
+		$dir_page_images_desktop = '../assets/page_images/desktop/';
 		$dir_page_images_mobile = '../assets/page_images/mobile/';
 		$page_images_width_desktop = 1170; // TODO: Fix width, maybe with settings
 		$page_images_width_mobile = 724; // TODO: Fix width, maybe with settings
@@ -276,6 +276,8 @@ class Asset extends CI_Controller {
 		$upconfig['upload_path'] = $dir_desktop;
 		$upconfig['allowed_types'] = 'jpg|jpeg|png|gif';
 		$upconfig['max_size'] = '2048';
+		//$upconfig['max_height'] = "768";
+		//$upconfig['max_width'] = "1024";
 		$upconfig['encrypt_name'] = true;
 		
 		$this->load->library('upload', $upconfig);
@@ -283,7 +285,7 @@ class Asset extends CI_Controller {
 		$filename = null;
 		if (!isset($_FILES['userfile']) || empty($_FILES['userfile']['name'])) { return $filename; }
 		
-		if ($this->upload->do_upload('userfile')) {
+		if ($this->upload->do_upload()) {
 			// get filename
 			$uploaddata = array('upload_data' => $this->upload->data());
 			$filename = $uploaddata['upload_data']['file_name'];
@@ -311,7 +313,7 @@ class Asset extends CI_Controller {
 			$this->image_lib->initialize($res_config);
 			$this->image_lib->resize();
 		} else {
-			$this->session->set_flashdata('message', 'Upload failed!');
+			$this->session->set_flashdata('message', $this->upload->display_errors());
 		}
 		
 		return $filename;
