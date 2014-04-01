@@ -4,19 +4,19 @@
 
 <?php echo form_open('page/edit/'.$page['id'], 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
-		<label for="title" class="col-sm-2 control-label">Page Title</label>
+		<label for="title" class="col-sm-2 control-label"><?php echo lang('page_title'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($title, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="description" class="col-sm-2 control-label">Description</label>
+		<label for="description" class="col-sm-2 control-label"><?php echo lang('page_desc'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($description, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="content" class="col-sm-2 control-label">Content</label>
+		<label for="content" class="col-sm-2 control-label"><?php echo lang('page_content'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_textarea($content, '', 'rows="12" class="form-control"');?>
 		</div>
@@ -28,12 +28,12 @@
 	</div>   
 <?php echo form_close();?>
 
-<h2>Options</h2>
+<h2><?php echo lang('page_options'); ?></h2>
 <table class="table table-condensed">
 	<tr>
-		<th>Order</th>
-		<th>Icon</th>
-		<th>Text</th>
+		<th><?php echo lang('page_options_order'); ?></th>
+		<th><?php echo lang('page_options_icon'); ?></th>
+		<th><?php echo lang('page_options_text'); ?></th>
 		<th width="80px"><?php echo lang('index_action_th');?></th>
 	</tr>
 	<?php foreach ($options as $option):?>
@@ -61,16 +61,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteModal<?php echo $option['id']; ?>Label">Option löschen: (<?php echo $option['text']; ?>)</h4>
+				<h4 class="modal-title" id="deleteModal<?php echo $option['id']; ?>Label"><?php echo lang('modal_optiondelete'); ?>: (<?php echo $option['text']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Option wirklich löschen?
+					<?php echo lang('modal_optiondelete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('option/delete/'.$option['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('option/delete/'.$option['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

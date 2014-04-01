@@ -1,10 +1,10 @@
-<h1>Add check/roll for option</h1>
+<h1><?php echo lang('page_options_add_check'); ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
 <?php echo form_open(uri_string(), 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
-		<label for="order" class="col-sm-2 control-label">Attribute</label>
+		<label for="order" class="col-sm-2 control-label"><?php echo lang('page_options_attributes'); ?></label>
 		<div class="col-sm-10">
 			<select name="attribute" id="attribute" class="form-control">
 				<?php foreach ($attributes as $a) { ?>
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="comparison" class="col-sm-2 control-label">Comparison</label>
+		<label for="comparison" class="col-sm-2 control-label"><?php echo lang('page_options_comparison'); ?></label>
 		<div class="col-sm-10">
 			<select name="comparison" id="comparison" class="form-control">
 				<?php foreach ($comparisons as $c) { ?>
@@ -28,13 +28,13 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="value" class="col-sm-2 control-label">Value</label>
+		<label for="value" class="col-sm-2 control-label"><?php echo lang('page_options_value'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($value, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="random" class="col-sm-2 control-label">Random</label>
+		<label for="random" class="col-sm-2 control-label"><?php echo lang('page_options_random'); ?></label>
 		<div class="col-sm-10">
 			<div class="checkbox">
 				<?php echo form_checkbox($random);?>
@@ -43,7 +43,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-2">
-			<?php echo form_submit('submit', 'Add', 'class="btn btn-default"');?>
+			<?php echo form_submit('submit', lang('form_add'), 'class="btn btn-default"');?>
 		</div>
 	</div>
 <?php echo form_close();?>

@@ -106,9 +106,16 @@
         particleSystem.eachNode(function(node, pt){
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
-
-          // draw a rectangle centered at pt
-          var w = 20
+			
+		//Circlesize
+		var w = 20;
+			
+			if(node.data.label == "1. Start") {
+				w = 50;
+				} else {
+				w = 20;
+				}
+         
           
 		  /*RECT
 		  ctx.fillStyle = node.data.color;	
