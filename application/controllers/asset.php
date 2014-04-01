@@ -8,17 +8,19 @@ class Asset extends CI_Controller {
 		$this->load->library('pagination');
 		$this->load->library('form_validation');
 		$this->load->helper('text');
-		$this->load->helper('bootstrap_adjustments');
-		$this->load->model('settings_model');
-		$this->load->model('attributes_model');
-		$this->load->model('pages_model');
-		$this->load->model('options_model');
+		$this->load->model('assets_model');
 		
 		$this->lang->load('storyengine');
 	}
 	
 	public function index() {
-		// List
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		$this->data['message'] = ($this->ion_auth->errors()) ? $this->ion_auth->errors() : $this->session->flashdata('message');
+		
+		$this->data['page_images'] = $this->assets_model->get_page_images();
+		$this->data['icons'] = $this->assets_model->get_icons();
+		$this->_render_page('assets/list', $this->data);
 	}
 	
 	public function add_page_image() {
