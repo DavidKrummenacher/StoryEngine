@@ -34,7 +34,12 @@
 				</tr>
 			<?php } ?>
 		</table>
-		<p><?php echo anchor('asset/add_page_image', '<span class="glyphicon glyphicon-plus"></span> Add page image', 'class="btn btn-default"'); ?></p>
+		<p>
+			<div class="btn-group">
+				<?php echo anchor('asset/add_page_image', '<span class="glyphicon glyphicon-plus"></span> Add page image', 'class="btn btn-default"'); ?>
+				<?php echo anchor('asset/batch_upload_page_images', '<span class="glyphicon glyphicon-upload"></span> Batch upload page images', 'class="btn btn-default"'); ?>
+			</div>
+		</p>
 	</div>
 	
 	<div class="tab-pane" id="icons">
@@ -63,7 +68,12 @@
 				</tr>
 			<?php } ?>
 		</table>
-		<p><?php echo anchor('asset/add_icon', '<span class="glyphicon glyphicon-plus"></span> Add icon', 'class="btn btn-default"'); ?></p>
+		<p>
+			<div class="btn-group">
+				<?php echo anchor('asset/add_icon', '<span class="glyphicon glyphicon-plus"></span> Add icon', 'class="btn btn-default"'); ?>
+				<?php echo anchor('asset/batch_upload_icons', '<span class="glyphicon glyphicon-upload"></span> Batch upload icons', 'class="btn btn-default"'); ?>
+			</div>
+		</p>
 	</div>
 </div>
 

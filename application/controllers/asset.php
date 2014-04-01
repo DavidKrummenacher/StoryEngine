@@ -36,7 +36,23 @@ class Asset extends CI_Controller {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
-			$this->_render_page('assets/icons/add', $this->data);
+			$this->_render_page('assets/images/add', $this->data);
+		}
+	}
+	public function batch_upload_page_images() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		//validate form input
+		//$this->form_validation->set_rules('order', 'Order', 'required');
+		//$this->form_validation->set_rules('text', 'Text', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			
+		} else {
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->_render_page('assets/images/batch', $this->data);
 		}
 	}
 	public function edit_page_image($id) {
@@ -52,7 +68,7 @@ class Asset extends CI_Controller {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
-			$this->_render_page('assets/icons/edit', $this->data);
+			$this->_render_page('assets/images/edit', $this->data);
 		}
 	}
 	public function delete_page_image($id) {
@@ -73,6 +89,22 @@ class Asset extends CI_Controller {
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
 			$this->_render_page('assets/icons/add', $this->data);
+		}
+	}
+	public function batch_upload_icons() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		
+		//validate form input
+		//$this->form_validation->set_rules('order', 'Order', 'required');
+		//$this->form_validation->set_rules('text', 'Text', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			
+		} else {
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->_render_page('assets/icons/batch', $this->data);
 		}
 	}
 	public function edit_icon($id) {
