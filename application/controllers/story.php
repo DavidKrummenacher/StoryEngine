@@ -11,6 +11,7 @@ class Story extends CI_Controller {
 		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
 		$this->load->model('story_model');
+		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
 	}
@@ -53,7 +54,13 @@ class Story extends CI_Controller {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
 		// TODO: Implement overview
-		$this->data['relations'] = $this->story_model->get_relations();
+		$this->data['options'] = $this->options_model->get_all();
+		$this->data['optiontargets'] = $this->story_model->get_optiontargets();
+		$this->data['optionchecks'] = $this->story_model->get_optionchecks();
+		$this->data['optionconditions'] = $this->story_model->get_optionconditions();
+		$this->data['optionconsequences'] = $this->story_model->get_optionconsequences();
+		$this->data['pages'] = $this->story_model->get_pages();
+		//$this->data['relations'] = $this->story_model->get_relations();
 		
 		$this->_render_page('story/overview', $this->data);
 	}

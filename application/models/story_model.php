@@ -26,10 +26,39 @@ class Story_model extends CI_Model {
 		$this->db->join('story_pages','story_pages.id = story_option_targets.target_page','left');
 			
 		$query = $this->db->get('story_option_targets');
-		
 		return $query->result_array();
 	}
 	
+	public function get_optiondata() {
+		$this->db->join('story_option_checks','story_option_checks.option = story_options.id');
+		$this->db->join('story_option_conditions','story_option_conditions.option = story_options.id');
+		$this->db->join('story_option_consequences','story_option_consequences.option = story_options.id');
+		
+		$query = $this->db->get('story_options');
+		return $query->result_array();
+		}
+		
+	public function get_optiontargets() {
+		$query = $this->db->get('story_option_targets');
+		return $query->result_array();
+		}
+		
+	public function get_optionchecks() {
+		$query = $this->db->get('story_option_checks');
+		return $query->result_array();
+		}
+		
+		
+	public function get_optionconditions() {
+		$query = $this->db->get('story_option_conditions');
+		return $query->result_array();
+		}
+		
+	public function get_optionconsequences() {
+		$query = $this->db->get('story_option_consequences');
+		return $query->result_array();
+		}
+		
 	public function search_page($searchterm) {
 		$this->db->like('title',$searchterm);
 		$query = $this->db->get('story_pages');

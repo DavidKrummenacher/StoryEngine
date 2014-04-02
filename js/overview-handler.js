@@ -57,17 +57,50 @@
           // pt2:  {x:#, y:#}  target position in screen coords
 
           // draw a line from pt1 to pt2
+		  if(edge.target.data.type == "option") {
+				lineW = 1;
+			} else {
+				lineW = 4;
+			}
+			
+		switch(edge.data.type) {
+			
+			case "page_to_option":
+			lineW = 4;
+			break;
+			
+			case "option_to_page":
+			lineW = 4;
+			break;
+			
+			case "option_to_check":
+			lineW = 1;
+			break;
+			
+			case "option_to_condition":
+			lineW = 1;
+			break;
+			
+			case "option_to_consequences":
+			lineW = 1;
+			break;
+			
+			default:
+			lineW = 2;
+			break;
+			}
+			
           ctx.strokeStyle = edge.data.color
-          ctx.lineWidth = 4
+          ctx.lineWidth = lineW
           ctx.beginPath()
           ctx.moveTo(pt1.x, pt1.y)
           ctx.lineTo(pt2.x, pt2.y)
           ctx.stroke()
 		  
-		ctx.fillStyle = "black";
+		/*ctx.fillStyle = "black";
         ctx.font = 'italic 2vw sans-serif';
         ctx.fillText (edge.data.label, (pt1.x + pt2.x) / 2, (pt1.y + pt2.y) / 2);
-
+*/
 		 
 		  if(edge.data.direction == 1) {
 			  var headlen = 50;   // length of head in pixels
@@ -97,6 +130,7 @@
 			
 		
 		  }
+		  
 			  
 		/*	ctx.fillStyle = "black";
 			ctx.font = 'italic 13px sans-serif';
@@ -107,33 +141,61 @@
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
 			
-		//Circlesize
-		var w = 20;
+			ctx.beginPath();
+
 			
-			if(node.data.label == "1. Start") {
-				w = 50;
-				} else {
-				w = 20;
-				}
+			
          
-          
-		  /*RECT
-		  ctx.fillStyle = node.data.color;	
-          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w)
-			*/
-			  ctx.beginPath();
-			  ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
-			  ctx.fillStyle = node.data.color;
-			  ctx.fill();
-			  
+			  switch(node.data.type) {
+				  case "page":
+					w = 20;
+					fontW = 3;
+					
+					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
+					ctx.fillStyle = node.data.color;
+					ctx.fill();
+				  break;
+				  
+				  case "option":
+					w = 30;
+					fontW = 2;
+					
+					ctx.fillStyle = node.data.color;	
+         			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+	
+				  break;
+				  
+				  case "check":
+					w = 10;
+					fontW = 2;
+					
+					ctx.fillStyle = node.data.color;	
+         			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+				  break;
+				  
+				  default:
+					w = 5;
+					fontW = 3;
+					
+					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
+					ctx.fillStyle = node.data.color;
+					ctx.fill();	
+				  break;
+				  }
+			
+			
+			 
+			
 		  
 
 			 //Write label 
-			ctx.font = "italic small-caps bold 3vw sans-serif"
+			ctx.font = "italic small-caps bold "+fontW+"vw sans-serif"
 			
 			
 			ctx.strokeStyle = 'white';
-			ctx.lineWidth = 8;
+			lineW = 3;
+			
+			ctx.lineWidth = lineW;
 			ctx.strokeText(node.data.label, pt.x+32, pt.y);
 
 			
@@ -201,8 +263,8 @@
  
 	
   $(document).ready(function(){
-    var sys = arbor.ParticleSystem(20, 600, 0.8) // create the system with sensible repulsion/stiffness/friction
-    sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
+	  //arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision) 
+    var sys = arbor.ParticleSystem(1000, 1000, 0,false,30,0.02,0.6) // create the system with sensible repulsion/stiffness/friction
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 	
 	//Placeholder Array for color implementation
@@ -223,36 +285,101 @@
 	//iterate through nodes (every node only ONCE)
 	
 	//Ini 1st Node, because 1st Node doesnt have to be a target
-	sys.addNode(1,{color:"#00FF00",label:"1. Start"});
+	//sys.addNode(1,{color:"#00FF00",label:"1. Start"});
 			//SingleNode[index] = target;
 	
+	//Parse PageNodes
 	$('#graph-data ul').children('li').each(function(index, element) {
-		
-		var source = $(this).attr('name');
-		var target = $(this).text();
-		
-		
-		var ColorInt = index % ColorArr.length;
-		if( $(this).attr('title') == "Non-existent") { NodeColor = "#ff0000";} else {NodeColor = ColorArr[ColorInt]}
-		
-    	if($.inArray(target,SingleNode) == -1 ) {
-			sys.addNode(target,{color:NodeColor,label:$(this).text()+"."+$(this).attr('title')});
-			SingleNode[index] = target;
-		}
-		
-		
+		var suffix = "page_";
+		var nodeName = $(this).text();		
 
+		if(nodeName == 1) { 
+		    	sys.addNode(suffix+nodeName,{mass:50,fixed:true,color:"#FF0000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
+		} else { 
+		    	sys.addNode(suffix+nodeName,{mass:20,color:"#000000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
+		}
     });
 	
-	$('#graph-data ul').children('li').each(function(index, element) {
+	//Parse Optionnodes
+	$('#graph-data-options ul').children('li').each(function(index, element) {
+		var suffix = "option_";
 		var source = $(this).attr('name');
-		var target = $(this).text();
+		var nodeName = $(this).text();
+		var NodeColor = "#000000";	
+    	sys.addNode(suffix+nodeName,{color:NodeColor,label:$(this).attr('title'),type:"option"});
+    });
+	
+	//Parse Optionchecks
+	$('#graph-data-optionchecks ul').children('li').each(function(index, element) {
+		var suffix = "check_";
+		var source = $(this).attr('name');
+		var nodeName = $(this).text();
+		var NodeColor = "#c83dca";	
+    	sys.addNode(suffix+nodeName,{color:NodeColor,label:$(this).attr('title'),type:"check"});
+    });
+	
+	//Parse Optionconditions
+	$('#graph-data-optionconditions ul').children('li').each(function(index, element) {
+		var suffix = "condition_";
+		var source = $(this).attr('name');
+		var nodeName = $(this).text();
+		var NodeColor = "#5bca3d";	
+    	sys.addNode(suffix+nodeName,{color:NodeColor,label:$(this).attr('title'),type:"condition"});
+    });
+	
+	//Parse Optionconsequences
+	$('#graph-data-optionconsequences ul').children('li').each(function(index, element) {
+		var suffix = "consequence_";
+		var source = $(this).attr('name');
+		var nodeName = $(this).text();
+		var NodeColor = "#3d68ca";	
+    	sys.addNode(suffix+nodeName,{color:NodeColor,label:$(this).attr('title'),type:"consequence"});
+    });
+	
+	
+	//ADD EDGES-------------------------------------------------	
+	
+	$('#graph-data-options ul').children('li').each(function(index, element) {
+		var source = "page_"+$(this).attr('name');
+		var target = "option_"+$(this).text();
 		var color = "#000000";
 		
 		if(sys.getNode(target).data.color == "#ff0000") {color = "#ff0000"; status = "Error";} else {color = sys.getNode(source).data.color; status = "i.O.";}
-		sys.addEdge(source,target,{direction:1,color:color,label:status});
+		sys.addEdge(source,target,{length:0.2,direction:1,color:color,label:status,type:"page_to_option"});
 		
+		});
+		
+	
+	$('#graph-data-optiontargets ul').children('li').each(function(index, element) {
+			var target = "page_"+$(this).text();
+			var source = "option_"+$(this).attr('name');
+			var NodeColor = sys.getNode(source).data.color;
+
+			sys.addEdge(source,target,{direction:1,color:NodeColor,type:"option_to_page"});
 	});
+	
+	$('#graph-data-optionchecks ul').children('li').each(function(index, element) {
+			var target = "check_"+$(this).text();
+			var source = "option_"+$(this).attr('name');
+			var NodeColor = sys.getNode(source).data.color;
+			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_check"});
+	});
+	
+	$('#graph-data-optionconditions ul').children('li').each(function(index, element) {
+			var target = "condition_"+$(this).text();
+			var source = "option_"+$(this).attr('name');
+			var NodeColor = sys.getNode(source).data.color;
+			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_condition"});
+	});
+	
+	$('#graph-data-optionconsequences ul').children('li').each(function(index, element) {
+			var target = "consequence_"+$(this).text();
+			var source = "option_"+$(this).attr('name');
+			var NodeColor = sys.getNode(source).data.color;
+			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_consequences"});
+	});
+	
+
 	
 	
 	
