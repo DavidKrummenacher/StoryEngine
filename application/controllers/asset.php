@@ -324,19 +324,9 @@ class Asset extends CI_Controller {
 			// copy to mobile
 			copy($dir_desktop.$filename, $dir_mobile.$filename);
 			
-			// resize desktop image
-			$res_config['image_library'] = 'gd2';
-			$res_config['source_image'] = $dir_desktop.$filename;
-			$res_config['width'] = $desktop_width;
-			$res_config['master_dim'] = 'width';
-			$this->load->library('image_lib', $res_config);
-			$this->image_lib->resize();
-			
-			// resize mobile image
-			$res_config['source_image'] = $dir_mobile.$filename;
-			$res_config['width'] = $mobile_width;
-			$this->image_lib->initialize($res_config);
-			$this->image_lib->resize();
+			// resize
+			$this->_resize($uploaddata['image_width'], $dir_desktop.$filename, $desktop_width); // desktop image
+			$this->_resize($uploaddata['image_width'], $dir_mobile.$filename, $mobile_width); // mobile image
 		} else {
 			$this->session->set_flashdata('message', $this->upload->display_errors());
 		}
@@ -373,19 +363,9 @@ class Asset extends CI_Controller {
 				// copy to mobile
 				copy($dir_desktop.$filename, $dir_mobile.$filename);
 				
-				// resize desktop image
-				$res_config['image_library'] = 'gd2';
-				$res_config['source_image'] = $dir_desktop.$filename;
-				$res_config['width'] = $desktop_width;
-				$res_config['master_dim'] = 'width';
-				$this->load->initialize('image_lib', $res_config);
-				$this->image_lib->resize();
-				
-				// resize mobile image
-				$res_config['source_image'] = $dir_mobile.$filename;
-				$res_config['width'] = $mobile_width;
-				$this->image_lib->initialize($res_config);
-				$this->image_lib->resize();
+				// resize
+				$this->_resize($uploaddata['image_width'], $dir_desktop.$filename, $desktop_width); // desktop image
+				$this->_resize($uploaddata['image_width'], $dir_mobile.$filename, $mobile_width); // mobile image
 				
 				// Add file data for storing
 				$file = array(
@@ -401,6 +381,21 @@ class Asset extends CI_Controller {
 		}
 		
 		return $files;
+	}
+	
+	protected function _resize($original_width, $image_uri, $max_width) {
+		if ($original_width > $max_width) {
+			$this->load->library('image_lib');
+			$res_config['image_library'] = 'gd2';
+			$res_config['source_image'] = $image_uri;
+			$res_config['maintain_ratio'] = TRUE;
+			$res_config['width'] = $max_width;
+			$res_config['height'] = $max_width;
+			$res_config['master_dim'] = 'width';
+			$this->image_lib->initialize($res_config);
+			$this->image_lib->resize();
+			$this->image_lib->clear();
+		}
 	}
 	
 	protected function _render_page($view, $data = null, $render = false) {
