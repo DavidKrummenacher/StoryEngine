@@ -18,11 +18,6 @@ class Option extends CI_Controller {
 		$this->lang->load('storyengine');
 	}
 	
-	public function index() {
-		// Codeigniter wont take parameters on inedx function :(
-		show_error('Herp Derp');
-	}
-	
 	public function choose($id) {
 		// TODO: Implement option handling
 		// Roll (story_option_rolls)

@@ -15,11 +15,6 @@ class Story extends CI_Controller {
 		$this->lang->load('storyengine');
 	}
 	
-	public function index() {
-		// Codeigniter wont take parameters on inedx function :(
-		show_error('Herp Derp');
-	}
-	
 	public function list_pages() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
