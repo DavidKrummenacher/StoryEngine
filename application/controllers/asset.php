@@ -86,15 +86,21 @@ class Asset extends CI_Controller {
 	public function batch_upload_page_images() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
-		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
-		
-		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+		if (isset($_POST) && !empty($_POST)) {
+			$files = $this->_upload_multiple_files(
+				$this->dir_page_images_desktop,
+				$this->dir_page_images_mobile,
+				$this->page_images_width_desktop,
+				$this->page_images_width_mobile
+			);
 			
+			foreach ($files as $file) {
+				$this->assets_model->create_page_image($file['name'], $file['description'], $file['desktop_uri'], $file['mobile_uri']);
+			}
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 			
 			$this->_render_page('assets/images/batch', $this->data);
 		}
@@ -205,15 +211,21 @@ class Asset extends CI_Controller {
 	public function batch_upload_icons() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		
-		//validate form input
-		//$this->form_validation->set_rules('order', 'Order', 'required');
-		//$this->form_validation->set_rules('text', 'Text', 'required');
-		
-		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+		if (isset($_POST) && !empty($_POST)) {
+			$files = $this->_upload_multiple_files(
+				$this->dir_icons_desktop,
+				$this->dir_icons_mobile,
+				$this->icons_width_desktop,
+				$this->icons_width_mobile
+			);
 			
+			foreach ($files as $file) {
+				$this->assets_model->create_icon($file['name'], $file['description'], $file['desktop_uri'], $file['mobile_uri']);
+			}
+			redirect('asset');
 		} else {
 			//set the flash data error message if there is one
-			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 			
 			$this->_render_page('assets/icons/batch', $this->data);
 		}
@@ -315,14 +327,14 @@ class Asset extends CI_Controller {
 			// resize desktop image
 			$res_config['image_library'] = 'gd2';
 			$res_config['source_image'] = $dir_desktop.$filename;
-			$res_config['width'] = $desktop_width; // TODO: Fix width, maybe with settings
+			$res_config['width'] = $desktop_width;
 			$res_config['master_dim'] = 'width';
 			$this->load->library('image_lib', $res_config);
 			$this->image_lib->resize();
 			
 			// resize mobile image
 			$res_config['source_image'] = $dir_mobile.$filename;
-			$res_config['width'] = $mobile_width; // TODO: Fix width, maybe with settings
+			$res_config['width'] = $mobile_width;
 			$this->image_lib->initialize($res_config);
 			$this->image_lib->resize();
 		} else {
@@ -330,6 +342,65 @@ class Asset extends CI_Controller {
 		}
 		
 		return $filename;
+	}
+	
+	function _upload_multiple_files($dir_desktop, $dir_mobile, $desktop_width, $mobile_width) {
+		//upload stuff
+		$upconfig['upload_path'] = $dir_desktop;
+		$upconfig['allowed_types'] = 'jpg|jpeg|png|gif';
+		$upconfig['max_size'] = '2048';
+		//$upconfig['max_height'] = "768";
+		//$upconfig['max_width'] = "1024";
+		$upconfig['encrypt_name'] = true;
+		
+		$this->load->library('upload', $upconfig);
+		
+		$files = array();
+		if (!isset($_FILES['userfiles']) || empty($_FILES['userfiles']['name'])) { return $files; }
+		
+		if ($this->upload->do_multi_upload('userfiles')) {
+			$this->load->library('image_lib');
+			
+			// get files
+			$uploaddatas = $this->upload->get_multi_upload_data();
+			foreach ($uploaddatas as $uploaddata) {
+				if (!$uploaddata['is_image']) {
+					$this->session->set_flashdata('message', 'File \''.$uploaddata['orig_name'].'\' isn\'t an image. Only images can be uploaded! Batch aborted!');
+					return $files;
+				}
+				$filename = $uploaddata['file_name'];
+				
+				// copy to mobile
+				copy($dir_desktop.$filename, $dir_mobile.$filename);
+				
+				// resize desktop image
+				$res_config['image_library'] = 'gd2';
+				$res_config['source_image'] = $dir_desktop.$filename;
+				$res_config['width'] = $desktop_width;
+				$res_config['master_dim'] = 'width';
+				$this->load->initialize('image_lib', $res_config);
+				$this->image_lib->resize();
+				
+				// resize mobile image
+				$res_config['source_image'] = $dir_mobile.$filename;
+				$res_config['width'] = $mobile_width;
+				$this->image_lib->initialize($res_config);
+				$this->image_lib->resize();
+				
+				// Add file data for storing
+				$file = array(
+					'name' => $uploaddata['orig_name'],
+					'description' => null,
+					'mobile_uri' => $filename,
+					'desktop_uri' => $filename,
+				);
+				array_push($files, $file);
+			}
+		} else {
+			$this->session->set_flashdata('message', $this->upload->display_errors());
+		}
+		
+		return $files;
 	}
 	
 	function _render_page($view, $data = null, $render = false) {
