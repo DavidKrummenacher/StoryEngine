@@ -292,7 +292,7 @@ class Asset extends CI_Controller {
 		redirect('asset');
 	}
 	
-	function _upload_single_file($dir_desktop, $dir_mobile, $desktop_width, $mobile_width, $prev = null) {
+	protected function _upload_single_file($dir_desktop, $dir_mobile, $desktop_width, $mobile_width, $prev = null) {
 		//upload stuff
 		$upconfig['upload_path'] = $dir_desktop;
 		$upconfig['allowed_types'] = 'jpg|jpeg|png|gif';
@@ -344,7 +344,7 @@ class Asset extends CI_Controller {
 		return $filename;
 	}
 	
-	function _upload_multiple_files($dir_desktop, $dir_mobile, $desktop_width, $mobile_width) {
+	protected function _upload_multiple_files($dir_desktop, $dir_mobile, $desktop_width, $mobile_width) {
 		//upload stuff
 		$upconfig['upload_path'] = $dir_desktop;
 		$upconfig['allowed_types'] = 'jpg|jpeg|png|gif';
@@ -403,7 +403,7 @@ class Asset extends CI_Controller {
 		return $files;
 	}
 	
-	function _render_page($view, $data = null, $render = false) {
+	protected function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		
 		$view_html = $this->load->view('templates/header', $this->viewdata);

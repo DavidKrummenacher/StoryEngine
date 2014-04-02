@@ -94,7 +94,7 @@ class Story extends CI_Controller {
 		$this->_render_page('story/settings', $this->data);
 	}
 	
-	function _render_page($view, $data = null, $render = false) {
+	protected function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		
 		$view_html = $this->load->view('templates/header', $this->viewdata);

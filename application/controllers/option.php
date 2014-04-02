@@ -558,7 +558,7 @@ class Option extends CI_Controller {
 		redirect('option/edit/'.$option);
 	}
 	
-	function _render_page($view, $data = null, $render = false) {
+	protected function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		
 		$view_html = $this->load->view('templates/header', $this->viewdata);

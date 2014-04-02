@@ -23,7 +23,7 @@ class Admin extends CI_Controller {
 	}
 
 	//redirect if needed, otherwise display the user list
-	function index() {
+	public function index() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		elseif (!$this->ion_auth->is_admin()) { show_error('You must be an administrator to view this page.'); }
 		else {
@@ -42,7 +42,7 @@ class Admin extends CI_Controller {
 	}
 
 	//log the user in
-	function login() {
+	public function login() {
 		$this->data['title'] = "Login";
 
 		//validate form input
@@ -86,7 +86,7 @@ class Admin extends CI_Controller {
 	}
 
 	//log the user out
-	function logout() {
+	public function logout() {
 		$this->data['title'] = "Logout";
 
 		//log the user out
@@ -98,7 +98,7 @@ class Admin extends CI_Controller {
 	}
 
 	//activate the user
-	function activate($id) {
+	public function activate($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		
@@ -108,7 +108,7 @@ class Admin extends CI_Controller {
 	}
 
 	//deactivate the user
-	function deactivate($id) {
+	public function deactivate($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		if ($this->ion_auth->user()->row()->id == $id) { show_error('You cannot deactivate yourself!'); }
@@ -120,7 +120,7 @@ class Admin extends CI_Controller {
 	}
 
 	//create a new user
-	function add() {
+	public function add() {
 		$this->data['title'] = "Create User";
 
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
@@ -196,7 +196,7 @@ class Admin extends CI_Controller {
 	}
 
 	//edit a user
-	function edit($id) {
+	public function edit($id) {
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
@@ -302,7 +302,7 @@ class Admin extends CI_Controller {
 		$this->_render_page('admin/edit', $this->data);
 	}
 
-	function delete($id) {
+	public function delete($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		if ($this->ion_auth->user()->row()->id == $id) { show_error('You cannot delete yourself!'); }
@@ -323,7 +323,7 @@ class Admin extends CI_Controller {
 		$this->_render_page('admin/settings', $this->data);
 	}
 
-	function _get_csrf_nonce() {
+	protected function _get_csrf_nonce() {
 		$this->load->helper('string');
 		$key   = random_string('alnum', 8);
 		$value = random_string('alnum', 20);
@@ -333,7 +333,7 @@ class Admin extends CI_Controller {
 		return array($key => $value);
 	}
 
-	function _valid_csrf_nonce() {
+	protected function _valid_csrf_nonce() {
 		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
 			$this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
 			return TRUE;
@@ -342,7 +342,7 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	function _render_page($view, $data = null, $render = false) {
+	protected function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		
 		$view_html = $this->load->view('templates/header', $this->viewdata);
