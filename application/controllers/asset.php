@@ -2,6 +2,15 @@
 
 class Asset extends CI_Controller {
 	
+	protected $dir_page_images_desktop;
+	protected $dir_page_images_mobile;
+	protected $page_images_width_desktop;
+	protected $page_images_width_mobile;
+	protected $dir_icons_desktop;
+	protected $dir_icons_mobile;
+	protected $icons_width_desktop;
+	protected $icons_width_mobile;
+	
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('ion_auth');
@@ -12,15 +21,15 @@ class Asset extends CI_Controller {
 		
 		$this->lang->load('storyengine');
 		
-		$dir_page_images_desktop = './assets/page_images/desktop/';
-		$dir_page_images_mobile = './assets/page_images/mobile/';
-		$page_images_width_desktop = 1170; // TODO: Fix width, maybe with settings
-		$page_images_width_mobile = 724; // TODO: Fix width, maybe with settings
+		$this->dir_page_images_desktop = './assets/page_images/desktop/';
+		$this->dir_page_images_mobile = './assets/page_images/mobile/';
+		$this->page_images_width_desktop = 1170; // TODO: Fix width, maybe with settings
+		$this->page_images_width_mobile = 724; // TODO: Fix width, maybe with settings
 		
-		$dir_icons_desktop = './assets/icons/desktop/';
-		$dir_icons_mobile = './assets/icons/mobile/';
-		$icons_width_desktop = 48; // TODO: Fix width, maybe with settings
-		$icons_width_mobile = 32; // TODO: Fix width, maybe with settings
+		$this->dir_icons_desktop = './assets/icons/desktop/';
+		$this->dir_icons_mobile = './assets/icons/mobile/';
+		$this->icons_width_desktop = 48; // TODO: Fix width, maybe with settings
+		$this->icons_width_mobile = 32; // TODO: Fix width, maybe with settings
 	}
 	
 	public function index() {
@@ -44,10 +53,10 @@ class Asset extends CI_Controller {
 			$description = $this->input->post('description');
 			
 			$filename = $this->_upload_single_file(
-				$dir_page_images_desktop,
-				$dir_page_images_mobile,
-				$page_images_width_desktop,
-				$page_images_width_mobile
+				$this->dir_page_images_desktop,
+				$this->dir_page_images_mobile,
+				$this->page_images_width_desktop,
+				$this->page_images_width_mobile
 			);
 			$desktop_uri = $filename;
 			$mobile_uri = $filename;
@@ -104,10 +113,10 @@ class Asset extends CI_Controller {
 			$mobile_uri = $image['mobile_uri'];
 			
 			$filename = $this->_upload_single_file(
-				$dir_page_images_desktop,
-				$dir_page_images_mobile,
-				$page_images_width_desktop,
-				$page_images_width_mobile,
+				$this->dir_page_images_desktop,
+				$this->dir_page_images_mobile,
+				$this->page_images_width_desktop,
+				$this->page_images_width_mobile,
 				$image
 			);
 			if ($filename != null) {
@@ -163,10 +172,10 @@ class Asset extends CI_Controller {
 			$description = $this->input->post('description');
 			
 			$filename = $this->_upload_single_file(
-				$dir_icons_desktop,
-				$dir_icons_mobile,
-				$icons_width_desktop,
-				$icons_width_mobile
+				$this->dir_icons_desktop,
+				$this->dir_icons_mobile,
+				$this->icons_width_desktop,
+				$this->icons_width_mobile
 			);
 			$desktop_uri = $filename;
 			$mobile_uri = $filename;
@@ -223,10 +232,10 @@ class Asset extends CI_Controller {
 			$mobile_uri = $icon['mobile_uri'];
 			
 			$filename = $this->_upload_single_file(
-				$dir_icons_desktop,
-				$dir_icons_mobile,
-				$icons_width_desktop,
-				$icons_width_mobile,
+				$this->dir_icons_desktop,
+				$this->dir_icons_mobile,
+				$this->icons_width_desktop,
+				$this->icons_width_mobile,
 				$icon
 			);
 			if ($filename != null) {
