@@ -154,8 +154,8 @@ class Asset extends CI_Controller {
 		
 		// delete files
 		$img = $this->assets_model->get_page_image($id);
-		if (file_exists($dir_page_images_desktop.$img['desktop_uri'])) { unlink ($dir_page_images_desktop.$img['desktop_uri']); }
-		if (file_exists($dir_page_images_mobile.$img['mobile_uri'])) { unlink ($dir_page_images_mobile.$img['mobile_uri']); }
+		if (file_exists($this->dir_page_images_desktop.$img['desktop_uri'])) { unlink ($this->dir_page_images_desktop.$img['desktop_uri']); }
+		if (file_exists($this->dir_page_images_mobile.$img['mobile_uri'])) { unlink ($this->dir_page_images_mobile.$img['mobile_uri']); }
 		
 		$this->assets_model->delete_page_image($id);
 		redirect('asset');
@@ -273,8 +273,8 @@ class Asset extends CI_Controller {
 		
 		// delete files
 		$icon = $this->assets_model->get_icon($id);
-		if (file_exists($dir_icons_desktop.$icon['desktop_uri'])) { unlink ($dir_icons_desktop.$icon['desktop_uri']); }
-		if (file_exists($dir_icons_mobile.$icon['mobile_uri'])) { unlink ($dir_icons_mobile.$icon['mobile_uri']); }
+		if (file_exists($this->dir_icons_desktop.$icon['desktop_uri'])) { unlink ($this->dir_icons_desktop.$icon['desktop_uri']); }
+		if (file_exists($this->dir_icons_mobile.$icon['mobile_uri'])) { unlink ($this->dir_icons_mobile.$icon['mobile_uri']); }
 		
 		$this->assets_model->delete_icon($id);
 		redirect('asset');
