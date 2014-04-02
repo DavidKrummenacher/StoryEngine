@@ -287,12 +287,12 @@ class Asset extends CI_Controller {
 		
 		if ($this->upload->do_upload('userfile')) {
 			// get filename
-			$uploaddata = array('upload_data' => $this->upload->data());
+			$uploaddata = $this->upload->data();
 			if (!$uploaddata['is_image']) {
 				$this->session->set_flashdata('message', 'File isn\'t an image. Only images can be uploaded!');
 				return $filename;
 			}
-			$filename = $uploaddata['upload_data']['file_name'];
+			$filename = $uploaddata['file_name'];
 			
 			// delete previous
 			if ($prev != null) {
