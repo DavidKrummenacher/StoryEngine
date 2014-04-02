@@ -7,7 +7,7 @@
 		<label for="name" class="col-sm-2 control-label">File</label>
 		<div class="col-sm-10">
 			<?php if ($icon['mobile_uri']) { ?>
-			<img src="<?php echo $icon['mobile_uri']; ?>" class="img-responsive" />
+			<img src="<?php echo base_url('assets/icons/mobile/'.$icon['mobile_uri']); ?>" class="img-responsive" />
 			<?php } ?>
 			<input type="file" name="userfile" size="10"/>
 			<p class="help-block">Select different file to change it. Max 2MB.</p>

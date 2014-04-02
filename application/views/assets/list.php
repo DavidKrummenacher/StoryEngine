@@ -22,7 +22,7 @@
 					<td><?php echo $page_image['id']; ?></td>
 					<td><?php echo $page_image['name']; ?></td>
 					<td><?php echo $page_image['description']; ?></td>
-					<td><?php echo $page_image['mobile_uri']; // TODO: display image ?></td>
+					<td><img src="<?php echo base_url('assets/page_images/mobile/'.$page_image['mobile_uri']); ?>" class="img-responsive" /></td>
 					<td>
 						<div class="btn-group">
 							<?php
@@ -56,7 +56,7 @@
 					<td><?php echo $icon['id']; ?></td>
 					<td><?php echo $icon['name']; ?></td>
 					<td><?php echo $icon['description']; ?></td>
-					<td><?php echo $icon['mobile_uri']; // TODO: display image ?></td>
+					<td><img src="<?php echo base_url('assets/icons/mobile/'.$icon['mobile_uri']); ?>" class="img-responsive" /></td>
 					<td>
 						<div class="btn-group">
 							<?php
