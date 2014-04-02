@@ -1,13 +1,13 @@
-<h1>Manage Attributes</h1>
+<h1><?php echo lang('page_options_attribute_manage'); ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
 <table class="table table-condensed">
 	<tr>
 		<th>Id</th>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Default value</th>
+		<th><?php echo lang('assets_name'); ?></th>
+		<th><?php echo lang('assets_desc'); ?></th>
+		<th><?php echo lang('form_default_value'); ?></th>
 		<th width="80px">Actions</th>
 	</tr>
 	<?php foreach ($attributes as $attribute) { ?>
@@ -36,16 +36,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteModal<?php echo $attribute['id']; ?>Label">Attribut löschen: (<?php echo $attribute['name']; ?>)</h4>
+				<h4 class="modal-title" id="deleteModal<?php echo $attribute['id']; ?>Label"><?php echo lang('attribute_delete'); ?>: (<?php echo $attribute['name']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Attribut wirklich löschen?
+					<?php echo lang('attribute_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('attribute/delete/'.$attribute['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('attribute/delete/'.$attribute['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

@@ -1,19 +1,19 @@
-<h1>Edit option</h1>
+<h1><?php echo lang('page_option_edit'); ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
 <?php echo form_open('option/edit/'.$option['id'], 'class="form-horizontal" role="form"');?>
 	<div class="form-group">
-		<label for="order" class="col-sm-2 control-label">Order</label>
+		<label for="order" class="col-sm-2 control-label"><?php echo lang('page_options_order'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($order, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="icon" class="col-sm-2 control-label">Icon</label>
+		<label for="icon" class="col-sm-2 control-label"><?php echo lang('page_options_icon'); ?></label>
 		<div class="col-sm-10">
 			<select name="icon" id="icon" class="form-control">
-				<option value="null"<?php if ($icon['value'] == null) { ?> selected="selected"<?php } ?>>No icon</option>
+				<option value="null"<?php if ($icon['value'] == null) { ?> selected="selected"<?php } ?>><?php echo lang('page_options_noicon'); ?></option>
 				<?php foreach ($icons as $i) { ?>
 				<option value="<?php echo $i['id']; ?>"<?php if ($i['id'] == $icon['value']) { ?> selected="selected"<?php } ?>>
 					<?php echo $i['name']; ?>
@@ -23,23 +23,23 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="text" class="col-sm-2 control-label">Text</label>
+		<label for="text" class="col-sm-2 control-label"><?php echo lang('page_options_text'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($text, '', 'class="form-control"');?>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-2">
-			<?php echo form_submit('submit', 'Apply', 'class="btn btn-default"');?>
+			<?php echo form_submit('submit', lang('form_apply'), 'class="btn btn-default"');?>
 		</div>
 	</div>
 <?php echo form_close();?>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#conditions" data-toggle="tab">Conditions</a></li>
-	<li><a href="#targets" data-toggle="tab">Targets</a></li>
-	<li><a href="#checks" data-toggle="tab">Checks</a></li>
-	<li><a href="#consequences" data-toggle="tab">Consequences</a></li>
+	<li class="active"><a href="#conditions" data-toggle="tab"><?php echo lang('page_conditions'); ?></a></li>
+	<li><a href="#targets" data-toggle="tab"><?php echo lang('page_targets'); ?></a></li>
+	<li><a href="#checks" data-toggle="tab"><?php echo lang('page_checks'); ?></a></li>
+	<li><a href="#consequences" data-toggle="tab"><?php echo lang('page_consequences'); ?></a></li>
 </ul>
 
 <div class="tab-content">
@@ -47,9 +47,9 @@
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Attribute</th>
-				<th>Comparison</th>
-				<th>Value</th>
+				<th><?php echo lang('page_options_attribute'); ?></th>
+				<th><?php echo lang('page_options_comparison'); ?></th>
+				<th><?php echo lang('page_options_value'); ?></th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($conditions as $condition):?>
@@ -69,15 +69,15 @@
 				</tr>
 			<?php endforeach;?>
 		</table>
-		<p><?php echo anchor('option/add_condition/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> Add condition', 'class="btn btn-default"'); ?></p>
+		<p><?php echo anchor('option/add_condition/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_add_condition'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
 	<div class="tab-pane" id="targets">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Target</th>
-				<th>Page type</th>
+				<th><?php echo lang('page_options_target'); ?></th>
+				<th><?php echo lang('page_options_pagetype'); ?></th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($targets as $target):?>
@@ -96,16 +96,16 @@
 				</tr>
 			<?php endforeach;?>
 		</table>
-		<p><?php echo anchor('option/add_target/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> Add target', 'class="btn btn-default"'); ?></p>
+		<p><?php echo anchor('option/add_target/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_target_add'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
 	<div class="tab-pane" id="checks">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Attribute</th>
-				<th>Comparison</th>
-				<th>Value</th>
+				<th><?php echo lang('page_options_attribute'); ?></th>
+				<th><?php echo lang('page_options_comparison'); ?></th>
+				<th><?php echo lang('page_options_value'); ?></th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($checks as $check):?>
@@ -125,16 +125,16 @@
 				</tr>
 			<?php endforeach;?>
 		</table>
-		<p><?php echo anchor('option/add_check/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> Add check', 'class="btn btn-default"'); ?></p>
+		<p><?php echo anchor('option/add_check/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_add_check'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
 	<div class="tab-pane" id="consequences">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Attribute</th>
-				<th>Operator</th>
-				<th>Value</th>
+				<th><?php echo lang('page_options_attribute'); ?></th>
+				<th><?php echo lang('page_options_operator'); ?></th>
+				<th><?php echo lang('page_options_value'); ?></th>
 				<th width="80px"><?php echo lang('index_action_th');?></th>
 			</tr>
 			<?php foreach ($consequences as $consequence):?>
@@ -154,7 +154,7 @@
 				</tr>
 			<?php endforeach;?>
 		</table>
-		<p><?php echo anchor('option/add_consequence/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> Add consequence', 'class="btn btn-default"'); ?></p>
+		<p><?php echo anchor('option/add_consequence/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_add_consequence'), 'class="btn btn-default"'); ?></p>
 	</div>
 </div>
 
@@ -164,16 +164,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteConditionModal<?php echo $condition['id']; ?>Label">Bedingung löschen:</h4>
+				<h4 class="modal-title" id="deleteConditionModal<?php echo $condition['id']; ?>Label"><?php echo lang('condition_delete'); ?>:</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Bedingung wirklich löschen?
+					<?php echo lang('condition_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('option/delete_condition/'.$condition['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('option/delete_condition/'.$condition['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
@@ -186,16 +186,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteTargetModal<?php echo $target['id']; ?>Label">Ziel löschen:</h4>
+				<h4 class="modal-title" id="deleteTargetModal<?php echo $target['id']; ?>Label"><?php echo lang('target_delete'); ?>:</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Ziel wirklich löschen?
+					<?php echo lang('target_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('option/delete_target/'.$target['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('option/delete_target/'.$target['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
@@ -208,16 +208,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteCheckModal<?php echo $check['id']; ?>Label">Überprüfung löschen:</h4>
+				<h4 class="modal-title" id="deleteCheckModal<?php echo $check['id']; ?>Label"><?php echo lang('check_delete'); ?>:</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Überprüfung wirklich löschen?
+					<?php echo lang('check_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('option/delete_check/'.$check['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('option/delete_check/'.$check['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
@@ -230,16 +230,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteConsequenceModal<?php echo $consequence['id']; ?>Label">Konsequenz löschen:</h4>
+				<h4 class="modal-title" id="deleteConsequenceModal<?php echo $consequence['id']; ?>Label"><?php echo lang('consequence_delete'); ?>:</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Konsequenz wirklich löschen?
+					<?php echo lang('consequence_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('option/delete_consequence/'.$consequence['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('option/delete_consequence/'.$consequence['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-<h1>Batch upload icons</h1>
+<h1><?php echo lang('page_options_batch_file'); ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 

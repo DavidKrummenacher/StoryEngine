@@ -1,4 +1,4 @@
-<h1>List of all pages</h1>
+<h1><?php echo lang('story_list'); ?></h1>
 <form action ="<?= base_url()?>index.php/story/search" method="post" id="searchform">
 <div class="input-group">
 	<input type="search" class="form-control" placeholder="Search" name="searchterm">
@@ -11,10 +11,10 @@
 <table class="table table-condensed">
 	<tr>
 		<th>Id</th>
-		<th>Title</th>
-		<th>Content</th>
-		<th>Options</th>
-		<th width="80px">Actions</th>
+		<th><?php echo lang('story_list_title'); ?></th>
+		<th><?php echo lang('story_list_content'); ?></th>
+		<th><?php echo lang('story_list_options'); ?></th>
+		<th width="80px"><?php echo lang('story_list_actions'); ?></th>
 	</tr>
 	<?php foreach ($pages as $page) { ?>
 		<tr>
@@ -46,16 +46,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteModal<?php echo $page['id']; ?>Label">Seite löschen: (<?php echo $page['id'].' - '.$page['title']; ?>)</h4>
+				<h4 class="modal-title" id="deleteModal<?php echo $page['id']; ?>Label"><?php echo lang('page_delete'); ?>: (<?php echo $page['id'].' - '.$page['title']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Seite wirklich löschen?
+					<?php echo lang('page_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('page/delete/'.$page['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<?php echo anchor('page/delete/'.$page['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

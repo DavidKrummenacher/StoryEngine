@@ -1,4 +1,4 @@
-<h1>Settings</h1>
+<h1><?php echo lang('story_settings'); ?></h1>
 <?php
 if(isset($flash)) {?> 
 <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span> <?php echo $flash ?></div>
@@ -21,7 +21,7 @@ if(isset($flash)) {?>
 <?php } ?>  
 
 <span class="input-group-btn">
-		<button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+		<button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-floppy-disk"></span> <?php echo lang('form_save'); ?></button>
 	</span>	
     </div>
 </form>

@@ -28,7 +28,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="value" class="col-sm-2 control-label">V<?php echo lang('page_options_value'); ?></label>
+		<label for="value" class="col-sm-2 control-label"><?php echo lang('page_options_value'); ?></label>
 		<div class="col-sm-10">
 			<?php echo form_input($value, '', 'class="form-control"');?>
 		</div>

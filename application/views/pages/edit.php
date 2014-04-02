@@ -1,4 +1,4 @@
-<h1>Edit Page: #<?php echo $page['id']; ?></h1>
+<h1><?php echo lang('menu_edit_page'); ?>: #<?php echo $page['id']; ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
@@ -53,7 +53,7 @@
 	<?php endforeach;?>
 </table>
 
-<p><?php echo anchor('option/add/'.$page['id'], '<span class="glyphicon glyphicon-plus"></span> Add option', 'class="btn btn-default"'); ?></p>
+<p><?php echo anchor('option/add/'.$page['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('form_label_page_add_option'), 'class="btn btn-default"'); ?></p>
 
 <?php foreach ($options as $option):?>
 <div class="modal fade" id="deleteModal<?php echo $option['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModal<?php echo $option['id']; ?>Label" aria-hidden="true">

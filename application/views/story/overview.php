@@ -1,4 +1,4 @@
-<h1>Overview of all pages</h1>
+<h1><?php echo lang('story_overview');  ?></h1>
 
 <div id="graph-data" class="hidden">
 <ul>

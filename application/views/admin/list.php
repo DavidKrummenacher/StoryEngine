@@ -61,8 +61,8 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('admin/delete/'.$user->id, 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('admin/delete/'.$user->id, lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>

@@ -1,10 +1,10 @@
-<h1>Manage assets</h1>
+<h1><?php echo lang('assets_manage'); ?></h1>
 
 <div id="infoMessage"><?php echo $message;?></div>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#page_images" data-toggle="tab">Page images</a></li>
-	<li><a href="#icons" data-toggle="tab">Icons</a></li>
+	<li class="active"><a href="#page_images" data-toggle="tab"><?php echo lang('page_options_page_images'); ?></a></li>
+	<li><a href="#icons" data-toggle="tab"><?php echo lang('page_options_icons'); ?></a></li>
 </ul>
 
 <div class="tab-content">
@@ -12,10 +12,10 @@
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Preview</th>
-				<th width="80px">Actions</th>
+				<th><?php echo lang('assets_name'); ?></th>
+				<th><?php echo lang('assets_desc'); ?></th>
+				<th><?php echo lang('assets_preview'); ?></th>
+				<th width="80px"><?php echo lang('assets_actions'); ?></th>
 			</tr>
 			<?php foreach ($page_images as $page_image) { ?>
 				<tr>
@@ -36,8 +36,8 @@
 		</table>
 		<p>
 			<div class="btn-group">
-				<?php echo anchor('asset/add_page_image', '<span class="glyphicon glyphicon-plus"></span> Add page image', 'class="btn btn-default"'); ?>
-				<?php echo anchor('asset/batch_upload_page_images', '<span class="glyphicon glyphicon-upload"></span> Batch upload page images', 'class="btn btn-default"'); ?>
+				<?php echo anchor('asset/add_page_image', '<span class="glyphicon glyphicon-plus"></span> '.lang('assets_image_add'), 'class="btn btn-default"'); ?>
+				<?php echo anchor('asset/batch_upload_page_images', '<span class="glyphicon glyphicon-upload"></span> '.lang('assets_batch_upload'), 'class="btn btn-default"'); ?>
 			</div>
 		</p>
 	</div>
@@ -46,10 +46,10 @@
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Preview</th>
-				<th width="80px">Actions</th>
+				<th><?php lang('assets_name'); ?></th>
+				<th><?php lang('assets_desc'); ?></th>
+				<th><?php lang('assets_preview'); ?></th>
+				<th width="80px"><?php lang('assets_actions'); ?></th>
 			</tr>
 			<?php foreach ($icons as $icon) { ?>
 				<tr>
@@ -71,7 +71,7 @@
 		<p>
 			<div class="btn-group">
 				<?php echo anchor('asset/add_icon', '<span class="glyphicon glyphicon-plus"></span> Add icon', 'class="btn btn-default"'); ?>
-				<?php echo anchor('asset/batch_upload_icons', '<span class="glyphicon glyphicon-upload"></span> Batch upload icons', 'class="btn btn-default"'); ?>
+				<?php echo anchor('asset/batch_upload_icons', '<span class="glyphicon glyphicon-upload"></span> '.lang('assets_batch_upload'), 'class="btn btn-default"'); ?>
 			</div>
 		</p>
 	</div>
@@ -83,16 +83,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deletePageImageModal<?php echo $page_image['id']; ?>Label">Bild löschen: (<?php echo $page_image['name']; ?>)</h4>
+				<h4 class="modal-title" id="deletePageImageModal<?php echo $page_image['id']; ?>Label"><?php echo lang('assets_image_delete'); ?>: (<?php echo $page_image['name']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Bild wirklich löschen?
+					<?php echo lang('assets_image_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('asset/delete_page_image/'.$page_image['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('asset/delete_page_image/'.$page_image['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
@@ -105,16 +105,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteIconModal<?php echo $icon['id']; ?>Label">Symbol löschen: (<?php echo $icon['name']; ?>)</h4>
+				<h4 class="modal-title" id="deleteIconModal<?php echo $icon['id']; ?>Label"><?php lang('assets_icon_delete'); ?>: (<?php echo $icon['name']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					Symbol wirklich löschen?
+					<?php lang('assets_icon_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-default" data-dismiss="modal">Abbrechen</a>
-				<?php echo anchor('asset/delete_icon/'.$icon['id'], 'Löschen', 'class="btn btn-primary"'); ?>
+				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
+				<?php echo anchor('asset/delete_icon/'.$icon['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
