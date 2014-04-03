@@ -146,63 +146,69 @@
 			
 		 var TxtOffset = 0;	
          var isundefiend = false;
+		 var highFac = 1;
+		 if(node.data.highlighted)
+			{
+				 highFac = 3;
+			}
+		
 			  switch(node.data.type) {
 				  
 				  case "highlighted":
-				  	w = 40;
-					fontW = 4;
-					TxtOffset = 250;	
+				  	w = 40*highFac;
+					fontW = 4*highFac;
+					TxtOffset = 250*highFac;	
 					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
 					ctx.fillStyle = "#ff0000";
 					ctx.fill();
 				  break;
 				  
 				  case "page":
-					w = 20;
-					fontW = 3;
-					TxtOffset = 150;	
+					w = 20*highFac;
+					fontW = 3*highFac;
+					TxtOffset = 100*highFac;	
 					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
 					ctx.fillStyle = node.data.color;
 					ctx.fill();
 				  break;
 				  
 				  case "option":
-					w = 30;
-					fontW = 2;
-					TxtOffset = 100;	
+					w = 30*highFac;
+					fontW = 2*highFac;
+					TxtOffset = 100*highFac;	
 					ctx.fillStyle = node.data.color;	
          			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 	
 				  break;
 				  
 				  case "check":
-					w = 20;
-					fontW = 2;
-					TxtOffset = 30;	
+					w = 20*highFac;
+					fontW = 2*highFac;
+					TxtOffset = 30*highFac;	
 					ctx.fillStyle = node.data.color;	
          			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 				  break;
 				  
 				  case "condition":
-					w = 20;
-					fontW = 2;
-					TxtOffset = 30;
+					w = 20*highFac;
+					fontW = 2*highFac;
+					TxtOffset = 30*highFac;
 					ctx.fillStyle = node.data.color;	
          			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 				  break;
 				  
 				  case "consequence":
-					w = 20;
-					fontW = 2;
-					TxtOffset = 30;
+					w = 20*highFac;
+					fontW = 2*highFac;
+					TxtOffset = 30*highFac;
 					ctx.fillStyle = node.data.color;	
          			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
 				  break;
 				  
 				  default:
-					w = 100;
-					fontW = 3;
-					TxtOffset = 50;
+					w = 100*highFac;
+					fontW = 3*highFac;
+					TxtOffset = 50*highFac;
 					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
 					ctx.fillStyle = node.data.color;
 					ctx.fill();	
@@ -211,23 +217,7 @@
 				  break;
 				  }
 			
-			/*
-			ctx.strokeStyle = "rgba(0,0,0,1)";
-        	ctx.lineWidth = 2;
-			ctx.moveTo(pt.x, pt.y);
-			ctx.lineTo(pt.x+150,pt.y);
-			*/
-			
-			if(node.data.highlighted)
-			{
-				w = 50;
-				fontW = 4;
-				TxtOffset = 250;	
-				ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
-				ctx.fillStyle = "#C4C4C4";
-				ctx.fill();	
-			}
-		  
+		
 
 			 //Write label 
 			ctx.font = "italic small-caps bold "+fontW+"vw sans-serif"
@@ -393,7 +383,7 @@
 		var nodeName = $(this).text();		
 
 		if(nodeName == 1) { 
-		    	sys.addNode(suffix+nodeName,{mass:50,fixed:true,color:"#FF0000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
+		    	sys.addNode(suffix+nodeName,{mass:150,fixed:true,color:"#FF0000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
 		} else { 
 		    	sys.addNode(suffix+nodeName,{mass:20,color:"#000000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
 		}
@@ -460,22 +450,22 @@
 	$('#graph-data-optionchecks ul').children('li').each(function(index, element) {
 			var target = "check_"+$(this).text();
 			var source = "option_"+$(this).attr('name');
-			var NodeColor = sys.getNode(source).data.color;
-			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_check"});
+			var NodeColor = sys.getNode(target).data.color;
+			sys.addEdge(source,target,{length:0.05,direction:0,color:NodeColor,type:"option_to_check"});
 	});
 	
 	$('#graph-data-optionconditions ul').children('li').each(function(index, element) {
 			var target = "condition_"+$(this).text();
 			var source = "option_"+$(this).attr('name');
-			var NodeColor = sys.getNode(source).data.color;
-			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_condition"});
+			var NodeColor = sys.getNode(target).data.color;
+			sys.addEdge(source,target,{length:0.05,direction:0,color:NodeColor,type:"option_to_condition"});
 	});
 	
 	$('#graph-data-optionconsequences ul').children('li').each(function(index, element) {
 			var target = "consequence_"+$(this).text();
 			var source = "option_"+$(this).attr('name');
-			var NodeColor = sys.getNode(source).data.color;
-			sys.addEdge(source,target,{length:0.1,direction:0,color:NodeColor,type:"option_to_consequences"});
+			var NodeColor = sys.getNode(target).data.color;
+			sys.addEdge(source,target,{length:0.05,direction:0,color:NodeColor,type:"option_to_consequences"});
 	});
 	
 
