@@ -107,6 +107,16 @@ $lang['attribute_delete']				= 'Delete attribute';
 $lang['attribute_delete_confirm']		= 'Are you sure you want to delete this attribute?';
 
 $lang['achievement_manage']				= 'Manage achievements';
+$lang['achievement_name']				= 'Name';
+$lang['achievement_desc']				= 'Description';
+$lang['achievement_attribute']			= 'Attribute';
+$lang['achievement_comparison']			= 'Comparison';
+$lang['achievement_value']				= 'Value';
+$lang['achievement_preview']			= 'Preview';
+$lang['achievement_actions']			= 'Actions';
+$lang['achievement_add']				= 'Add achievement';
+$lang['achievement_delete']				= 'Delete achievement';
+$lang['achievement_delete_confirm']		= 'Are you sure you want to delete this achievement?';
 
 $lang['condition_delete']				= 'Delete condition';
 $lang['condition_delete_confirm']		= 'Are you sure you want to delete this condition?';

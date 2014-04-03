@@ -108,6 +108,16 @@ $lang['attribute_delete']				= 'Attribut löschen';
 $lang['attribute_delete_confirm']		= 'Attribut wirklich löschen?';
 
 $lang['achievement_manage']				= 'Erfolge verwalten';
+$lang['achievement_name']				= 'Name';
+$lang['achievement_desc']				= 'Beschreibung';
+$lang['achievement_attribute']			= 'Attribut';
+$lang['achievement_comparison']			= 'Vergleich';
+$lang['achievement_value']				= 'Wert';
+$lang['achievement_preview']			= 'Vorschau';
+$lang['achievement_actions']			= 'Aktionen';
+$lang['achievement_add']				= 'Erfolg hinzufügen';
+$lang['achievement_delete']				= 'Erfolg löschen';
+$lang['achievement_delete_confirm']		= 'Erfolg wirklich löschen?';
 
 $lang['condition_delete']				= 'Bedingung löschen';
 $lang['condition_delete_confirm']		= 'Bedingung wirklich löschen?';

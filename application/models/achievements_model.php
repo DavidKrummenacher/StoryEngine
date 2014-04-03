@@ -8,11 +8,45 @@ class Achievements_model extends CI_Model {
 	}
 	
 	public function get_all() {
+		$this->db->select('
+			story_achievements.id,
+			story_achievements.name,
+			story_achievements.description,
+			story_achievements.attribute,
+			story_achievements.comparison,
+			story_achievements.value,
+			story_attributes.id AS attributes_id,
+			story_attributes.name AS attribute_name,
+			story_attributes.description AS attribute_description,
+			story_attributes.value AS attribute_value,
+			story_attribute_comparisons.id AS comparison_id,
+			story_attribute_comparisons.name AS comparison_name,
+			story_attribute_comparisons.description AS comparison_description
+		');
+		$this->db->join('story_attributes','story_attributes.id = story_achievements.attribute');
+		$this->db->join('story_attribute_comparisons','story_attribute_comparisons.id = story_achievements.comparison');
 		$query = $this->db->get('story_achievements');
 		return $query->result_array();
 	}
 	
 	public function get($id) {
+		$this->db->select('
+			story_achievements.id,
+			story_achievements.name,
+			story_achievements.description,
+			story_achievements.attribute,
+			story_achievements.comparison,
+			story_achievements.value,
+			story_attributes.id AS attributes_id,
+			story_attributes.name AS attribute_name,
+			story_attributes.description AS attribute_description,
+			story_attributes.value AS attribute_value,
+			story_attribute_comparisons.id AS comparison_id,
+			story_attribute_comparisons.name AS comparison_name,
+			story_attribute_comparisons.description AS comparison_description
+		');
+		$this->db->join('story_attributes','story_attributes.id = story_achievements.attribute');
+		$this->db->join('story_attribute_comparisons','story_attribute_comparisons.id = story_achievements.comparison');
 		$query = $this->db->get_where('story_achievements', array('id' => $id));
 		return $query->row_array();
 	}
