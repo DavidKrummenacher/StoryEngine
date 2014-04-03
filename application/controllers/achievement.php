@@ -34,6 +34,11 @@ class Achievement extends CI_Controller {
 		$this->_render_page('achievements/list', $this->data);
 	}
 	
+	public function show() {
+		$this->data['achievements'] = $this->achievements_model->get_all();
+		$this->_render_page('achievements/show', $this->data);
+	}
+	
 	public function add() {
 		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
 		

@@ -120,7 +120,7 @@
 	<?php } ?>
 	
 	<section class="container">
-		<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
+		<?php if(($this->router->class == "page" && $this->router->method == "show" && $page) || ($this->router->class == "achievement" && $this->router->method == "show")) { ?>
 		<nav class="navbar" role="navigation">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
@@ -136,7 +136,7 @@
 						</ul>
 					</li>
 					<li>
-						<?php echo anchor('menu/achievements', '<span class="glyphicon glyphicon-bookmark"></span>'); ?>
+						<?php echo anchor('achievement/show', '<span class="glyphicon glyphicon-bookmark"></span>'); ?>
 				</ul>
 			</div><!-- /.container-fluid -->
 		</nav>
