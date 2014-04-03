@@ -145,7 +145,7 @@
 
 			
 			
-         
+         var isundefiend = false;
 			  switch(node.data.type) {
 				  case "page":
 					w = 20;
@@ -166,7 +166,23 @@
 				  break;
 				  
 				  case "check":
-					w = 10;
+					w = 20;
+					fontW = 2;
+					
+					ctx.fillStyle = node.data.color;	
+         			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+				  break;
+				  
+				  case "condition":
+					w = 20;
+					fontW = 2;
+					
+					ctx.fillStyle = node.data.color;	
+         			ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+				  break;
+				  
+				  case "consequence":
+					w = 20;
 					fontW = 2;
 					
 					ctx.fillStyle = node.data.color;	
@@ -174,12 +190,14 @@
 				  break;
 				  
 				  default:
-					w = 5;
+					w = 100;
 					fontW = 3;
 					
 					ctx.arc(pt.x, pt.y, w, 0, 2 * Math.PI, false);
 					ctx.fillStyle = node.data.color;
 					ctx.fill();	
+					
+					isundefiend = true
 				  break;
 				  }
 			
@@ -192,15 +210,23 @@
 			ctx.font = "italic small-caps bold "+fontW+"vw sans-serif"
 			
 			
+			lineW = 5;
+			if(isundefiend != true) {
 			ctx.strokeStyle = 'white';
-			lineW = 3;
-			
+
 			ctx.lineWidth = lineW;
 			ctx.strokeText(node.data.label, pt.x+32, pt.y);
 
 			
 			ctx.fillStyle = 'black';
 			ctx.fillText(node.data.label, pt.x+32, pt.y);
+			} else {
+				//Display Error
+		
+			
+			ctx.fillStyle = 'red';
+			ctx.fillText("ERROR", pt.x-65, pt.y+10);
+			}
 			
         })   			
       } ,
@@ -208,28 +234,37 @@
       initMouseHandling:function(){
         // no-nonsense drag and drop (thanks springy.js)
         var dragged = null;
-
+		var iniColor;
         // set up a handler object that will initially listen for mousedowns then
         // for moves and mouseups while dragging
         var handler = {
-          clicked:function(e){
-            var pos = $(canvas).offset();
-            _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
-            dragged = particleSystem.nearest(_mouseP);
+          hover:function(e){
+            var pos = $('canvas').offset();
+            //_mouseP = arbor.Point(e.pageX+pos.left, e.pageY+pos.top)
+		   _mouseP = arbor.Point(e.pageX, e.pageY)
+            
+			hover = particleSystem.nearest(_mouseP);
+			iniColor = hover.node.data.color;
+			particleSystem.tweenNode(hover.node, 1, {color:"cyan", radius:4})
 
-            if (dragged && dragged.node !== null){
-              // while we're dragging, don't let physics move the node
-              dragged.node.fixed = false
-            }
-
-            $(canvas).bind('mousemove', handler.dragged)
+         
+			
+            $('canvas').bind('mouseclicked', handler.clicked)
+            $('canvas').bind('mousemove', handler.dragged)
             $(window).bind('mouseup', handler.dropped)
 
             return false
           },
+		  clicked:function(e) {
+			  
+			  if (dragged && dragged.node !== null){
+              // while we're dragging, don't let physics move the node
+              dragged.node.fixed = false
+            }
+			  },
           dragged:function(e){
-            var pos = $(canvas).offset();
-            var s = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
+            var pos = $('canvas').offset();
+            var s = arbor.Point(e.pageX, e.pageY)
 
             if (dragged && dragged.node !== null){
               var p = particleSystem.fromScreen(s)
@@ -242,9 +277,9 @@
           dropped:function(e){
             if (dragged===null || dragged.node===undefined) return
             if (dragged.node !== null) dragged.node.fixed = false
-            dragged.node.tempMass = 2000
+            dragged.node.tempMass = 1000
             dragged = null
-            $(canvas).unbind('mousemove', handler.dragged)
+            $('canvas').unbind('mousemove', handler.dragged)
             $(window).unbind('mouseup', handler.dropped)
             _mouseP = null
             return false
@@ -252,17 +287,23 @@
         }
         
         // start listening
-        $(canvas).mousedown(handler.clicked);
+        $('canvas').mouseover(handler.hover);
 
       },
       
     }
     return that
   } 
-     
- 
+    /* 
+  $('canvas').addEventListener("mouseover", OverviewMouseOver, false);
 	
+	function OverviewMouseOver(e) {
+				_mouseP = arbor.Point(e.pageX, e.pageY)
+				nearest = sys.nearest(_mouseP);
+
+		}*/
   $(document).ready(function(){
+	  
 	  //arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision) 
     var sys = arbor.ParticleSystem(1000, 1000, 0,false,30,0.02,0.6) // create the system with sensible repulsion/stiffness/friction
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
