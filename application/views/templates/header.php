@@ -120,5 +120,24 @@
 	<?php } ?>
 	
 	<section class="container">
-
-
+		<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
+		<nav class="navbar" role="navigation">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<?php echo anchor('menu/new_game', '<span class="glyphicon glyphicon-repeat"></span> Start new game'); ?>
+							</li>
+							<li>
+								<?php echo anchor('menu/continue_game', '<span class="glyphicon glyphicon-refresh"></span> Continue game'); ?>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<?php echo anchor('menu/achievements', '<span class="glyphicon glyphicon-bookmark"></span>'); ?>
+				</ul>
+			</div><!-- /.container-fluid -->
+		</nav>
+		<?php } ?>
