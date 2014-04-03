@@ -12,6 +12,8 @@ class Achievements_model extends CI_Model {
 			story_achievements.id,
 			story_achievements.name,
 			story_achievements.description,
+			story_achievements.desktop_uri,
+			story_achievements.mobile_uri,
 			story_achievements.attribute,
 			story_achievements.comparison,
 			story_achievements.value,
@@ -34,6 +36,8 @@ class Achievements_model extends CI_Model {
 			story_achievements.id,
 			story_achievements.name,
 			story_achievements.description,
+			story_achievements.desktop_uri,
+			story_achievements.mobile_uri,
 			story_achievements.attribute,
 			story_achievements.comparison,
 			story_achievements.value,
@@ -47,7 +51,7 @@ class Achievements_model extends CI_Model {
 		');
 		$this->db->join('story_attributes','story_attributes.id = story_achievements.attribute');
 		$this->db->join('story_attribute_comparisons','story_attribute_comparisons.id = story_achievements.comparison');
-		$query = $this->db->get_where('story_achievements', array('id' => $id));
+		$query = $this->db->get_where('story_achievements', array('story_achievements.id' => $id));
 		return $query->row_array();
 	}
 	

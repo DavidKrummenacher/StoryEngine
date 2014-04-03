@@ -117,6 +117,9 @@ $lang['achievement_actions']			= 'Actions';
 $lang['achievement_add']				= 'Add achievement';
 $lang['achievement_delete']				= 'Delete achievement';
 $lang['achievement_delete_confirm']		= 'Are you sure you want to delete this achievement?';
+$lang['achievement_file']				= 'Image';
+$lang['achievement_select_file']		= 'Select file to upload.';
+$lang['achievement_different_file']		= 'Select different file to change it.';
 
 $lang['condition_delete']				= 'Delete condition';
 $lang['condition_delete_confirm']		= 'Are you sure you want to delete this condition?';

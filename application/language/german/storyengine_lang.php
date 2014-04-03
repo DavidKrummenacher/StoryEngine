@@ -118,6 +118,9 @@ $lang['achievement_actions']			= 'Aktionen';
 $lang['achievement_add']				= 'Erfolg hinzufügen';
 $lang['achievement_delete']				= 'Erfolg löschen';
 $lang['achievement_delete_confirm']		= 'Erfolg wirklich löschen?';
+$lang['achievement_file']				= 'Bild';
+$lang['achievement_select_file']		= 'Datei auswählen um hochzuladen.';
+$lang['achievement_different_file']		= 'Andere Datei auswählen um zu ändern.';
 
 $lang['condition_delete']				= 'Bedingung löschen';
 $lang['condition_delete_confirm']		= 'Bedingung wirklich löschen?';

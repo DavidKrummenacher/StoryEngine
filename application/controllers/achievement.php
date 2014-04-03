@@ -133,13 +133,13 @@ class Achievement extends CI_Controller {
 			}
 			
 			$this->achievements_model->update($id, $name, $description, $desktop_uri, $mobile_uri, $attribute, $comparison, $value);
-			redirect('asset');
+			redirect('achievement');
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			
-			$achievement = $this->achievement_model->get($id);
-			$this->data['$achievement'] = $achievement;
+			$achievement = $this->achievements_model->get($id);
+			$this->data['achievement'] = $achievement;
 			
 			$this->data['name'] = array(
 				'name'  => 'name',

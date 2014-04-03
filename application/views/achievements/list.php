@@ -6,7 +6,7 @@
 	<tr>
 		<th>Id</th>
 		<th><?php echo lang('achievement_name'); ?></th>
-		<th><?php echo lang('achievement_description'); ?></th>
+		<th><?php echo lang('achievement_desc'); ?></th>
 		<th><?php echo lang('achievement_attribute'); ?></th>
 		<th><?php echo lang('achievement_comparison'); ?></th>
 		<th><?php echo lang('achievement_value'); ?></th>
@@ -41,16 +41,16 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="deleteAchievementModal<?php echo $achievement['id']; ?>Label"><?php lang('achievement_delete'); ?>: (<?php echo $achievement['name']; ?>)</h4>
+				<h4 class="modal-title" id="deleteAchievementModal<?php echo $achievement['id']; ?>Label"><?php echo lang('achievement_delete'); ?>: (<?php echo $achievement['name']; ?>)</h4>
 			</div>
 			<div class="modal-body">
 				<p>
-					<?php lang('achievement_delete_confirm'); ?>
+					<?php echo lang('achievement_delete_confirm'); ?>
 				</p>
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-default" data-dismiss="modal"><?php echo lang('form_cancel'); ?></a>
-				<?php echo anchor('asset/delete_icon/'.$achievement['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
+				<?php echo anchor('achievement/delete/'.$achievement['id'], lang('form_delete'), 'class="btn btn-primary"'); ?>
 			</div>
 		</div>
 	</div>
