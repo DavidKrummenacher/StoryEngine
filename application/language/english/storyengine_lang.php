@@ -106,6 +106,8 @@ $lang['assets_icon_delete_confirm']		= 'Are you sure you want to delete this ico
 $lang['attribute_delete']				= 'Delete attribute';
 $lang['attribute_delete_confirm']		= 'Are you sure you want to delete this attribute?';
 
+$lang['achievement_manage']				= 'Manage achievements';
+
 $lang['condition_delete']				= 'Delete condition';
 $lang['condition_delete_confirm']		= 'Are you sure you want to delete this condition?';
 

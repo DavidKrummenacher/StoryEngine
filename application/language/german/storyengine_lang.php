@@ -107,6 +107,8 @@ $lang['assets_icon_delete_confirm']		= 'AreSymbol wirklich löschen?';
 $lang['attribute_delete']				= 'Attribut löschen';
 $lang['attribute_delete_confirm']		= 'Attribut wirklich löschen?';
 
+$lang['achievement_manage']				= 'Erfolge verwalten';
+
 $lang['condition_delete']				= 'Bedingung löschen';
 $lang['condition_delete_confirm']		= 'Bedingung wirklich löschen?';
 
