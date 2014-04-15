@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `auth_groups` (
 
 INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Administrator'),
-(2, 'members', 'General User');
+(2, 'authors', 'Story author'),
+(3, 'members', 'General User');
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,8 @@ CREATE TABLE IF NOT EXISTS `auth_users_groups` (
 
 INSERT INTO `auth_users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
-(2, 1, 2);
+(2, 1, 2),
+(3, 1, 3);
 
 -- --------------------------------------------------------
 

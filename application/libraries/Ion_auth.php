@@ -454,6 +454,17 @@ class Ion_auth
 	}
 
 	/**
+	 * is_author
+	 *
+	 * @return bool
+	 * @author David Krummenacher
+	 **/
+	public function is_author($id=false) {
+		return $this->in_group('authors', $id);
+	}
+
+
+	/**
 	 * in_group
 	 *
 	 * @param mixed group(s) to check
