@@ -69,6 +69,13 @@ class Attributes_model extends CI_Model {
 	
 	public function get_for_user($user, $id) {
 		$query = $this->db->get_where('story_users_attributes', array('user' => $user, 'attribute' => $id));
+		
+		// Set to default value if not set
+		if ($query->num_rows() <= 0) {
+			$this->create_for_user($user, $id);
+			$query = $this->db->get_where('story_users_attributes', array('user' => $user, 'attribute' => $id));
+		}
+		
 		return $query->row_array();
 	}
 	

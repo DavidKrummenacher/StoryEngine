@@ -21,14 +21,29 @@ class Option extends CI_Controller {
 	public function choose($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
 		
-		// TODO: Implement option handling
-		// Roll (story_option_rolls)
+		// Checks (story_option_checks)
 		$success = true;
 		$checks = $this->options_model->get_checks_for_option($id);
 		foreach ($checks as $check) {
-			// TODO: Check for failure
 			// Check for failure
+			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $check['attribute']);
+			$comparison = $check['comparison'];
+			$check_value = ($check['random'] == 0) ? $check['value'] : rand(0, $check['value']);
 			
+			switch ($comparison) {
+				case 1: // ==
+					$success = ($value == $check_value); break;
+				case 2: // !=
+					$success = ($value != $check_value); break;
+				case 3: // >
+					$success = ($value > $check_value); break;
+				case 4: // >=
+					$success = ($value >= $check_value); break;
+				case 5: // <
+					$success = ($value < $check_value); break;
+				case 6: // <=
+					$success = ($value <= $check_value); break;
+			}
 			
 			if (!success) { break; }
 		}
@@ -37,9 +52,26 @@ class Option extends CI_Controller {
 		$targets = $this->options_model->get_targets_for_option($id, !$success);
 		$target = $targets[array_rand($targets)];
 		
-		// TODO: Apply consequences (story_option_consequences)
+		// Apply consequences (story_option_consequences)
 		$consequences = $this->options_model->get_consequences_for_option($id);
-		foreach ($consequences as $consequence) { /*_apply_consequences($consequence);*/ }
+		foreach ($consequences as $consequence) {
+			$attribute = $consequence['attribute'];
+			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+			$operator = $consequence['operator'];
+			$consequence_value = $consequence['value'];
+			
+			switch ($operator) {
+				case 1: // +=
+					$value += $consequence_value; break;
+				case 2: // -=
+					$value -= $consequence_value; break;
+				case 3: // =
+					$value = $consequence_value; break;
+			}
+			
+			// Apply
+			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
+		}
 		
 		// Redirect to page
 		redirect('page/show/'.$target['target_page']);

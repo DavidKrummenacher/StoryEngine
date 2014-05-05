@@ -10,6 +10,7 @@ class Page extends CI_Controller {
 		$this->load->model('settings_model');
 		$this->load->model('pages_model');
 		$this->load->model('assets_model');
+		$this->load->model('attributes_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -32,9 +33,26 @@ class Page extends CI_Controller {
 		$this->data['page'] = $this->pages_model->get($id);
 		$this->data['image'] = $this->assets_model->get_page_image($this->data['page']['image']);
 		
-		// TODO: Apply consequences (story_page_consequences)
+		// Apply consequences (story_page_consequences)
 		$consequences = $this->pages_model->get_consequences($id);
-		foreach ($consequences as $consequence) { /*_apply_consequences($consequence);*/ }
+		foreach ($consequences as $consequence) {
+			$attribute = $consequence['attribute'];
+			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+			$operator = $consequence['operator'];
+			$consequence_value = $consequence['value'];
+			
+			switch ($operator) {
+				case 1: // +=
+					$value += $consequence_value; break;
+				case 2: // -=
+					$value -= $consequence_value; break;
+				case 3: // =
+					$value = $consequence_value; break;
+			}
+			
+			// Apply
+			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
+		}
 		
 		// Option filtering
 		$options = array();
@@ -44,9 +62,25 @@ class Page extends CI_Controller {
 			
 			$conditions_met = true;
 			foreach ($conditions as $condition) {
-				// TODO: Check conditions
 				// Check conditions
-				
+				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $condition['attribute']);
+				$comparison = $condition['comparison'];
+				$condition_value = $condition['value'];
+			
+				switch ($comparison) {
+					case 1: // ==
+						$conditions_met = ($value == $condition_value); break;
+					case 2: // !=
+						$conditions_met = ($value != $condition_value); break;
+					case 3: // >
+						$conditions_met = ($value > $condition_value); break;
+					case 4: // >=
+						$conditions_met = ($value >= $condition_value); break;
+					case 5: // <
+						$conditions_met = ($value < $condition_value); break;
+					case 6: // <=
+						$conditions_met = ($value <= $condition_value); break;
+				}
 				
 				if (!$conditions_met) { break; }
 			}
