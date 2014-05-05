@@ -353,6 +353,46 @@ INSERT INTO `story_settings` (`key`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `story_users_achievements`
+--
+
+DROP TABLE IF EXISTS `story_users_achievements`;
+CREATE TABLE IF NOT EXISTS `story_users_achievements` (
+  `user` int(11) unsigned NOT NULL,
+  `achievement` int(11) NOT NULL,
+  PRIMARY KEY (`user`, `achievement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `story_users_attributes`
+--
+
+DROP TABLE IF EXISTS `story_users_attributes`;
+CREATE TABLE IF NOT EXISTS `story_users_attributes` (
+  `user` int(11) unsigned NOT NULL,
+  `attribute` int(11) NOT NULL,
+  `value` int(11) NOT NULL,
+  PRIMARY KEY (`user`, `attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `story_display_settings`
+--
+
+DROP TABLE IF EXISTS `story_display_settings`;
+CREATE TABLE IF NOT EXISTS `story_display_settings` (
+  `key` varchar(120) NOT NULL,
+  `value` varchar(280) NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Constraints der Tabellen
 --
 
@@ -421,3 +461,17 @@ ALTER TABLE `story_page_consequences`
   ADD CONSTRAINT `fk_story_page_consequences_page` FOREIGN KEY (`page`) REFERENCES `story_pages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_story_page_consequences_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_story_page_consequences_operator` FOREIGN KEY (`operator`) REFERENCES `story_attribute_operators` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_users_achievements`
+--
+ALTER TABLE `story_users_achievements`
+  ADD CONSTRAINT `fk_story_users_achievements_user` FOREIGN KEY (`user`) REFERENCES `auth_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_users_achievements_achievement` FOREIGN KEY (`achievement`) REFERENCES `story_achievements` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `story_users_attributes`
+--
+ALTER TABLE `story_users_attributes`
+  ADD CONSTRAINT `fk_story_users_attributes_user` FOREIGN KEY (`user`) REFERENCES `auth_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_story_users_attributes_attribute` FOREIGN KEY (`attribute`) REFERENCES `story_attributes` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
