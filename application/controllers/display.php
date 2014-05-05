@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class DisplaySettings extends CI_Controller {
+class Display extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
@@ -12,6 +12,10 @@ class DisplaySettings extends CI_Controller {
 	}
 	
 	public function index() {
+		// echo css
+	}
+	
+	public function edit() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		/*if ($this->input->post() != null) {
