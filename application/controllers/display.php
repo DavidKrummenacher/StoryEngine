@@ -28,14 +28,14 @@ class Display extends CI_Controller {
 		}
 		
 		// TODO: Fix settings
-		// TODO: Implement settings
+		// TODO: Implement settings*/
 		$this->data['settings'] = $this->settings_model->get_story_settings();
-		$this->_render_page('story/settings', $this->data);*/
+		$this->_render_page('display/edit', $this->data);
 	}
 	
 	public function preview() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
-		
+		$this->_render_page('display/preview', $this->data);
 	}
 	
 	protected function _render_page($view, $data = null, $render = false) {

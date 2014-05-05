@@ -59,6 +59,7 @@
 							<li class="divider"></li>
 							<li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-flash"></span> Debugging'); ?></li>
 							<li class="divider"></li>
+							<li><?php echo anchor('display/edit', '<span class="glyphicon glyphicon-th-large"></span> Design'); ?></li>
 							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>
 					</li>
