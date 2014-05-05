@@ -87,4 +87,23 @@ class Achievements_model extends CI_Model {
 	public function delete($id) {
 		$this->db->delete('story_achievements', array('id' => $id));
 	}
+
+	public function get_all_for_user($user) {
+		$query = $this->db->get_where('story_users_achievements', array('user' => $user));
+		return $query->result_array();
+	}
+	
+	public function get_for_user($user, $id) {
+		$query = $this->db->get_where('story_users_achievements', array('user' => $user, 'achievement' => $id));
+		return $query->row_array();
+	}
+	
+	public function set_for_user($user, $id) {
+		$data = array(
+			'user' => $user,
+			'attribute' => $id
+		);
+		
+		$this->db->insert('story_users_achievements', $data);
+	}
 }

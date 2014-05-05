@@ -61,4 +61,39 @@ class Attributes_model extends CI_Model {
 		$query = $this->db->get_where('story_attribute_operators', array('id' => $id));
 		return $query->row_array();
 	}
+	
+	public function get_all_for_user($user) {
+		$query = $this->db->get_where('story_users_attributes', array('user' => $user));
+		return $query->result_array();
+	}
+	
+	public function get_for_user($user, $id) {
+		$query = $this->db->get_where('story_users_attributes', array('user' => $user, 'attribute' => $id));
+		return $query->row_array();
+	}
+	
+	public function create_for_user($user, $id) {
+		$value = $this->get($id);
+		$data = array(
+			'user' => $user,
+			'attribute' => $id,
+			'value' => $value['value']
+		);
+		
+		$this->db->insert('story_users_attributes', $data);
+	}
+	
+	public function update_for_user($user, $id, $value) {
+		$data = array(
+			'value' => $value
+		);
+		
+		$this->db->where('user', $user);
+		$this->db->where('attribute', $id);
+		$this->db->update('story_users_attributes', $data);
+	}
+	
+	public function delete_for_user($user, $id) {
+		$this->db->delete('story_users_attributes', array('user' => $user, 'attribute' => $id));
+	}
 }
