@@ -33,7 +33,7 @@ class Asset extends CI_Controller {
 	}
 	
 	public function index() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$this->data['message'] = ($this->ion_auth->errors()) ? $this->ion_auth->errors() : $this->session->flashdata('message');
 		
@@ -43,7 +43,7 @@ class Asset extends CI_Controller {
 	}
 	
 	public function add_page_image() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -84,7 +84,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function batch_upload_page_images() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		if (isset($_POST) && !empty($_POST)) {
 			$files = $this->_upload_multiple_files(
@@ -106,7 +106,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function edit_page_image($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -156,7 +156,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function delete_page_image($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		// delete files
 		$img = $this->assets_model->get_page_image($id);
@@ -168,7 +168,7 @@ class Asset extends CI_Controller {
 	}
 	
 	public function add_icon() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -209,7 +209,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function batch_upload_icons() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		if (isset($_POST) && !empty($_POST)) {
 			$files = $this->_upload_multiple_files(
@@ -231,7 +231,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function edit_icon($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -281,7 +281,7 @@ class Asset extends CI_Controller {
 		}
 	}
 	public function delete_icon($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		// delete files
 		$icon = $this->assets_model->get_icon($id);

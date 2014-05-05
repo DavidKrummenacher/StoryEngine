@@ -38,7 +38,7 @@ class Story extends CI_Controller {
 			//check to see if we are creating the user
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("admin", 'refresh');
+			redirect("page", 'refresh');
 		} else {
 			//display the create user form
 			//set the flash data error message if there is one
@@ -81,7 +81,7 @@ class Story extends CI_Controller {
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
 
-			$this->_render_page('admin/add', $this->data);
+			$this->_render_page('story/register', $this->data);
 		}
 	}
 	
@@ -101,13 +101,12 @@ class Story extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				if ($this->ion_auth->is_admin()) redirect('admin', 'refresh');
-				else redirect('page', 'refresh');
+				redirect('page', 'refresh');
 			} else {
 				//if the login was un-successful
 				//redirect them back to the login page
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('admin/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+				redirect('story/login', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		} else {
 			//the user is not logging in so display the login page
@@ -141,7 +140,7 @@ class Story extends CI_Controller {
 	}
 	
 	public function list_pages() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		// TODO: Grab "per_page" config-var from ADMIN-settings instead of story_settings
 		//Pagination configs
@@ -175,7 +174,7 @@ class Story extends CI_Controller {
 	}
 	
 	public function overview() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		// TODO: Implement overview
 		$this->data['options'] = $this->options_model->get_all();
@@ -190,7 +189,7 @@ class Story extends CI_Controller {
 	}
 	
 	public function search($term = null) {
-    	if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+    	if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 
 		$this->data['results'] = null;
 		$term = $this->input->post('searchterm',TRUE);
@@ -202,7 +201,7 @@ class Story extends CI_Controller {
 	}
 	
 	public function settings() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		if (!$this->ion_auth->is_admin()) { show_error('You need admin rights to do this!'); }
 		
 		if ($this->input->post() != null) {

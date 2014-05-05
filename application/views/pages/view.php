@@ -1,6 +1,6 @@
 
 			<?php if ($page) { ?>
-			<?php if ($this->ion_auth->logged_in()) { ?>
+			<?php if ($this->ion_auth->is_author()) { ?>
 			<div class="row">
 				<div class="col-xs-12">
 					<p><i>(<?php echo $page['title']; ?>)</i></p>

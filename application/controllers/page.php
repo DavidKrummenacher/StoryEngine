@@ -16,6 +16,9 @@ class Page extends CI_Controller {
 	}
 	
 	public function index() {
+		// If not logged in redirect to login page
+		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		
 		// Redirect to start page
 		$start_page = $this->settings_model->get_value('start_page');
 		redirect('page/show/'.$start_page);
@@ -54,7 +57,7 @@ class Page extends CI_Controller {
 	}
 	
 	public function add() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('title', 'Title', 'required');
@@ -96,7 +99,7 @@ class Page extends CI_Controller {
 	}
 	
 	public function edit($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('title', 'Title', 'required');
@@ -144,7 +147,7 @@ class Page extends CI_Controller {
 	}
 	
 	public function delete($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		if ($id == $this->settings_model->get_value('start_page')) { show_error('You cannot delete the current start page.'); }
 		
 		// Delete image on server

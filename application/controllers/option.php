@@ -44,7 +44,7 @@ class Option extends CI_Controller {
 	}
 
 	public function add($page) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('order', 'Order', 'required');
@@ -85,7 +85,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function edit($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('order', 'Order', 'required');
@@ -134,7 +134,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function delete($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$option = $this->options_model->get($id);
 		$page = $option['source_page'];
@@ -144,7 +144,7 @@ class Option extends CI_Controller {
 	}
 	
 	public function add_condition($option) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -188,7 +188,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function edit_condition($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -237,7 +237,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function delete_condition($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$helper = $this->options_model->get_condition($id);
 		$option = $helper['option'];
@@ -247,7 +247,7 @@ class Option extends CI_Controller {
 	}
 	
 	public function add_target($option) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('target_page', 'Target', 'required');
@@ -282,7 +282,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function edit_target($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('target_page', 'Target', 'required');
@@ -322,7 +322,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function delete_target($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$helper = $this->options_model->get_target($id);
 		$option = $helper['option'];
@@ -332,7 +332,7 @@ class Option extends CI_Controller {
 	}
 	
 	public function add_check($option) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -384,7 +384,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function edit_check($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -441,7 +441,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function delete_check($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$helper = $this->options_model->get_check($id);
 		$option = $helper['option'];
@@ -451,7 +451,7 @@ class Option extends CI_Controller {
 	}
 	
 	public function add_consequence($option) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -495,7 +495,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function edit_consequence($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
@@ -544,7 +544,7 @@ class Option extends CI_Controller {
 		}
 	}
 	public function delete_consequence($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$helper = $this->options_model->get_consequence($id);
 		$option = $helper['option'];

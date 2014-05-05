@@ -460,7 +460,7 @@ class Ion_auth
 	 * @author David Krummenacher
 	 **/
 	public function is_author($id=false) {
-		return $this->in_group('authors', $id);
+		return $this->in_group('authors', $id) || $this->is_admin($id);
 	}
 
 

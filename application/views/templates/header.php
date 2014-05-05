@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="de-CH">
 <head>
-	<title>MLStorytelling<?php if ($this->ion_auth->logged_in() || $this->router->class == "admin") { ?> (StoryAdmin)<?php } ?></title>
+	<title>MLStorytelling<?php if ($this->ion_auth->is_author() || $this->router->class == "admin") { ?> (StoryAdmin)<?php } ?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,11 +27,11 @@
 	</head>
 	<body>
 	
-	<?php if ($this->ion_auth->logged_in() || $this->router->class == "admin") { ?>
+	<?php if ($this->ion_auth->is_author() || $this->router->class == "admin") { ?>
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<?php if ($this->ion_auth->logged_in()) { ?>
+				<?php if ($this->ion_auth->is_author()) { ?>
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
@@ -42,7 +42,7 @@
 				<a href="<?php echo base_url(); ?>" class="navbar-brand"><span class="glyphicon glyphicon-book"></span> StoryAdmin</a>
 			</div>
 			
-			<?php if ($this->ion_auth->logged_in()) { ?>
+			<?php if ($this->ion_auth->is_author()) { ?>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-left">
 					<li class="dropdown">
@@ -93,7 +93,7 @@
 	</nav>
 	<?php } ?>
 	
-	<?php if ($this->ion_auth->logged_in()) { ?>
+	<?php if ($this->ion_auth->is_author()) { ?>
 	<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
 	<?php if($page['id'] != $this->settings_model->get_value('start_page')) { ?>
 	<div class="modal fade" id="deletePageModal" tabindex="-1" role="dialog" aria-labelledby="deletePageModalLabel" aria-hidden="true">

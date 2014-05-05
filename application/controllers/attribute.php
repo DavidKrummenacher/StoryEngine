@@ -11,7 +11,7 @@ class Attribute extends CI_Controller {
 	}
 	
 	public function index() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$this->data['message'] = ($this->ion_auth->errors()) ? $this->ion_auth->errors() : $this->session->flashdata('message');
 		
@@ -20,7 +20,7 @@ class Attribute extends CI_Controller {
 	}
 
 	public function add() {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -61,7 +61,7 @@ class Attribute extends CI_Controller {
 	}
 	
 	public function edit($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		//validate form input
 		$this->form_validation->set_rules('name', 'Name', 'required');
@@ -105,7 +105,7 @@ class Attribute extends CI_Controller {
 	}
 	
 	public function delete($id) {
-		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		$this->attributes_model->delete($id);
 		redirect('attribute');

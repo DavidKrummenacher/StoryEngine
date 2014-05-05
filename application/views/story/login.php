@@ -22,6 +22,9 @@
 							</div>
 							<p><?php echo form_submit('submit', 'Login', 'class="btn btn-lg btn-primary btn-block"');?></p>
 						<?php echo form_close();?>
+						<p>
+							<?php echo anchor('story/register', 'No Account! Register here!', 'class="btn btn-default btn-block"'); ?>
+						</p>
 					</div>
 				</div>
 			</div>
