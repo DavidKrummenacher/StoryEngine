@@ -86,6 +86,8 @@ class Story extends CI_Controller {
 	}
 	
 	public function login() {
+		if ($this->ion_auth->logged_in()) { redirect('page', 'refresh'); }
+		
 		$this->data['title'] = "Login";
 
 		//validate form input

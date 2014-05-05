@@ -13,6 +13,8 @@ class Menu extends CI_Controller {
 	}
 	
 	public function new_game() {
+		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		
 		// TODO: Reset attributes
 		
 		// Load start page
@@ -21,6 +23,8 @@ class Menu extends CI_Controller {
 	}
 	
 	public function continue_game() {
+		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		
 		// TODO: Load attributes
 		$last_page = 1;
 		redirect('page/show/'.$last_page);

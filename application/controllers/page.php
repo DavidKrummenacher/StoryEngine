@@ -25,6 +25,8 @@ class Page extends CI_Controller {
 	}
 	
 	public function show($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		
 		// TODO: Implement page handling
 		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get($id);

@@ -19,6 +19,8 @@ class Option extends CI_Controller {
 	}
 	
 	public function choose($id) {
+		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		
 		// TODO: Implement option handling
 		// Roll (story_option_rolls)
 		$success = true;
