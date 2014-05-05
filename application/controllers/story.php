@@ -221,6 +221,16 @@ class Story extends CI_Controller {
 		$this->_render_page('story/settings', $this->data);
 	}
 	
+	public function debug() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { show_error('You need author rights to do this!'); }
+		
+		$this->load->model('attributes_model');
+		$this->data['attributes'] = $this->attributes_model->get_all();
+		$this->data['user_attributes'] = $this->attributes_model->get_all_for_user($this->ion_auth->user()->row()->id);
+		$this->_render_page('story/debug', $this->data);
+	}
+	
 	protected function _render_page($view, $data = null, $render = false) {
 		$this->viewdata = (empty($data)) ? $this->data: $data;
 		

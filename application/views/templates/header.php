@@ -57,6 +57,8 @@
 							<li><?php echo anchor('asset', '<span class="glyphicon glyphicon-picture"></span> '. lang('assets_manage')); ?></a></li>
 							<li><?php echo anchor('achievement', '<span class="glyphicon glyphicon-bookmark"></span> '.lang('achievement_manage')); ?></a></li>
 							<li class="divider"></li>
+							<li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-flash"></span> Debugging'); ?></li>
+							<li class="divider"></li>
 							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>
 					</li>
