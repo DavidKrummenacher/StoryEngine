@@ -120,6 +120,7 @@
 	<?php } ?>
 	
 	<section class="container">
+		<?php if ($this->ion_auth->logged_in()) { ?>
 		<?php if(($this->router->class == "page" && $this->router->method == "show" && $page) || ($this->router->class == "achievement" && $this->router->method == "show")) { ?>
 		<nav class="navbar" role="navigation">
 			<div class="container-fluid">
@@ -133,6 +134,9 @@
 							<li>
 								<?php echo anchor('menu/continue_game', '<span class="glyphicon glyphicon-refresh"></span> Continue game'); ?>
 							</li>
+							<li>
+								<?php echo anchor('story/logout', '<span class="glyphicon glyphicon-log-out"></span> Logout'); ?>
+							</li>
 						</ul>
 					</li>
 					<li>
@@ -140,4 +144,5 @@
 				</ul>
 			</div><!-- /.container-fluid -->
 		</nav>
+		<?php } ?>
 		<?php } ?>
