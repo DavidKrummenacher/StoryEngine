@@ -144,8 +144,9 @@ class Admin extends CI_Controller {
 				'last_name'  => $this->input->post('last_name')
 			);
 		}
-		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data)) {
+		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, array(2,3))) {
 			//check to see if we are creating the user
+			//add to author group also
 			//redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
 			redirect("admin", 'refresh');
