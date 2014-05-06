@@ -16,7 +16,7 @@
 			<?php
 				$user_value = null;
 				foreach ($user_attributes as $user_attribute) {
-					if ($user_attribute['id'] == $attribute['id'])
+					if ($user_attribute['attribute'] == $attribute['id'])
 						$user_value = $user_attribute['value'];
 				}
 				echo ($user_value != null) ? $user_value : 'NOT SET';

@@ -38,6 +38,7 @@ class Page extends CI_Controller {
 		foreach ($consequences as $consequence) {
 			$attribute = $consequence['attribute'];
 			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+			$value = $value['value'];
 			$operator = $consequence['operator'];
 			$consequence_value = $consequence['value'];
 			
@@ -64,6 +65,7 @@ class Page extends CI_Controller {
 			foreach ($conditions as $condition) {
 				// Check conditions
 				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $condition['attribute']);
+				$value = $value['value'];
 				$comparison = $condition['comparison'];
 				$condition_value = $condition['value'];
 			

@@ -27,6 +27,7 @@ class Option extends CI_Controller {
 		foreach ($checks as $check) {
 			// Check for failure
 			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $check['attribute']);
+			$value = $value['value'];
 			$comparison = $check['comparison'];
 			$check_value = ($check['random'] == 0) ? $check['value'] : rand(0, $check['value']);
 			
@@ -57,6 +58,7 @@ class Option extends CI_Controller {
 		foreach ($consequences as $consequence) {
 			$attribute = $consequence['attribute'];
 			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+			$value = $value['value'];
 			$operator = $consequence['operator'];
 			$consequence_value = $consequence['value'];
 			
