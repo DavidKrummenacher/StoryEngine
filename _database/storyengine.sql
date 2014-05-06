@@ -386,9 +386,15 @@ CREATE TABLE IF NOT EXISTS `story_users_attributes` (
 DROP TABLE IF EXISTS `story_display_settings`;
 CREATE TABLE IF NOT EXISTS `story_display_settings` (
   `key` varchar(120) NOT NULL,
-  `value` varchar(280) NOT NULL,
+  `value` text NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Daten für Tabelle `story_display_settings`
+--
+
+INSERT INTO `story_display_settings` (`key`, `value`) VALUES ('css', '');
 
 -- --------------------------------------------------------
 

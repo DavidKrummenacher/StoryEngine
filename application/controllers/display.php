@@ -6,30 +6,21 @@ class Display extends CI_Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->library('form_validation');
-		$this->load->model('settings_model');
+		$this->load->model('display_model');
 		
 		$this->lang->load('storyengine');
 	}
 	
 	public function index() {
 		// echo css
+		echo $this->display_model->get_value('css');
 	}
 	
 	public function edit() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
-		/*if ($this->input->post() != null) {
-			$p = $this->input->post();
-			foreach($p as $key=>$value) {   
-				$this->settings_model->set_story_setting($key,$value);
-			}
-			
-			$this->data['flash'] = $this->lang->line('settings_saved');
-		}
-		
-		// TODO: Fix settings
-		// TODO: Implement settings*/
-		$this->data['settings'] = $this->settings_model->get_story_settings();
+		$this->data['message'] = 'Derp';
+		$this->data['css'] = $this->display_model->get_value('css');
 		$this->_render_page('display/edit', $this->data);
 	}
 	
