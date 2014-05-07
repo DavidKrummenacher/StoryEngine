@@ -28,10 +28,8 @@ class Page extends CI_Controller {
 	public function show($id) {
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
 		
-		// TODO: Implement page handling
-		// TODO: Achievemnt unlocking
 		$this->data['page'] = $this->pages_model->get($id);
-		$this->data['image'] = $this->assets_model->get_page_image($this->data['page']['image']);
+		$this->data['image'] = ($this->data['page'] != null) ? $this->assets_model->get_page_image($this->data['page']['image']) : null;
 		
 		// Apply consequences (story_page_consequences)
 		$consequences = $this->pages_model->get_consequences($id);
@@ -54,6 +52,9 @@ class Page extends CI_Controller {
 			// Apply
 			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
 		}
+		
+		// TODO: Achievement unlocking
+		
 		
 		// Option filtering
 		$options = array();
