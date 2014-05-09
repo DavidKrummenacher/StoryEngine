@@ -29,10 +29,19 @@ class Admin extends CI_Controller {
 		else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			//list the users
+			
+			//list admins and authors
 			$this->ion_auth->order_by("username", "asc");
-			$this->data['users'] = $this->ion_auth->users()->result();
+			$groups = array(1, 2);
+			$this->data['authors'] = $this->ion_auth->users($groups)->result();
+			foreach ($this->data['authors'] as $k => $user) {
+				$this->data['authors'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+			}
+			
+			//list the regular users
+			$this->ion_auth->order_by("username", "asc");
+			$groups = array(3);
+			$this->data['users'] = $this->ion_auth->users($groups)->result();
 			foreach ($this->data['users'] as $k => $user) {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
@@ -225,7 +234,7 @@ class Admin extends CI_Controller {
 
 			if (isset($groupData) && !empty($groupData)) {
 
-				$this->ion_auth->remove_from_group('', $id); // TODO: Fix admin
+				$this->ion_auth->remove_from_group('', $id);
 
 				foreach ($groupData as $grp) {
 					$this->ion_auth->add_to_group($grp, $id);

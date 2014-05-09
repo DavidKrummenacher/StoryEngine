@@ -44,11 +44,23 @@
 		<?php
 			$first = TRUE;
 			foreach ($groups as $group):
+				
+				$disabled = '';
+				
+				//don't allow making yourself not an admin
+				if ($user->id == $this->ion_auth->user()->row()->id && $group['name'] == $this->config->item('admin_group', 'ion_auth')) {
+					$disabled = ' hidden';
+				}
+				
+				//don't allow making yourself not a general user
+				if ($group['id'] == 3) {
+					$disabled = ' hidden';
+				}
 		?>
 			<div class="checkbox">
 				<label>
 					<?php
-						$gID=$group['id'];
+						$gID = $group['id'];
 						$checked = null;
 						$item = null;
 						foreach($currentGroups as $grp) {
@@ -57,14 +69,13 @@
 								break;
 							}
 						}
-						
-						//don't allow making yourself not an admin
-						$disabled = '';
-						if ($user->id == $this->ion_auth->user()->row()->id && $group['name'] == $this->config->item('admin_group', 'ion_auth')) {
-							$disabled = ' hidden';
-						}
 					?>
-					<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked.$disabled;?>>
+					<?php if ($disabled == '') { ?>
+						<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?>>
+					<?php } else { ?>
+						<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?> hidden>
+						<input type="checkbox"<?php echo $checked;?> disabled>
+					<?php } ?>
 					<?php echo $group['description'];?>
 				</label>
 			</div>
