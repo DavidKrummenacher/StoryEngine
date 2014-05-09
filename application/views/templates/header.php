@@ -19,6 +19,11 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
 	<?php } ?>
     
+    <?php if($this->router->class == "option") { ?>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>css/image-picker.css">
+       
+        <?php } ?>
+    
     <?php if($this->router->class == "page" && $this->router->method == "edit") { ?>
     <!-- Iconpicker stuff -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/iconselect.css">

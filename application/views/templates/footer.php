@@ -6,12 +6,18 @@
     
     <?php if($this->router->class == "page" && $this->router->method == "edit") { ?>
     <!-- Iconpicker stuff -->
-       	<script src="<?php echo base_url(); ?>js/iconselect/iconselect.js"></script>
+    <script src="<?php echo base_url(); ?>js/iconselect/iconselect.js"></script>
 
-       	<script src="<?php echo base_url(); ?>js/iconselect/iscroll.js"></script>
-		<script src="<?php echo base_url(); ?>js/edit_page-handler.js"></script>
+    <script src="<?php echo base_url(); ?>js/iconselect/iscroll.js"></script>
+	<script src="<?php echo base_url(); ?>js/edit_page-handler.js"></script>
     
     <?php } ?>
+    
+        <?php if($this->router->class == "option") { ?>
+     <script src="<?php echo base_url(); ?>js/image-picker.min.js"></script> 
+     <script src="<?php echo base_url(); ?>js/imagepicker-handle.js"></script>
+       
+        <?php } ?>
 	
     <?php if($this->router->class == "story" && $this->router->method == "overview") { ?>
     <!-- Arbor.JS Stuff -->

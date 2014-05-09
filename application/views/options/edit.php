@@ -15,7 +15,7 @@
 			<select name="icon" id="icon" class="form-control">
 				<option value="null"<?php if ($icon['value'] == null) { ?> selected="selected"<?php } ?>><?php echo lang('page_options_noicon'); ?></option>
 				<?php foreach ($icons as $i) { ?>
-				<option value="<?php echo $i['id']; ?>"<?php if ($i['id'] == $icon['value']) { ?> selected="selected"<?php } ?>>
+				<option value="<?php echo $i['id']; ?>" data-img-src="<?php echo base_url();?>/assets/icons/desktop/<?php echo $i['desktop_uri']; ?>" <?php if ($i['id'] == $icon['value']) { ?> selected="selected"<?php } ?>>
 					<?php echo $i['name']; ?>
 				</option>
 				<?php } ?>
