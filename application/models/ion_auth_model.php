@@ -2087,7 +2087,7 @@ class Ion_auth_model extends CI_Model
 	}
 
 	protected function _prepare_ip($ip_address) {
-		if ($this->db->platform() === 'postgre' || $this->db->platform() === 'sqlsrv' || $this->db->platform() === 'mssql')
+		if ($this->db->platform() === 'postgre' || $this->db->platform() === 'sqlsrv' || $this->db->platform() === 'mssql' || $this->db->platform() === 'mysql')
 		{
 			return $ip_address;
 		}
