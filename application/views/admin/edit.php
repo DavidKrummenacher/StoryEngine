@@ -36,8 +36,7 @@
 	</div>
 
 	<?php if ($this->ion_auth->is_admin()):  ?>
-	<?php //TODO: don't allow making yourself not an admin ?>
-
+	
 	<!--<h3><?php echo lang('edit_user_groups_heading');?></h3>-->
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><?php echo lang('edit_user_groups_heading');?></label>
@@ -45,8 +44,6 @@
 		<?php
 			$first = TRUE;
 			foreach ($groups as $group):
-				// TODO: Find better solution for 'don't let administrators make themselfs not an administrator anymore'-hack
-				if ($user->id == $this->ion_auth->user()->row()->id && $group['name'] == $this->config->item('admin_group', 'ion_auth')) { continue; };
 		?>
 			<div class="checkbox">
 				<label>
@@ -60,8 +57,14 @@
 								break;
 							}
 						}
+						
+						//don't allow making yourself not an admin
+						$disabled = '';
+						if ($user->id == $this->ion_auth->user()->row()->id && $group['name'] == $this->config->item('admin_group', 'ion_auth')) {
+							$disabled = ' hidden';
+						}
 					?>
-					<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked;?>>
+					<input type="checkbox" name="groups[]" value="<?php echo $group['id'];?>"<?php echo $checked.$disabled;?>>
 					<?php echo $group['description'];?>
 				</label>
 			</div>
@@ -75,7 +78,6 @@
 	<?php endif ?>
 
 	<?php echo form_hidden('id', $user->id);?>
-	<?php echo form_hidden($csrf); ?>
 	
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">

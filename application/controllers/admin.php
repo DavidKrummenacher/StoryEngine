@@ -214,11 +214,6 @@ class Admin extends CI_Controller {
 		$this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
 
 		if (isset($_POST) && !empty($_POST)) {
-			// do we have a valid request?
-			if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
-				show_error($this->lang->line('error_csrf'));
-			}
-
 			$data = array(
 				'email' => $this->input->post('email'),
 				'first_name' => $this->input->post('first_name'),
@@ -230,7 +225,7 @@ class Admin extends CI_Controller {
 
 			if (isset($groupData) && !empty($groupData)) {
 
-				$this->ion_auth->remove_from_group('', $id);
+				$this->ion_auth->remove_from_group('', $id); // TODO: Fix admin
 
 				foreach ($groupData as $grp) {
 					$this->ion_auth->add_to_group($grp, $id);
@@ -259,9 +254,6 @@ class Admin extends CI_Controller {
 				}
 			}
 		}
-
-		//display the edit user form
-		$this->data['csrf'] = $this->_get_csrf_nonce();
 
 		//set the flash data error message if there is one
 		$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -322,25 +314,6 @@ class Admin extends CI_Controller {
 		// TODO: Implement settings
 		$this->data['settings'] = null; // Dummy data to prevent php error
 		$this->_render_page('admin/settings', $this->data);
-	}
-
-	protected function _get_csrf_nonce() {
-		$this->load->helper('string');
-		$key   = random_string('alnum', 8);
-		$value = random_string('alnum', 20);
-		$this->session->set_flashdata('csrfkey', $key);
-		$this->session->set_flashdata('csrfvalue', $value);
-
-		return array($key => $value);
-	}
-
-	protected function _valid_csrf_nonce() {
-		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-			$this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
 	}
 
 	protected function _render_page($view, $data = null, $render = false) {
