@@ -27,3 +27,8 @@ ul.thumbnails.image_picker_selector {
         -webkit-user-drag: none; }
     ul.thumbnails.image_picker_selector li .thumbnail.selected {
       background: #0088cc; }
+	  
+.image_picker_selector img {
+	max-width:128px;
+	height:auto;
+	}

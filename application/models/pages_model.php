@@ -17,22 +17,24 @@ class Pages_model extends CI_Model {
 		return $query->row_array();
 	}
 	
-	public function create($title, $description, $content) {
+	public function create($title, $description, $content, $page_image) {
 		$data = array(
 			'title' => $title,
 			'description' => $description,
-			'content' => $content
+			'content' => $content,
+			'image' => $page_image
 		);
 		
 		$this->db->insert('story_pages', $data);
 		return $this->db->insert_id();
 	}
 	
-	public function update($id, $title, $description, $content) {
+	public function update($id, $title, $description, $content, $page_image) {
 		$data = array(
 			'title' => $title,
 			'description' => $description,
-			'content' => $content
+			'content' => $content,
+			'image' => $page_image
 		);
 		
 		$this->db->where('id', $id);

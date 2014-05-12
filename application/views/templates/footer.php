@@ -13,7 +13,7 @@
     
     <?php } ?>
     
-        <?php if($this->router->class == "option") { ?>
+        <?php if($this->router->class == "option" || $this->router->class == "page") { ?>
      <script src="<?php echo base_url(); ?>js/image-picker.min.js"></script> 
      <script src="<?php echo base_url(); ?>js/imagepicker-handle.js"></script>
        

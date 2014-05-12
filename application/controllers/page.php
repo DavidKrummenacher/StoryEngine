@@ -106,8 +106,9 @@ class Page extends CI_Controller {
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 			$content = $this->input->post('content');
+			$page_image = $this->input->post('page_image');
 			
-			$id = $this->pages_model->create($title, $description, $content);
+			$id = $this->pages_model->create($title, $description, $content, $page_image);
 			redirect('page/edit/'.$id);
 		} else {
 			//display the add page form
@@ -132,6 +133,7 @@ class Page extends CI_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('content'),
 			);
+			$this->data['page_images'] = $this->assets_model->get_page_images();
 
 			$this->_render_page('pages/add', $this->data);
 		}
@@ -148,8 +150,10 @@ class Page extends CI_Controller {
 			$title = $this->input->post('title');
 			$description = $this->input->post('description');
 			$content = $this->input->post('content');
+			$page_image = $this->input->post('page_image');
+
 			
-			$this->pages_model->update($id, $title, $description, $content);
+			$this->pages_model->update($id, $title, $description, $content, $page_image);
 			redirect('page/show/'.$id);
 		} else {
 			//display the add page form
@@ -180,6 +184,7 @@ class Page extends CI_Controller {
 			
 			$this->data['options'] = $this->options_model->get_options_for_page($id);
 			$this->data['icons'] = $this->assets_model->get_icons();
+			$this->data['page_images'] = $this->assets_model->get_page_images();
 			$this->data['targets'] = $this->options_model->get_targets($id);
 			$this->_render_page('pages/edit',$this->data);
 		}

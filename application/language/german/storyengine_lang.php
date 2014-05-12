@@ -47,6 +47,7 @@ $lang['page_options_icons']				= 'Symbole';
 $lang['page_options_addicon']			= 'Symbol hinzufügen';
 $lang['page_options_editicon']			= 'Symbol bearbeiten';
 $lang['page_options_noicon']			= 'Kein Symbol';
+$lang['page_options_noimage']			= 'Kein Bild';
 $lang['page_options_text']				= 'Text';
 $lang['page_options_attribute']			= 'Attribut';
 $lang['page_options_attribute_add']		= 'Attribut hinzufügen';

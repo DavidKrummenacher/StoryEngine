@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
 	<?php } ?>
     
-    <?php if($this->router->class == "option") { ?>
+    <?php if($this->router->class == "option" || $this->router->class == "page") { ?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/image-picker.css">
        
         <?php } ?>
