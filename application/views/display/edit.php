@@ -1,6 +1,11 @@
 <h1>Edit page design</h1>
 
-<div id="infoMessage"><?php echo $message;?></div>
+<?php if ($message != "") { ?>
+<div class="alert alert-info">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<?php echo $message;?>
+</div>
+<?php } ?>
 
 <?php echo form_open('display/edit', 'class="form-horizontal" role="form"');?>
 	<div class="form-group">

@@ -14,12 +14,12 @@ class Display_model extends CI_Model {
 	}
 	
 	
-	public function get_story_setting($key) {
+	public function get_display_setting($key) {
 		$query = $this->db->get_where('story_display_settings', array('key' => $key));
 		return $query->row_array();
 	}
 	
-	public function get_story_settings($key = null) {
+	public function get_display_settings($key = null) {
 		if($key != null) {
 			$query = $this->db->get_where('story_display_settings',array('key' => $key));
 			$row = $query->row(); 
@@ -34,7 +34,7 @@ class Display_model extends CI_Model {
 		}	
 	}
 	
-	public function set_story_setting($key, $value) {
+	public function set_display_setting($key, $value) {
 		$this->db->where('key', $key);
 		$this->db->update('story_display_settings', array('value' => $value));
 	}
