@@ -7,6 +7,12 @@
 		<th>Default value</th>
 		<th>Current user value</th>
 	</tr>
+	<tr>
+		<td></td>
+		<td>Last visited page</td>
+		<td><?php echo $start_page; ?></td>
+		<td><?php echo $last_page; ?></td>
+	</tr>
 	<?php foreach ($attributes as $attribute) { ?>
 		<tr>
 			<td><?php echo $attribute['id']; ?></td>

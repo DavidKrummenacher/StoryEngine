@@ -226,6 +226,8 @@ class Story extends CI_Controller {
 		if (!$this->ion_auth->is_author()) { show_error('You need author rights to do this!'); }
 		
 		$this->load->model('attributes_model');
+		$this->data['start_page'] = $this->settings_model->get_value('start_page');
+		$this->data['last_page'] = $this->ion_auth->user()->row()->last_page;
 		$this->data['attributes'] = $this->attributes_model->get_all();
 		$this->data['user_attributes'] = $this->attributes_model->get_all_for_user($this->ion_auth->user()->row()->id);
 		$this->_render_page('story/debug', $this->data);
