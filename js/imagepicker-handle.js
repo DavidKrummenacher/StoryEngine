@@ -2,7 +2,7 @@
 
 $( document ).ready(function() {
 
-if($("select#page_image").length > 0 ) {
+if($("select#icon").length > 0 ) {
 $("select#icon").imagepicker();
 }
 
