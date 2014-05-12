@@ -8,6 +8,7 @@ class Menu extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->helper('text');
 		$this->load->model('settings_model');
+		$this->load->model('attributes_model');
 		
 		$this->lang->load('storyengine');
 	}
@@ -15,7 +16,16 @@ class Menu extends CI_Controller {
 	public function new_game() {
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
 		
-		// TODO: Reset attributes
+		// Reset attributes
+		$user = $this->ion_auth->user()->row()->id;
+		$user_attributes = $this->attributes_model->get_all_for_user($user);
+		foreach($user_attributes as $user_attribute) {
+			$attribute = $user_attribute['attribute'];
+			$value = $this->attributes_model->get($attribute);
+			$value = $value['value'];
+			
+			$this->attributes_model->update_for_user($user, $attribute, $value);
+		}
 		
 		// Load start page
 		$start_page = $this->settings_model->get_value('start_page');
@@ -25,8 +35,9 @@ class Menu extends CI_Controller {
 	public function continue_game() {
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
 		
-		// TODO: Load attributes
-		$last_page = 1;
+		// Load last page
+		$this->session->set_flashdata('loaded', true);
+		$last_page = $this->ion_auth->user()->row()->last_page;
 		redirect('page/show/'.$last_page);
 	}
 }

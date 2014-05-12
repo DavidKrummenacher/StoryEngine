@@ -11,6 +11,7 @@ class Page extends CI_Controller {
 		$this->load->model('pages_model');
 		$this->load->model('assets_model');
 		$this->load->model('attributes_model');
+		$this->load->model('achievements_model');
 		$this->load->model('options_model');
 		
 		$this->lang->load('storyengine');
@@ -30,31 +31,64 @@ class Page extends CI_Controller {
 		
 		$this->data['page'] = $this->pages_model->get($id);
 		$this->data['image'] = ($this->data['page'] != null) ? $this->assets_model->get_page_image($this->data['page']['image']) : null;
+		$user = $this->ion_auth->user()->row()->id;
 		
-		// Apply consequences (story_page_consequences)
-		$consequences = $this->pages_model->get_consequences($id);
-		foreach ($consequences as $consequence) {
-			$attribute = $consequence['attribute'];
-			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
-			$value = $value['value'];
-			$operator = $consequence['operator'];
-			$consequence_value = $consequence['value'];
-			
-			switch ($operator) {
-				case 1: // +=
-					$value += $consequence_value; break;
-				case 2: // -=
-					$value -= $consequence_value; break;
-				case 3: // =
-					$value = $consequence_value; break;
+		// Apply consequences (story_page_consequences) if not loaded
+		if (!$this->session->flashdata('loaded')) {
+			$consequences = $this->pages_model->get_consequences($id);
+			foreach ($consequences as $consequence) {
+				$attribute = $consequence['attribute'];
+				$value = $this->attributes_model->get_for_user($user, $attribute);
+				$value = $value['value'];
+				$operator = $consequence['operator'];
+				$consequence_value = $consequence['value'];
+				
+				switch ($operator) {
+					case 1: // +=
+						$value += $consequence_value; break;
+					case 2: // -=
+						$value -= $consequence_value; break;
+					case 3: // =
+						$value = $consequence_value; break;
+				}
+				
+				// Apply
+				$this->attributes_model->update_for_user($user, $attribute, $value);
 			}
-			
-			// Apply
-			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
 		}
 		
-		// TODO: Achievement unlocking
-		
+		// Achievement unlocking
+		$achievements = $this->achievements_model->get_all();
+		foreach ($achievements as $achievement) {
+			// Skip already set achievements
+			if ($this->achievements_model->get_for_user($user, $achievement['id'])) { continue; }
+			
+			// Check comparison
+			$value = $this->attributes_model->get_for_user($user, $achievement['attribute']);
+			$value = $value['value'];
+			$comparison = $achievement['comparison'];
+			$achievement_value = $achievement['value'];
+			
+			$achievement_unlocked = false;
+			switch ($comparison) {
+				case 1: // ==
+					$achievement_unlocked = ($value == $achievement_value); break;
+				case 2: // !=
+					$achievement_unlocked = ($value != $achievement_value); break;
+				case 3: // >
+					$achievement_unlocked = ($value > $achievement_value); break;
+				case 4: // >=
+					$achievement_unlocked = ($value >= $achievement_value); break;
+				case 5: // <
+					$achievement_unlocked = ($value < $achievement_value); break;
+				case 6: // <=
+					$achievement_unlocked = ($value <= $achievement_value); break;
+			}
+			
+			if ($achievement_unlocked) {
+				$this->achievements_model->set_for_user($user, $achievement['id']);
+			}
+		}
 		
 		// Option filtering
 		$options = array();
@@ -69,7 +103,7 @@ class Page extends CI_Controller {
 				$value = $value['value'];
 				$comparison = $condition['comparison'];
 				$condition_value = $condition['value'];
-			
+				
 				switch ($comparison) {
 					case 1: // ==
 						$conditions_met = ($value == $condition_value); break;
@@ -91,6 +125,9 @@ class Page extends CI_Controller {
 			if ($conditions_met) { array_push($options, $option); }
 		}
 		$this->data['options'] = $options;
+		
+		// Set last page for user
+		$this->ion_auth->update($user, array('last_page' => $id));
 		
 		$this->_render_page('pages/view', $this->data);
 	}
