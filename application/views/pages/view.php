@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-xs-12">
                 
-					<img src="<?php echo base_url('assets/page_images/'); echo "/".$image['desktop_uri']; ?>" class="img-responsive" />
+					<img src="<?php echo base_url('assets/page_images/')."/".$device."/".$image['desktop_uri']; ?>" class="img-responsive" />
 				</div>
 			</div>
 			<?php } ?>

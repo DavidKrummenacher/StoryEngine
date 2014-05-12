@@ -12,6 +12,7 @@ class Page extends CI_Controller {
 		$this->load->model('assets_model');
 		$this->load->model('attributes_model');
 		$this->load->model('options_model');
+		$this->load->library('user_agent');
 		
 		$this->lang->load('storyengine');
 	}
@@ -30,6 +31,27 @@ class Page extends CI_Controller {
 		
 		$this->data['page'] = $this->pages_model->get($id);
 		$this->data['image'] = ($this->data['page'] != null) ? $this->assets_model->get_page_image($this->data['page']['image']) : null;
+		
+		//Get UserAgent
+		if ($this->agent->is_browser())
+			{
+				$device = 'desktop';
+			}
+			elseif ($this->agent->is_robot())
+			{
+				$device = 'desktop';
+			}
+			elseif ($this->agent->is_mobile())
+			{
+				$device = 'mobile';
+			}
+			else
+			{
+				$device = 'desktop';
+			}
+			
+			$this->data['device'] = $device;
+
 		
 		// Apply consequences (story_page_consequences)
 		$consequences = $this->pages_model->get_consequences($id);
