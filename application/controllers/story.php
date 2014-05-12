@@ -12,7 +12,8 @@ class Story extends CI_Controller {
 		$this->load->model('settings_model');
 		$this->load->model('story_model');
 		$this->load->model('options_model');
-		
+		$this->load->model('assets_model');
+
 		$this->lang->load('storyengine');
 	}
 	
@@ -218,6 +219,7 @@ class Story extends CI_Controller {
 		// TODO: Fix settings
 		// TODO: Implement settings
 		$this->data['settings'] = $this->settings_model->get_story_settings();
+		$this->data['icons'] = $this->assets_model->get_icons();
 		$this->_render_page('story/settings', $this->data);
 	}
 	

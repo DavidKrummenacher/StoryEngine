@@ -329,6 +329,8 @@ INSERT INTO `story_settings` (`key`, `value`) VALUES
 ('start_page', 1);
 INSERT INTO `story_settings` (`key`, `value`) VALUES
 ('pages_per_page', 10);
+INSERT INTO `story_settings` (`key`, `value`) VALUES
+('default_icon', null);
 
 -- Data for `story_display_settings`
 -- ----------------------------------------------------------------------------------------------------------------------------

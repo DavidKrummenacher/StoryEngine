@@ -112,7 +112,32 @@ class Page extends CI_Controller {
 			
 			if ($conditions_met) { array_push($options, $option); }
 		}
-		$this->data['options'] = $options;
+		
+		
+		$icons = $this->assets_model->get_icons();
+		
+		//Update Options 
+		$updated_options = array();
+		
+		foreach($options as $opt) {
+			unset($icon);
+			$icon = $this->assets_model->get_icon($opt['icon']);
+			
+			if($icon != null) {
+			$opt['icon'] = $icon[$device."_uri"];
+			} else {
+				//TODO: Implement Default Icon Option in Story_Settigns
+				$default_icon = $this->settings_model->get_story_setting('default_icon');
+				$default_icon = $this->assets_model->get_icon($default_icon['value']);
+				$opt['icon'] = $default_icon[$device."_uri"];
+			}
+			
+			array_push($updated_options,$opt);
+			
+			}
+			
+		$this->data['options'] = $updated_options;		
+
 		
 		$this->_render_page('pages/view', $this->data);
 	}

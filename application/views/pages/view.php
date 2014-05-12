@@ -28,7 +28,8 @@
 				<?php foreach($options as $option) { ?>
 				
 				<a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="list-group-item">
-					<span class="glyphicon glyphicon-chevron-right"></span>
+					<!--<span class="glyphicon glyphicon-chevron-right"></span>-->
+                    <img src="<?php echo base_url('assets/icons/')."/".$device."/".$option['icon']; ?>" alt="icon" />
 					<?php echo $option['text']; ?>
 				</a>
 				<?php } ?>

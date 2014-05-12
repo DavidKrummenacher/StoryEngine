@@ -100,7 +100,7 @@ class Option extends CI_Controller {
 			$this->data['order'] = array(
 				'name'  => 'order',
 				'id'    => 'order',
-				'type'  => 'text',
+				'type'  => 'number',
 				'value' => $this->form_validation->set_value('order'),
 			);
 			$this->data['icons'] = $this->assets_model->get_icons();
@@ -149,7 +149,7 @@ class Option extends CI_Controller {
 			$this->data['order'] = array(
 				'name'  => 'order',
 				'id'    => 'order',
-				'type'  => 'text',
+				'type'  => 'number',
 				'value' => ($this->input->post('order')) ? $this->input->post('order') : $option['order'],
 			);
 			$this->data['icons'] = $this->assets_model->get_icons();
