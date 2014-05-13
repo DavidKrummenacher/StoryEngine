@@ -26,7 +26,7 @@
 		<label for="icon" class="col-sm-2 control-label"><?php echo lang('page_options_icon'); ?></label>
 		<div class="col-sm-10">
 			<select name="page_image" id="page_image" class="form-control">
-				<option value="null" <?php if ($page['image'] == null) { ?> selected="selected"<?php } ?>><?php echo lang('page_options_noimage'); ?></option>
+				<option value="null"  selected="selected"><?php echo lang('page_options_noimage'); ?></option>
 				<?php foreach ($page_images as $i) { ?>
 				<option value="<?php echo $i['id']; ?>" data-img-src="<?php echo base_url();?>/assets/page_images/mobile/<?php echo $i['desktop_uri']; ?>" <?php if ($i['id'] == $page['image']) { ?> selected="selected"<?php } ?>>
 					<?php echo $i['name']; ?>
