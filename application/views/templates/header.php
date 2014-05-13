@@ -14,9 +14,15 @@
 	
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap-theme.min.css">
-	<?php if ($this->router->class == "page") { ?>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>css/layout.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css">
+	<?php
+		if (
+			($this->router->class == "page" && $this->router->method == "show") ||
+			($this->router->class == "story" && $this->router->method == "login") ||
+			($this->router->class == "story" && $this->router->method == "register") ||
+			($this->router->class == "achievement" && $this->router->method == "show")
+		) {
+	?>
+	<link rel="stylesheet" href="<?php echo site_url('display'); ?>">
 	<?php } ?>
     
     <?php if($this->router->class == "option" || $this->router->class == "page" || $this->router->class == "story") { ?>

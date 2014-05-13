@@ -13,7 +13,9 @@ class Display extends CI_Controller {
 	
 	public function index() {
 		// echo css
-		echo $this->display_model->get_value('css');
+		$this->output
+			->set_content_type('text/css')
+			->set_output($this->display_model->get_value('css'));
 	}
 	
 	public function edit() {
