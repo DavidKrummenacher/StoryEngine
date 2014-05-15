@@ -59,7 +59,7 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span> <?php echo lang('menu_story');?> <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><?php echo anchor('story/overview', '<span class="glyphicon glyphicon-map-marker"></span> '.lang('menu_story_overview')); ?></li>
-							<li><?php echo anchor('story/list_pages', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')); ?></li>
+							<li><?php echo anchor('story/list_pages/0', '<span class="glyphicon glyphicon-list"></span> '.lang('menu_story_list_pages')); ?></li>
 							<li class="divider"></li>
 							<li><?php echo anchor('page/add', '<span class="glyphicon glyphicon-plus"></span> '.lang('menu_story_add_page')); ?></a></li>
 							<li class="divider"></li>

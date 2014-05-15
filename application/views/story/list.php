@@ -1,5 +1,5 @@
 <h1><?php echo lang('story_list'); ?></h1>
-<form action ="<?= base_url()?>index.php/story/search" method="post" id="searchform">
+<form action ="<?php base_url(); ?>../search" method="post" id="searchform">
 <div class="input-group">
 	<input type="search" class="form-control" placeholder="Search" name="searchterm">
 	<span class="input-group-btn">

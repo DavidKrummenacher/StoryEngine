@@ -164,7 +164,6 @@ class Story extends CI_Controller {
 		
 		//get current page
 		$config['cur_page'] = ($this->uri->segment($config["uri_segment"])) ? $this->uri->segment($config["uri_segment"]) : 0;
-		
  		//Ini pagination lib
         $this->pagination->initialize($config);
 		
@@ -197,8 +196,8 @@ class Story extends CI_Controller {
 		$this->data['results'] = null;
 		$term = $this->input->post('searchterm',TRUE);
 		
-		if ($term != null) { $this->data['results'] = $this->story_model->search_page($term); }
-		else { redirect('page/list_all', 'refresh'); }
+		if ($term != null) { $this->data['results'] = $this->story_model->search_page($term); } 
+		else { redirect('story/list_pages/0', 'refresh'); }
 		
 		$this->_render_page('story/search', $this->data);
 	}
