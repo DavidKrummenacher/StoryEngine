@@ -79,6 +79,9 @@
 					<li><a data-toggle="modal" data-target="#deletePageModal"><span class="glyphicon glyphicon-trash"></span> <?php echo lang('menu_delete_page'); ?></a></li>
 					<?php } ?>
 					<?php } ?>
+					<?php if($this->router->class == "option" && $this->router->method == "edit" && $option) { ?>
+					<li><?php echo anchor('page/edit/'.$option['source_page'], '<span class="glyphicon glyphicon-chevron-left"></span> Back to page'); ?></li>
+					<?php } ?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php if ($this->ion_auth->is_admin()) { ?>
