@@ -31,6 +31,7 @@
                     <img src="<?php echo base_url('assets/icons/')."/".$device."/".$option['icon']; ?>" alt="icon" class="option-icon"/>
 				</a>
                 <a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="option-txt-container col-md-10 col-sm-11 col-xs-10">
+                <?php if (!$option['has_targets']) { ?><span class="label label-danger"><span class="glyphicon glyphicon-link"></span></span><?php } ?>
                 <?php echo $option['text']; ?>
                 </a>
                 </div>
