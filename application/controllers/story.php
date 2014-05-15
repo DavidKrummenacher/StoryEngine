@@ -168,7 +168,7 @@ class Story extends CI_Controller {
  		//Ini pagination lib
         $this->pagination->initialize($config);
 		
-		$this->data['pages'] = $this->story_model->get_pages($config['cur_page'],$config['per_page']);
+		$this->data['pages'] = $this->story_model->get_pages($config['cur_page']*$config['per_page'],$config['per_page']);
 		
 		//Add Links to data array
         $this->data['pagination'] = create_list($this->pagination);
