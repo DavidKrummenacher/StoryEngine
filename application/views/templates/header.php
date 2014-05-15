@@ -81,7 +81,7 @@
 					<?php } ?>
 					<?php if($this->router->class == "option" && $this->router->method == "edit" && $option) { ?>
 					<li><?php echo anchor('page/edit/'.$option['source_page'], '<span class="glyphicon glyphicon-chevron-left"></span> Back to page'); ?></li>
-					<li><?php echo anchor('option/add/'.$option['source_page'], '<span class="glyphicon glyphicon-chevron-plus"></span> Add option'); ?></li>
+					<li><?php echo anchor('option/add/'.$option['source_page'], '<span class="glyphicon glyphicon-plus"></span> Add option'); ?></li>
 					<?php } ?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
