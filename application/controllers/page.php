@@ -33,46 +33,40 @@ class Page extends CI_Controller {
 		$this->data['image'] = ($this->data['page'] != null) ? $this->assets_model->get_page_image($this->data['page']['image']) : null;
 		
 		//Get UserAgent
-		if ($this->agent->is_browser())
-			{
-				$device = 'desktop';
-			}
-			elseif ($this->agent->is_robot())
-			{
-				$device = 'desktop';
-			}
-			elseif ($this->agent->is_mobile())
-			{
-				$device = 'mobile';
-			}
-			else
-			{
-				$device = 'desktop';
-			}
-			
-			$this->data['device'] = $device;
-
+		if ($this->agent->is_browser()) {
+			$device = 'desktop';
+		} elseif ($this->agent->is_robot()) {
+			$device = 'desktop';
+		} elseif ($this->agent->is_mobile()) {
+			$device = 'mobile';
+		} else {
+			$device = 'desktop';
+		}
 		
-		// Apply consequences (story_page_consequences)
-		$consequences = $this->pages_model->get_consequences($id);
-		foreach ($consequences as $consequence) {
-			$attribute = $consequence['attribute'];
-			$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
-			$value = $value['value'];
-			$operator = $consequence['operator'];
-			$consequence_value = $consequence['value'];
-			
-			switch ($operator) {
-				case 1: // +=
-					$value += $consequence_value; break;
-				case 2: // -=
-					$value -= $consequence_value; break;
-				case 3: // =
-					$value = $consequence_value; break;
+		$this->data['device'] = $device;
+		
+		// Apply consequences (story_page_consequences) if not loaded
+		if (!$this->session->flashdata('loaded')) {
+			$consequences = $this->pages_model->get_consequences($id);
+			foreach ($consequences as $consequence) {
+				$attribute = $consequence['attribute'];
+				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+				$value = $value['value'];
+				$operator = $consequence['operator'];
+				$consequence_value = $consequence['value'];
+				
+				switch ($operator) {
+					case 1: // +=
+						$value += $consequence_value; break;
+					case 2: // -=
+						$value -= $consequence_value; break;
+					case 3: // =
+						$value = $consequence_value; break;
+				}
+				
+				// Apply
+				$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
 			}
-			
-			// Apply
-			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
 		}
 		
 		 // Achievement unlocking
