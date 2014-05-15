@@ -11,12 +11,12 @@
 			if ($image) { ?>
 			<div class="row page-image">
 				<div class="col-xs-12">   
-					<img src="<?php echo base_url('assets/page_images/')."/".$device."/".$image['desktop_uri']; ?>" class="img-responsive" />
+					<img src="<?php echo base_url('assets/page_images/')."/".$device."/".$image['desktop_uri']; ?>" class="img-responsive page-illustration" />
 				</div>
 			</div>
 			<?php } ?>
 			<div class="row page-content">
-			<div class="col-xs-12 col-md-<?php if ($options) { echo '6'; } else { echo '12'; } ?>">
+			<div class="col-xs-12 col-md-<?php if ($options) { echo '6'; } else { echo '12'; } ?> page-txt">
 			<p>
 				<span class="firstcharacter"><?php echo substr($page['content'],0,1); ?> </span> <?php  echo substr($page['content'],1); ?>
 			</p>
@@ -24,13 +24,16 @@
 			<?php if ($options) { ?>
 			<div class="col-xs-12 col-md-6 page-options">
 			<div class="list-group">
+            
 				<?php foreach($options as $option) { ?>
-				
-				<a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="list-group-item">
+                <div class="list-group-item col-xs-12">
+				<a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="option-icon-container col-md-2 col-sm-1 col-xs-2">
                     <img src="<?php echo base_url('assets/icons/')."/".$device."/".$option['icon']; ?>" alt="icon" class="option-icon"/>
-                    <?php if (!$option['has_targets']) { ?><span class="label label-danger"><span class="glyphicon glyphicon-link"></span></span><?php } ?>
-					<?php echo $option['text']; ?>
 				</a>
+                <a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="option-txt-container col-md-10 col-sm-11 col-xs-10">
+                <?php echo $option['text']; ?>
+                </a>
+                </div>
 				<?php } ?>
 			</div>
 			</div>
