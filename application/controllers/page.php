@@ -11,6 +11,7 @@ class Page extends CI_Controller {
 		$this->load->model('pages_model');
 		$this->load->model('assets_model');
 		$this->load->model('attributes_model');
+		$this->load->model('achievements_model');
 		$this->load->model('options_model');
 		$this->load->library('user_agent');
 		
@@ -135,11 +136,14 @@ class Page extends CI_Controller {
 				if (!$conditions_met) { break; }
 			}
 			
-			if ($conditions_met) { array_push($options, $option); }
+			if ($conditions_met) {
+				$option['has_targets'] = ($this->options_model->get_amount_of_targets_for_option($option['id'], false) > 0);
+				array_push($options, $option);
+			}
 		}
 		
 		
-		$icons = $this->assets_model->get_icons();
+		$icons = $this->assets_model->get_icons(); // TODO: Is this necessairy?
 		
 		//Update Options 
 		$updated_options = array();
@@ -148,8 +152,8 @@ class Page extends CI_Controller {
 			unset($icon);
 			$icon = $this->assets_model->get_icon($opt['icon']);
 			
-			if($icon != null) {
-			$opt['icon'] = $icon[$device."_uri"];
+			if ($icon != null) {
+				$opt['icon'] = $icon[$device."_uri"];
 			} else {
 				//TODO: Implement Default Icon Option in Story_Settigns
 				$default_icon = $this->settings_model->get_story_setting('default_icon');
@@ -157,9 +161,8 @@ class Page extends CI_Controller {
 				$opt['icon'] = $default_icon[$device."_uri"];
 			}
 			
-			array_push($updated_options,$opt);
-			
-			}
+			array_push($updated_options, $opt);
+		}
 			
 		$this->data['options'] = $updated_options;		
 
@@ -254,7 +257,12 @@ class Page extends CI_Controller {
 				'value' => ($this->input->post('content')) ? $this->input->post('content') : $page['content'],
 			);
 			
-			$this->data['options'] = $this->options_model->get_options_for_page($id);
+			$options = array();
+			foreach($this->options_model->get_options_for_page($id) as $option) {
+				$option['has_targets'] = ($this->options_model->get_amount_of_targets_for_option($option['id'], false) > 0);
+				array_push($options, $option);
+			}
+			$this->data['options'] = $options;
 			$this->data['icons'] = $this->assets_model->get_icons();
 			$this->data['page_images'] = $this->assets_model->get_page_images();
 			$this->data['targets'] = $this->options_model->get_targets($id);

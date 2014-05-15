@@ -28,6 +28,7 @@
 				
 				<a href="<?php echo base_url().'index.php/option/choose/'.$option['id']; ?>" class="list-group-item">
                     <img src="<?php echo base_url('assets/icons/')."/".$device."/".$option['icon']; ?>" alt="icon" class="option-icon"/>
+                    <?php if (!$option['has_targets']) { ?><span class="label label-danger"><span class="glyphicon glyphicon-link"></span></span><?php } ?>
 					<?php echo $option['text']; ?>
 				</a>
 				<?php } ?>

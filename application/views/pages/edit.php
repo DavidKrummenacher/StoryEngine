@@ -62,7 +62,10 @@
 				<tr>
 					<td><?php echo $option['order'];?></td>
 					<td><?php echo $option['icon'];?></td>
-					<td><?php echo $option['text'];?></td>
+					<td>
+						<?php if (!$option['has_targets']) { ?><span class="label label-danger"><span class="glyphicon glyphicon-link"></span></span><?php } ?>
+						<?php echo $option['text'];?>
+					</td>
 					<td>
 						<div class="btn-group">
 							<?php

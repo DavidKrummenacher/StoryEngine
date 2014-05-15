@@ -138,6 +138,13 @@ class Options_model extends CI_Model {
 			$query = $this->db->get_where('story_option_targets', array('option' => $option));
 		return $query->result_array();
 	}
+	public function get_amount_of_targets_for_option($option, $fail = null) {
+		if ($fail != null)
+			$query = $this->db->get_where('story_option_targets', array('option' => $option, 'fail' => $fail));
+		else
+			$query = $this->db->get_where('story_option_targets', array('option' => $option));
+		return $query->num_rows();
+	}
 	
 	public function get_check($id) {
 		$query = $this->db->get_where('story_option_checks', array('id' => $id));
