@@ -45,12 +45,12 @@
 <?php echo form_close();?>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#options" data-toggle="tab"><?php echo lang('page_options'); ?></a></li>
-	<li><a href="#consequences" data-toggle="tab"><?php echo lang('page_consequences'); ?></a></li>
+	<li<?php if ($active_tab == 'option') { ?> class="active"<?php } ?>><a href="#options" data-toggle="tab"><?php echo lang('page_options'); ?></a></li>
+	<li<?php if ($active_tab == 'consequence') { ?> class="active"<?php } ?>><a href="#consequences" data-toggle="tab"><?php echo lang('page_consequences'); ?></a></li>
 </ul>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="options">
+	<div class="tab-pane<?php if ($active_tab == 'option') { ?> active<?php } ?>" id="options">
 		<table class="table table-condensed">
 			<tr>
 				<th><?php echo lang('page_options_order'); ?></th>
@@ -80,7 +80,7 @@
 		<p><?php echo anchor('option/add/'.$page['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('form_label_page_add_option'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
-	<div class="tab-pane" id="consequences">
+	<div class="tab-pane<?php if ($active_tab == 'consequence') { ?> active<?php } ?>" id="consequences">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>

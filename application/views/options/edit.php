@@ -36,14 +36,14 @@
 <?php echo form_close();?>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#conditions" data-toggle="tab"><?php echo lang('page_conditions'); ?></a></li>
-	<li><a href="#targets" data-toggle="tab"><?php echo lang('page_targets'); ?></a></li>
-	<li><a href="#checks" data-toggle="tab"><?php echo lang('page_checks'); ?></a></li>
-	<li><a href="#consequences" data-toggle="tab"><?php echo lang('page_consequences'); ?></a></li>
+	<li<?php if ($active_tab == 'condition') { ?> class="active"<?php } ?>><a href="#conditions" data-toggle="tab"><?php echo lang('page_conditions'); ?></a></li>
+	<li<?php if ($active_tab == 'target') { ?> class="active"<?php } ?>><a href="#targets" data-toggle="tab"><?php echo lang('page_targets'); ?></a></li>
+	<li<?php if ($active_tab == 'check') { ?> class="active"<?php } ?>><a href="#checks" data-toggle="tab"><?php echo lang('page_checks'); ?></a></li>
+	<li<?php if ($active_tab == 'consequence') { ?> class="active"<?php } ?>><a href="#consequences" data-toggle="tab"><?php echo lang('page_consequences'); ?></a></li>
 </ul>
 
 <div class="tab-content">
-	<div class="tab-pane active" id="conditions">
+	<div class="tab-pane<?php if ($active_tab == 'condition') { ?> active<?php } ?>" id="conditions">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
@@ -72,7 +72,7 @@
 		<p><?php echo anchor('option/add_condition/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_add_condition'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
-	<div class="tab-pane" id="targets">
+	<div class="tab-pane<?php if ($active_tab == 'target') { ?> active<?php } ?>" id="targets">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
@@ -99,7 +99,7 @@
 		<p><?php echo anchor('option/add_target/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_target_add'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
-	<div class="tab-pane" id="checks">
+	<div class="tab-pane<?php if ($active_tab == 'check') { ?> active<?php } ?>" id="checks">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>
@@ -128,7 +128,7 @@
 		<p><?php echo anchor('option/add_check/'.$option['id'], '<span class="glyphicon glyphicon-plus"></span> '.lang('page_options_add_check'), 'class="btn btn-default"'); ?></p>
 	</div>
 	
-	<div class="tab-pane" id="consequences">
+	<div class="tab-pane<?php if ($active_tab == 'consequence') { ?> active<?php } ?>" id="consequences">
 		<table class="table table-condensed">
 			<tr>
 				<th>Id</th>

@@ -189,7 +189,7 @@ class Page extends CI_Controller {
 			//display the add page form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
+			
 			$this->data['title'] = array(
 				'name'  => 'title',
 				'id'    => 'title',
@@ -233,6 +233,7 @@ class Page extends CI_Controller {
 			//display the add page form
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['active_tab'] = ($this->session->flashdata('active_tab')) ? $this->session->flashdata('active_tab') : 'option';
 			
 			$page = $this->pages_model->get($id);
 			$this->data['page'] = $page;
@@ -303,6 +304,7 @@ class Page extends CI_Controller {
 			
 			$this->pages_model->create_consequence($page, $attribute, $operator, $value);
 			
+			$this->session->set_flashdata('tab_to_open', 'consequence');
 			redirect('page/edit/'.$page);
 		} else {
 			//set the flash data error message if there is one
@@ -349,6 +351,7 @@ class Page extends CI_Controller {
 			
 			$helper = $this->pages_model->get_consequence($id);
 			$page = $helper['page'];
+			$this->session->set_flashdata('tab_to_open', 'consequence');
 			redirect('page/edit/'.$page);
 		} else {
 			//set the flash data error message if there is one
@@ -388,6 +391,7 @@ class Page extends CI_Controller {
 		$page = $helper['page'];
 		
 		$this->pages_model->delete_consequence($id);
+		$this->session->set_flashdata('tab_to_open', 'consequence');
 		redirect('page/edit/'.$page);
 	}
 	

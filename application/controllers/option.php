@@ -137,6 +137,7 @@ class Option extends CI_Controller {
 		} else {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			$this->data['active_tab'] = ($this->session->flashdata('active_tab')) ? $this->session->flashdata('active_tab') : 'condition';
 			
 			$option = $this->options_model->get($id);
 			$this->data['option'] = $option;
@@ -194,6 +195,7 @@ class Option extends CI_Controller {
 			
 			$this->options_model->create_condition($option, $attribute, $comparison, $value);
 			
+			$this->session->set_flashdata('active_tab', 'condition');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -240,6 +242,7 @@ class Option extends CI_Controller {
 			
 			$helper = $this->options_model->get_condition($id);
 			$option = $helper['option'];
+			$this->session->set_flashdata('active_tab', 'condition');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -279,6 +282,7 @@ class Option extends CI_Controller {
 		$option = $helper['option'];
 		
 		$this->options_model->delete_condition($id);
+		$this->session->set_flashdata('active_tab', 'condition');
 		redirect('option/edit/'.$option);
 	}
 	
@@ -294,6 +298,7 @@ class Option extends CI_Controller {
 			
 			$this->options_model->create_target($option, $target_page, $fail);
 			
+			$this->session->set_flashdata('active_tab', 'target');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -331,6 +336,7 @@ class Option extends CI_Controller {
 			
 			$helper = $this->options_model->get_target($id);
 			$option = $helper['option'];
+			$this->session->set_flashdata('active_tab', 'target');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -364,6 +370,7 @@ class Option extends CI_Controller {
 		$option = $helper['option'];
 		
 		$this->options_model->delete_target($id);
+		$this->session->set_flashdata('active_tab', 'target');
 		redirect('option/edit/'.$option);
 	}
 	
@@ -383,6 +390,7 @@ class Option extends CI_Controller {
 			
 			$this->options_model->create_check($option, $attribute, $comparison, $value, $random);
 			
+			$this->session->set_flashdata('active_tab', 'check');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -437,6 +445,7 @@ class Option extends CI_Controller {
 			
 			$helper = $this->options_model->get_check($id);
 			$option = $helper['option'];
+			$this->session->set_flashdata('active_tab', 'check');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -483,6 +492,7 @@ class Option extends CI_Controller {
 		$option = $helper['option'];
 		
 		$this->options_model->delete_check($id);
+		$this->session->set_flashdata('active_tab', 'check');
 		redirect('option/edit/'.$option);
 	}
 	
@@ -501,6 +511,7 @@ class Option extends CI_Controller {
 			
 			$this->options_model->create_consequence($option, $attribute, $operator, $value);
 			
+			$this->session->set_flashdata('active_tab', 'consequence');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -547,6 +558,7 @@ class Option extends CI_Controller {
 			
 			$helper = $this->options_model->get_consequence($id);
 			$option = $helper['option'];
+			$this->session->set_flashdata('active_tab', 'consequence');
 			redirect('option/edit/'.$option);
 		} else {
 			//set the flash data error message if there is one
@@ -586,6 +598,7 @@ class Option extends CI_Controller {
 		$option = $helper['option'];
 		
 		$this->options_model->delete_consequence($id);
+		$this->session->set_flashdata('active_tab', 'consequence');
 		redirect('option/edit/'.$option);
 	}
 	
