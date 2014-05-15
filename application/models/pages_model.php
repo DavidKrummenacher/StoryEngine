@@ -22,7 +22,7 @@ class Pages_model extends CI_Model {
 			'title' => $title,
 			'description' => $description,
 			'content' => $content,
-			'image' => $page_image
+			'image' => ($page_image == 'null') ? null : $page_image
 		);
 		
 		$this->db->insert('story_pages', $data);
@@ -34,7 +34,7 @@ class Pages_model extends CI_Model {
 			'title' => $title,
 			'description' => $description,
 			'content' => $content,
-			'image' => $page_image
+			'image' => ($page_image == 'null') ? null : $page_image
 		);
 		
 		$this->db->where('id', $id);
