@@ -47,7 +47,7 @@ class Page extends CI_Controller {
 		
 		// Apply consequences (story_page_consequences) if not loaded
 		if (!$this->session->flashdata('loaded')) {
-			$consequences = $this->pages_model->get_consequences($id);
+			$consequences = $this->pages_model->get_consequences_for_page($id);
 			foreach ($consequences as $consequence) {
 				$attribute = $consequence['attribute'];
 				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
@@ -70,48 +70,36 @@ class Page extends CI_Controller {
 		}
 		
 		 // Achievement unlocking
-		$achievements = $this -> achievements_model -> get_all();
+		$achievements = $this->achievements_model->get_all();
 		foreach ($achievements as $achievement) {
 			// Skip already set achievements
-			if ($this -> achievements_model -> get_for_user($user, $achievement['id'])) {
+			if ($this->achievements_model->get_for_user($user, $achievement['id'])) {
 				continue;
 			}
 			
 			// Check comparison
-			$value = $this -> attributes_model -> get_for_user($user, $achievement['attribute']);
+			$value = $this->attributes_model->get_for_user($user, $achievement['attribute']);
 			$value = $value['value'];
 			$comparison = $achievement['comparison'];
 			$achievement_value = $achievement['value'];
 			
 			$achievement_unlocked = false;
 			switch ($comparison) {
-				case 1 :
-					// ==
-					$achievement_unlocked = ($value == $achievement_value);
-					break;
-				case 2 :
-					// !=
-					$achievement_unlocked = ($value != $achievement_value);
-					break;
-				case 3 :
-					// >
-					$achievement_unlocked = ($value > $achievement_value);
-					break;
-				case 4 :
-					// >=
-					$achievement_unlocked = ($value >= $achievement_value);
-					break;
-				case 5 :
-					// <
-					$achievement_unlocked = ($value < $achievement_value);
-					break;
-				case 6 :
-					// <=
-					$achievement_unlocked = ($value <= $achievement_value);
-					break;
+				case 1 : // ==
+					$achievement_unlocked = ($value == $achievement_value); break;
+				case 2 : // !=
+					$achievement_unlocked = ($value != $achievement_value); break;
+				case 3 : // >
+					$achievement_unlocked = ($value > $achievement_value); break;
+				case 4 : // >=
+					$achievement_unlocked = ($value >= $achievement_value); break;
+				case 5 : // <
+					$achievement_unlocked = ($value < $achievement_value); break;
+				case 6 : // <=
+					$achievement_unlocked = ($value <= $achievement_value); break;
 			}
-				if ($achievement_unlocked) {
-				$this -> achievements_model -> set_for_user($user, $achievement['id']);
+			if ($achievement_unlocked) {
+				$this->achievements_model->set_for_user($user, $achievement['id']);
 			}
 		}
 		
@@ -235,7 +223,6 @@ class Page extends CI_Controller {
 			$description = $this->input->post('description');
 			$content = $this->input->post('content');
 			$page_image = $this->input->post('page_image');
-
 			
 			$this->pages_model->update($id, $title, $description, $content, $page_image);
 			redirect('page/show/'.$id);
@@ -246,6 +233,7 @@ class Page extends CI_Controller {
 			
 			$page = $this->pages_model->get($id);
 			$this->data['page'] = $page;
+			$this->data['consequences'] = $this->pages_model->get_consequences_for_page($id);
 			
 			$this->data['title'] = array(
 				'name'  => 'title',
@@ -290,6 +278,109 @@ class Page extends CI_Controller {
 		$this->pages_model->delete($id);
 		
 		redirect('story/list_pages', 'refresh');
+	}
+	
+	public function add_consequence($page) {
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		
+		//validate form input
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('operator', 'Operator', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$operator = $this->input->post('operator');
+			$value = $this->input->post('value');
+			
+			$this->pages_model->create_consequence($page, $attribute, $operator, $value);
+			
+			redirect('page/edit/'.$page);
+		} else {
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('attribute'),
+			);
+			$this->data['operators'] = $this->attributes_model->get_attribute_operators();
+			$this->data['operator'] = array(
+				'name'  => 'operator',
+				'id'    => 'operator',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('operator'),
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => $this->form_validation->set_value('value'),
+			);
+			
+			$this->_render_page('pages/consequences/add', $this->data);
+		}
+	}
+	public function edit_consequence($id) {
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		
+		//validate form input
+		$this->form_validation->set_rules('attribute', 'Attribute', 'required');
+		$this->form_validation->set_rules('operator', 'Operator', 'required');
+		$this->form_validation->set_rules('value', 'Value', 'required');
+		
+		if (isset($_POST) && !empty($_POST) && $this->form_validation->run() == true) {
+			$attribute = $this->input->post('attribute');
+			$operator = $this->input->post('operator');
+			$value = $this->input->post('value');
+			
+			$this->pages_model->update_consequence($id, $attribute, $operator, $value);
+			
+			$helper = $this->pages_model->get_consequence($id);
+			$page = $helper['page'];
+			redirect('page/edit/'.$page);
+		} else {
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+			
+			$consequence = $this->pages_model->get_consequence($id);
+			$this->data['consequence'] = $consequence;
+			
+			$this->data['attributes'] = $this->attributes_model->get_all();
+			$this->data['attribute'] = array(
+				'name'  => 'attribute',
+				'id'    => 'attribute',
+				'type'  => 'text',
+				'value' => ($this->input->post('attribute')) ? $this->input->post('attribute') : $consequence['attribute'],
+			);
+			$this->data['operators'] = $this->attributes_model->get_attribute_operators();
+			$this->data['operator'] = array(
+				'name'  => 'operator',
+				'id'    => 'operator',
+				'type'  => 'text',
+				'value' => ($this->input->post('operator')) ? $this->input->post('operator') : $consequence['operator'],
+			);
+			$this->data['value'] = array(
+				'name'  => 'value',
+				'id'    => 'value',
+				'type'  => 'text',
+				'value' => ($this->input->post('value')) ? $this->input->post('value') : $consequence['value'],
+			);
+			
+			$this->_render_page('pages/consequences/edit', $this->data);
+		}
+	}
+	public function delete_consequence($id) {
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		
+		$helper = $this->pages_model->get_consequence($id);
+		$page = $helper['page'];
+		
+		$this->pages_model->delete_consequence($id);
+		redirect('page/edit/'.$page);
 	}
 	
 	protected function _render_page($view, $data = null, $render = false) {
