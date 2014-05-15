@@ -75,8 +75,51 @@ class Page extends CI_Controller {
 			$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
 		}
 		
-		// TODO: Achievement unlocking
-		
+		 // Achievement unlocking
+		$achievements = $this -> achievements_model -> get_all();
+		foreach ($achievements as $achievement) {
+			// Skip already set achievements
+			if ($this -> achievements_model -> get_for_user($user, $achievement['id'])) {
+				continue;
+			}
+			
+			// Check comparison
+			$value = $this -> attributes_model -> get_for_user($user, $achievement['attribute']);
+			$value = $value['value'];
+			$comparison = $achievement['comparison'];
+			$achievement_value = $achievement['value'];
+			
+			$achievement_unlocked = false;
+			switch ($comparison) {
+				case 1 :
+					// ==
+					$achievement_unlocked = ($value == $achievement_value);
+					break;
+				case 2 :
+					// !=
+					$achievement_unlocked = ($value != $achievement_value);
+					break;
+				case 3 :
+					// >
+					$achievement_unlocked = ($value > $achievement_value);
+					break;
+				case 4 :
+					// >=
+					$achievement_unlocked = ($value >= $achievement_value);
+					break;
+				case 5 :
+					// <
+					$achievement_unlocked = ($value < $achievement_value);
+					break;
+				case 6 :
+					// <=
+					$achievement_unlocked = ($value <= $achievement_value);
+					break;
+			}
+				if ($achievement_unlocked) {
+				$this -> achievements_model -> set_for_user($user, $achievement['id']);
+			}
+		}
 		
 		// Option filtering
 		$options = array();
