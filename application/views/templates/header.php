@@ -156,6 +156,7 @@
 					</li>
 					<li>
 						<?php  echo anchor('achievement/show', '<span class="glyphicon glyphicon-bookmark control-icon-achievements"></span>'); ?>
+					</li>
 				</ul>
 			</div><!-- /.container-fluid -->
 		</nav>
