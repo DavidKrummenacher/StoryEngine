@@ -22,9 +22,8 @@ class Page extends CI_Controller {
 		// If not logged in redirect to login page
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
 		
-		// Redirect to start page
-		$start_page = $this->settings_model->get_value('start_page');
-		redirect('page/show/'.$start_page);
+		// Continue game
+		redirect('menu/continue_game');
 	}
 	
 	public function show($id) {
