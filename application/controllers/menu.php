@@ -37,7 +37,7 @@ class Menu extends CI_Controller {
 		
 		// Load last page
 		$this->session->set_flashdata('loaded', true);
-		$last_page = $this->ion_auth->user()->row()->last_page;
+		$last_page = ($this->ion_auth->user()->row()->last_page) ? $this->ion_auth->user()->row()->last_page : $this->settings_model->get_value('start_page');
 		redirect('page/show/'.$last_page);
 	}
 }

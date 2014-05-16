@@ -68,7 +68,7 @@ class Admin extends CI_Controller {
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
 				if ($this->ion_auth->is_admin()) redirect('admin', 'refresh');
-				else redirect('page', 'refresh');
+				else redirect('menu/continue_game', 'refresh');
 			} else {
 				//if the login was un-successful
 				//redirect them back to the login page

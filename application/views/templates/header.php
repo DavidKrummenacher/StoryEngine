@@ -149,9 +149,6 @@
 								<?php echo anchor('menu/new_game', '<span class="glyphicon glyphicon-repeat"></span> Start new game'); ?>
 							</li>
 							<li>
-								<?php echo anchor('menu/continue_game', '<span class="glyphicon glyphicon-refresh"></span> Continue game'); ?>
-							</li>
-							<li>
 								<?php echo anchor('story/logout', '<span class="glyphicon glyphicon-log-out"></span> Logout'); ?>
 							</li>
 						</ul>
