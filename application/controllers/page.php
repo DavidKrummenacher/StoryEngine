@@ -32,6 +32,7 @@ class Page extends CI_Controller {
 		
 		$this->data['page'] = $this->pages_model->get($id);
 		$this->data['image'] = ($this->data['page'] != null) ? $this->assets_model->get_page_image($this->data['page']['image']) : null;
+		$user = $this->ion_auth->user()->row()->id;
 		
 		//Get UserAgent
 		if ($this->agent->is_browser()) {
@@ -51,7 +52,7 @@ class Page extends CI_Controller {
 			$consequences = $this->pages_model->get_consequences_for_page($id);
 			foreach ($consequences as $consequence) {
 				$attribute = $consequence['attribute'];
-				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $attribute);
+				$value = $this->attributes_model->get_for_user($user, $attribute);
 				$value = $value['value'];
 				$operator = $consequence['operator'];
 				$consequence_value = $consequence['value'];
@@ -66,7 +67,7 @@ class Page extends CI_Controller {
 				}
 				
 				// Apply
-				$this->attributes_model->update_for_user($this->ion_auth->user()->row()->id, $attribute, $value);
+				$this->attributes_model->update_for_user($user, $attribute, $value);
 			}
 		}
 		
@@ -113,7 +114,7 @@ class Page extends CI_Controller {
 			$conditions_met = true;
 			foreach ($conditions as $condition) {
 				// Check conditions
-				$value = $this->attributes_model->get_for_user($this->ion_auth->user()->row()->id, $condition['attribute']);
+				$value = $this->attributes_model->get_for_user($user, $condition['attribute']);
 				$value = $value['value'];
 				$comparison = $condition['comparison'];
 				$condition_value = $condition['value'];
@@ -142,9 +143,6 @@ class Page extends CI_Controller {
 			}
 		}
 		
-		
-		$icons = $this->assets_model->get_icons(); // TODO: Is this necessairy?
-		
 		//Update Options 
 		$updated_options = array();
 		
@@ -166,6 +164,8 @@ class Page extends CI_Controller {
 			
 		$this->data['options'] = $updated_options;		
 
+		// Set last page for user
+		$this->ion_auth->update($user, array('last_page' => $id));
 		
 		$this->_render_page('pages/view', $this->data);
 	}
