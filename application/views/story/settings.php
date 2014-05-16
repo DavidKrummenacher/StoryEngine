@@ -8,7 +8,7 @@ if(isset($flash)) {?>
 	<div class="form-group">
         <div class="input-group">
         	<span class="input-group-addon">Story title</span>
-        	<?php echo form_input($story_title, '', 'class="form-control"');?>
+        	<input type="text" class="form-control" name="<?php echo $story_title['key']; ?>" value="<?php echo $story_title['value']; ?>"/>
 		</div><!-- /input-group -->
 	</div>
 <?php foreach($settings as $set) {?>
