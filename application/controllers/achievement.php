@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Achievement extends CI_Controller {
+class Achievement extends MY_Controller {
 	
 	protected $dir_icons_desktop;
 	protected $dir_icons_mobile;

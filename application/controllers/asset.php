@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Asset extends CI_Controller {
+class Asset extends MY_Controller {
 	
 	protected $dir_page_images_desktop;
 	protected $dir_page_images_mobile;

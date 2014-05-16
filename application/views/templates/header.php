@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="de-CH">
 <head>
-	<title>MLStorytelling<?php if ($this->ion_auth->is_author() || $this->router->class == "admin") { ?> (StoryAdmin)<?php } ?></title>
+	<title><?php echo $story_title; ?><?php if ($this->ion_auth->is_author() || $this->router->class == "admin") { ?> (StoryAdmin)<?php } ?></title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Option extends CI_Controller {
+class Option extends MY_Controller {
 	
 	public function __construct() {
 		parent::__construct();
