@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="fail" class="col-sm-2 control-label"><?php echo lang('page_targets_is_fail_page'); ?></label>
+		<label for="fail" class="col-sm-2 control-label"><?php echo lang('target_is_fail_page'); ?></label>
 		<div class="col-sm-10">
 			<div class="checkbox">
 				<?php echo form_checkbox($fail);?>

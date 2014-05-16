@@ -13,11 +13,11 @@
     
     <?php } ?>
     
-        <?php if($this->router->class == "option" || $this->router->class == "page" || $this->router->class == "story") { ?>
-     <script src="<?php echo base_url(); ?>js/image-picker.min.js"></script> 
-     <script src="<?php echo base_url(); ?>js/imagepicker-handle.js"></script>
+    <?php if($this->router->class == "option" || $this->router->class == "page" || $this->router->class == "story") { ?>
+    <script src="<?php echo base_url(); ?>js/image-picker.min.js"></script> 
+    <script src="<?php echo base_url(); ?>js/imagepicker-handler.js"></script>
        
-        <?php } ?>
+    <?php } ?>
 	
     <?php if($this->router->class == "story" && $this->router->method == "overview") { ?>
     <!-- Arbor.JS Stuff -->
@@ -25,5 +25,13 @@
    	<script src="<?php echo base_url(); ?>js/arbor-tween.js"></script>
    	<script src="<?php echo base_url(); ?>js/overview-handler.js"></script>
     <?php } ?>
-</body>
+    
+    <?php if($this->router->class == "option") { ?>
+    
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/select2.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/searchable-handler.js"></script>
+    
+    <?php } ?>
+    
+ </body>
 </html>

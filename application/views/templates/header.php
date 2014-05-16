@@ -27,12 +27,18 @@
     
     <?php if($this->router->class == "option" || $this->router->class == "page" || $this->router->class == "story") { ?>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>css/image-picker.css">
+    
+    <!-- Select2 stuff -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/select2-bootstrap.css">
+    
     <?php } ?>
     
     <?php if($this->router->class == "page" && $this->router->method == "edit") { ?>
     <!-- Iconpicker stuff -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/iconselect.css">
     <?php } ?>
+   
 
 	</head>
 	<body>
@@ -78,6 +84,9 @@
 					<?php if($page['id'] != $this->settings_model->get_value('start_page')) { ?>
 					<li><a data-toggle="modal" data-target="#deletePageModal"><span class="glyphicon glyphicon-trash"></span> <?php echo lang('menu_delete_page'); ?></a></li>
 					<?php } ?>
+					<?php } ?>
+                    <?php if($this->router->class == "page" && $this->router->method == "edit" && $page) { ?> 
+					<li><?php echo anchor('page/show/'.$page['id'], '<span class="glyphicon glyphicon-eye-open"></span> Show page'); ?></li>
 					<?php } ?>
 					<?php if($this->router->class == "option" && $this->router->method == "edit" && $option) { ?>
 					<li><?php echo anchor('page/edit/'.$option['source_page'], '<span class="glyphicon glyphicon-chevron-left"></span> Back to page'); ?></li>
