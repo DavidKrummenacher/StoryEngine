@@ -5,7 +5,12 @@ if(isset($flash)) {?>
 <?php }
 ?>
 <form action ="<?php echo base_url()?>index.php/story/settings" method="post" id="story_set">
-
+	<div class="form-group">
+        <div class="input-group">
+        	<span class="input-group-addon">Story title</span>
+        	<?php echo form_input($story_title, '', 'class="form-control"');?>
+		</div><!-- /input-group -->
+	</div>
 <?php foreach($settings as $set) {?>
 
 <?php if($set['key'] == 'default_icon') { ?>

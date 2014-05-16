@@ -326,16 +326,16 @@ INSERT INTO `story_attribute_operators` (`id`, `name`, `description`) VALUES
 -- ----------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO `story_settings` (`key`, `value`) VALUES
-('start_page', 1);
-INSERT INTO `story_settings` (`key`, `value`) VALUES
-('pages_per_page', 10);
-INSERT INTO `story_settings` (`key`, `value`) VALUES
-('default_icon', null);
+('start_page', 1),
+('pages_per_page', 10),
+('default_icon', 0);
 
 -- Data for `story_display_settings`
 -- ----------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO `story_display_settings` (`key`, `value`) VALUES ('css', '');
+INSERT INTO `story_display_settings` (`key`, `value`) VALUES
+('css', ''),
+('story_title', '');
 
 -- ----------------------------------------------------------------------------------------------------------------------------
 -- Table constraints

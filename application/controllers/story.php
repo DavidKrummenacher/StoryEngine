@@ -10,6 +10,7 @@ class Story extends CI_Controller {
 		$this->load->helper('text');
 		$this->load->helper('bootstrap_adjustments');
 		$this->load->model('settings_model');
+		$this->load->model('display_model');
 		$this->load->model('story_model');
 		$this->load->model('options_model');
 		$this->load->model('assets_model');
@@ -208,8 +209,12 @@ class Story extends CI_Controller {
 		
 		if ($this->input->post() != null) {
 			$p = $this->input->post();
-			foreach($p as $key=>$value) {   
-				$this->settings_model->set_story_setting($key,$value);
+			foreach($p as $key=>$value) {
+				if ($key == 'story_title') {
+					$this->display_model->set_display_setting($key, $value);
+				} else {
+					$this->settings_model->set_story_setting($key, $value);
+				}
 			}
 			
 			$this->data['flash'] = $this->lang->line('settings_saved');
@@ -218,6 +223,7 @@ class Story extends CI_Controller {
 		// TODO: Fix settings
 		// TODO: Implement settings
 		$this->data['settings'] = $this->settings_model->get_story_settings();
+		$this->data['story_title'] = $this->display_model->get_display_setting('story_title');
 		$this->data['icons'] = $this->assets_model->get_icons();
 		$this->_render_page('story/settings', $this->data);
 	}
