@@ -143,7 +143,8 @@
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog control-icon-settings">
+                       </span></a>
 						<ul class="dropdown-menu">
 							<li>
 								<?php echo anchor('menu/new_game', '<span class="glyphicon glyphicon-repeat"></span> Start new game'); ?>
@@ -154,7 +155,7 @@
 						</ul>
 					</li>
 					<li>
-						<?php echo anchor('achievement/show', '<span class="glyphicon glyphicon-bookmark"></span>'); ?>
+						<?php  echo anchor('achievement/show', '<span class="glyphicon glyphicon-bookmark control-icon-achievements"></span>'); ?>
 				</ul>
 			</div><!-- /.container-fluid -->
 		</nav>
