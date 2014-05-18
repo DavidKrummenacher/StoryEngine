@@ -353,7 +353,7 @@
   $(document).ready(function(){
 	  
 	  //arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision) 
-    var sys = arbor.ParticleSystem(50, 1000, 0,false,30,0.02,0.6) // create the system with sensible repulsion/stiffness/friction
+    var sys = arbor.ParticleSystem(1000, 1, 0,false,30,0,0) // create the system with sensible repulsion/stiffness/friction
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 	
 	//Placeholder Array for color implementation
@@ -378,12 +378,18 @@
 			//SingleNode[index] = target;
 	
 	//Parse PageNodes
+	var firstDrawn = false;
+	
+	var CheckColor;
+	
+	
 	$('#graph-data ul').children('li').each(function(index, element) {
 		var suffix = "page_";
 		var nodeName = $(this).text();		
 
-		if(nodeName == 1) { 
-		    	sys.addNode(suffix+nodeName,{mass:150,fixed:true,color:"#FF0000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
+		if(firstDrawn == false) { 
+		    	sys.addNode(suffix+nodeName,{mass:100,fixed:true,color:"#FF0000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
+				firstDrawn = true;
 		} else { 
 		    	sys.addNode(suffix+nodeName,{mass:20,color:"#000000",label:nodeName +". "+ $(this).attr('title'),type:"page"});
 		}

@@ -150,6 +150,12 @@ class Options_model extends CI_Model {
 		$query = $this->db->get_where('story_option_checks', array('id' => $id));
 		return $query->row_array();
 	}
+	
+	public function get_checks() {
+		$query = $this->db->get('story_option_checks');
+		return $query->result_array();
+	}
+	
 	public function create_check($option, $attribute, $comparison, $value, $random) {
 		$data = array(
 			'option' => $option,

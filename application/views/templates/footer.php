@@ -20,10 +20,49 @@
     <?php } ?>
 	
     <?php if($this->router->class == "story" && $this->router->method == "overview") { ?>
-    <!-- Arbor.JS Stuff -->
-   	<script src="<?php echo base_url(); ?>js/arbor.js"></script>
-   	<script src="<?php echo base_url(); ?>js/arbor-tween.js"></script>
-   	<script src="<?php echo base_url(); ?>js/overview-handler.js"></script>
+    
+<!-- START SIGMA IMPORTS -->
+<script src="<?php echo base_url(); ?>js/sigmajs/sigma.core.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/conrad.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/utils/sigma.utils.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/utils/sigma.polyfills.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/sigma.settings.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/classes/sigma.classes.dispatcher.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/classes/sigma.classes.configurable.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/classes/sigma.classes.graph.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/classes/sigma.classes.camera.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/classes/sigma.classes.quad.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/captors/sigma.captors.mouse.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/captors/sigma.captors.touch.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/sigma.renderers.canvas.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/sigma.renderers.webgl.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/sigma.renderers.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/webgl/sigma.webgl.edges.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.labels.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.edges.def.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/middlewares/sigma.middlewares.rescale.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/middlewares/sigma.middlewares.copy.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/misc/sigma.misc.animation.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/misc/sigma.misc.bindEvents.js"></script>
+<script src="<?php echo base_url(); ?>js/sigmajs/misc/sigma.misc.drawHovers.js"></script>
+
+<script type="text/javascript" src="<?php echo base_url(); ?>js/sigmajs/plugins/sigma.parsers.json/sigma.parsers.json.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/sigmajs/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>js/sigmajs/plugins/sigma.layout.forceAtlas2/sigma.layout.forceAtlas2.js"></script>
+
+
+<script type="text/javascript" src="<?php echo base_url(); ?>js/sigma-handler.js"></script>
+
+
     <?php } ?>
     
     <?php if($this->router->class == "option") { ?>

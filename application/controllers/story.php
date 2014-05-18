@@ -176,16 +176,151 @@ class Story extends MY_Controller {
 		$this->_render_page('story/list', $this->data);
 	}
 	
+	
+	
+	public function jsondata() {
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		
+		
+		//Prepare PageNodes
+		$pages = $this->story_model->get_pages();
+		$pages = array_map(function($pages) {
+					return array(
+						'label' => utf8_encode(substr($pages['title'],0,16)),
+						'id' => "page".$pages['id'],
+						'color' => "rgb(10,10,10)",
+						'size' => 4.0,
+						'x' => $pages['id']+rand()/100,
+						'y' => $pages['id']+rand()/100
+					);
+				}, $pages);
+				
+				
+		
+				
+		//Prepare OptionNodes		
+		$optionnodes = $this->options_model->get_all();
+		$optionnodes = array_map(function($optionnodes) {
+						return array(
+							'label' => "Option ".utf8_encode(substr($optionnodes['text'],0,16)),
+							'id' => "option".$optionnodes['id'],
+							'color' => "rgb(10,10,180)",
+							'size' => 2.0,
+							'x' => $optionnodes['source_page']-5,
+							'y' => $optionnodes['source_page']-5
+							);
+					}, $optionnodes);
+					
+					
+		//Prepare Check	Nodes	
+		/*$checknodes = $this->options_model->get_checks();
+		$checknodes = array_map(function($checknodes) {
+						return array(
+							'label' => "Check",
+							'id' => "check".$checknodes['id'],
+							'color' => "rgb(10,180,10)",
+							'size' => 1.0,
+							'x' => rand()/100,
+							'y' => rand()/100
+							);
+					}, $checknodes);
+		*/			
+					
+		
+					
+					
+		//Merge NodeTypes
+		//$nodes = array_merge($pages,$optionnodes,$checknodes);
+		$nodes = array_merge($pages,$optionnodes);
+
+		
+		//Get Edges / Connections
+		$targetedges = $this->story_model->get_optiontargets();
+		
+		$targetedges = array_map(function($targetedges) {
+						return array(
+							'source' => "option".$targetedges['option'],
+							'target' => "page".$targetedges['target_page'],
+							'id' => "targetedge".$targetedges['id']
+						);
+					}, $targetedges);
+					
+		$optionedges = 	$this->options_model->get_all();
+		
+		$optionedges = array_map(function($optionedges) {
+						return array(
+							'source' => "page".$optionedges['source_page'],
+							'target' => "option".$optionedges['id'],
+							'id' => "optionedge".$optionedges['id']
+							);
+					}, $optionedges);
+					
+		/*
+		$checkedges = $this->options_model->get_checks();
+		$checkedges = array_map(function($checkedges) {
+						return array(
+							'source' => "option".$checkedges['option'],
+							'target' => "check".$checkedges['id'],
+							'id' => "checkedge".$checkedges['id']
+							);
+					}, $checkedges);
+					
+					*/
+		
+		//Merge EdgeTypes
+		//$edges = array_merge($targetedges,$optionedges,$checkedges);
+		$edges = array_merge($targetedges,$optionedges);
+		
+		$this->output
+    	->set_content_type('application/json')
+		//set_header('Content-Type:application/json; charset=UTF-8')
+  		->set_output(json_encode(array('edges' => $edges,
+									   'nodes'=> $nodes)
+									)
+								);
+								
+	
+		
+	
+	}
+	
+	public function dummyjson() {
+		$this->output->set_header('Content-Type:application/json; charset=UTF-8')
+		->set_output(json_encode(array('edges' => array(			array('source'=>'1','target' => '2','id'=>'edge_1'),
+																	array('source'=>'1','target' => '3','id'=>'edge_2'),
+																	array('source'=>'3','target' => '9','id'=>'edge_3'),
+																	array('source'=>'1','target' => '4','id'=>'edge_4'),
+																	array('source'=>'4','target' => '7','id'=>'edge_5'),
+																	array('source'=>'5','target' => '6','id'=>'edge_6'),
+																	array('source'=>'6','target' => '9','id'=>'edge_7'),
+																	array('source'=>'7','target' => '8','id'=>'edge_8')
+														),
+									  			  
+									   'nodes'=> array(				array('label'=>'start','id' => '1','size'=>'3'),
+												   				   array('label'=>'middle','id' => '2','size'=>'3'),
+																   array('label'=>'end3','id' => '3','size'=>'3'),
+																   array('label'=>'end4','id' => '4','size'=>'3'),
+																   array('label'=>'end5','id' => '5','size'=>'3'),
+																   array('label'=>'end6','id' => '6','size'=>'3'),
+																   array('label'=>'end7','id' => '7','size'=>'3'),
+																   array('label'=>'end8','id' => '8','size'=>'3'),
+																   array('label'=>'end9','id' => '9','size'=>'3')
+																   )
+									)
+								)
+								);
+								}
+	
 	public function overview() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		// TODO: Implement overview
-		$this->data['options'] = $this->options_model->get_all();
+		/*$this->data['options'] = $this->options_model->get_all();
 		$this->data['optiontargets'] = $this->story_model->get_optiontargets();
 		$this->data['optionchecks'] = $this->story_model->get_optionchecks();
 		$this->data['optionconditions'] = $this->story_model->get_optionconditions();
 		$this->data['optionconsequences'] = $this->story_model->get_optionconsequences();
-		$this->data['pages'] = $this->story_model->get_pages();
+		$this->data['pages'] = $this->story_model->get_pages();*/
 		//$this->data['relations'] = $this->story_model->get_relations();
 		
 		$this->_render_page('story/overview', $this->data);
