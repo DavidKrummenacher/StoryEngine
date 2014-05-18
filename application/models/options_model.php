@@ -12,6 +12,16 @@ class Options_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function get_direct_connections() {
+		 $this->db->select('*');
+		$this->db->from('story_options');
+		$this->db->join('story_option_targets', 'story_option_targets.option = story_options.id','inner');
+		
+		$query = $this->db->get();
+		
+		return $query->result_array();
+		}
+	
 	public function get_options_for_page($page) {
 		$query = $this->db->get_where('story_options', array('source_page' => $page));
 		return $query->result_array();

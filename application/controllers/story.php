@@ -178,20 +178,22 @@ class Story extends MY_Controller {
 	
 	
 	
-	public function jsondata() {
+	public function pages_and_options() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
 		
 		//Prepare PageNodes
 		$pages = $this->story_model->get_pages();
 		$pages = array_map(function($pages) {
+			
+			
 					return array(
-						'label' => utf8_encode(substr($pages['title'],0,16)),
+						'label' => utf8_encode($pages['title']),
 						'id' => "page".$pages['id'],
 						'color' => "rgb(10,10,10)",
 						'size' => 4.0,
-						'x' => $pages['id']+rand()/100,
-						'y' => $pages['id']+rand()/100
+						'x' => rand($pages['id']/2,$pages['id']),
+						'y' => rand($pages['id']/2,$pages['id'])
 					);
 				}, $pages);
 				
@@ -201,13 +203,14 @@ class Story extends MY_Controller {
 		//Prepare OptionNodes		
 		$optionnodes = $this->options_model->get_all();
 		$optionnodes = array_map(function($optionnodes) {
+				
 						return array(
-							'label' => "Option ".utf8_encode(substr($optionnodes['text'],0,16)),
+							'label' => "Option: ".utf8_encode($optionnodes['text']),
 							'id' => "option".$optionnodes['id'],
-							'color' => "rgb(10,10,180)",
+							'color' => "rgb(180,180,180)",
 							'size' => 2.0,
-							'x' => $optionnodes['source_page']-5,
-							'y' => $optionnodes['source_page']-5
+							'x' => rand($optionnodes['source_page']/2,$optionnodes['source_page']),
+							'y' => rand($optionnodes['source_page']/2,$optionnodes['source_page'])
 							);
 					}, $optionnodes);
 					
@@ -278,51 +281,59 @@ class Story extends MY_Controller {
 									   'nodes'=> $nodes)
 									)
 								);
-								
-	
-		
 	
 	}
 	
-	public function dummyjson() {
-		$this->output->set_header('Content-Type:application/json; charset=UTF-8')
-		->set_output(json_encode(array('edges' => array(			array('source'=>'1','target' => '2','id'=>'edge_1'),
-																	array('source'=>'1','target' => '3','id'=>'edge_2'),
-																	array('source'=>'3','target' => '9','id'=>'edge_3'),
-																	array('source'=>'1','target' => '4','id'=>'edge_4'),
-																	array('source'=>'4','target' => '7','id'=>'edge_5'),
-																	array('source'=>'5','target' => '6','id'=>'edge_6'),
-																	array('source'=>'6','target' => '9','id'=>'edge_7'),
-																	array('source'=>'7','target' => '8','id'=>'edge_8')
-														),
-									  			  
-									   'nodes'=> array(				array('label'=>'start','id' => '1','size'=>'3'),
-												   				   array('label'=>'middle','id' => '2','size'=>'3'),
-																   array('label'=>'end3','id' => '3','size'=>'3'),
-																   array('label'=>'end4','id' => '4','size'=>'3'),
-																   array('label'=>'end5','id' => '5','size'=>'3'),
-																   array('label'=>'end6','id' => '6','size'=>'3'),
-																   array('label'=>'end7','id' => '7','size'=>'3'),
-																   array('label'=>'end8','id' => '8','size'=>'3'),
-																   array('label'=>'end9','id' => '9','size'=>'3')
-																   )
+	public function page_nodes_only() {
+		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		
+		
+		//Prepare PageNodes
+		$nodes = $this->story_model->get_pages();
+		$nodes = array_map(function($nodes) {
+		
+		
+					return array(
+						'label' => utf8_encode($nodes['title']),
+						'id' => "page".$nodes['id'],
+						'color' => "rgb(10,10,10)",
+						'size' => 4.0,
+						'x' => rand($nodes['id']/2,$nodes['id']),
+						'y' => rand($nodes['id']/2,$nodes['id'])
+					);
+				}, $nodes);
+				
+	
+
+		
+		//Get Edges / Connections
+		
+		$edges = $this->options_model->get_direct_connections();
+		
+		$edges = array_map(function($edges) {
+						return array(
+							'source' => "page".$edges['source_page'],
+							'target' => "page".$edges['target_page'],
+							'id' => "No.".$edges['id']."_".$edges['source_page']."_to_".$edges['target_page']
+							);
+					}, $edges);
+					
+		
+		
+		
+		$this->output
+    	->set_content_type('application/json')
+		//set_header('Content-Type:application/json; charset=UTF-8')
+  		->set_output(json_encode(array('edges' => $edges,
+									   'nodes'=> $nodes)
 									)
-								)
 								);
-								}
+	
+	}
+
 	
 	public function overview() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
-		
-		// TODO: Implement overview
-		/*$this->data['options'] = $this->options_model->get_all();
-		$this->data['optiontargets'] = $this->story_model->get_optiontargets();
-		$this->data['optionchecks'] = $this->story_model->get_optionchecks();
-		$this->data['optionconditions'] = $this->story_model->get_optionconditions();
-		$this->data['optionconsequences'] = $this->story_model->get_optionconsequences();
-		$this->data['pages'] = $this->story_model->get_pages();*/
-		//$this->data['relations'] = $this->story_model->get_relations();
-		
 		$this->_render_page('story/overview', $this->data);
 	}
 	

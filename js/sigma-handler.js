@@ -1,5 +1,15 @@
 $( document ).ready(function() {
 	
+
+var datasources = new Array();
+
+datasources[0] = '../story/page_nodes_only';
+datasources[1] = '../story/pages_and_options';	
+	
+
+
+currentdatasource = datasources[0];
+	
 sigma.classes.graph.addMethod('neighbors', function(nodeId) {
     var k,
         neighbors = {},
@@ -24,7 +34,7 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
   });
 
   sigma.parsers.json(
-    '../story/jsondata',
+    currentdatasource,
     {
       container: 'graph-container'
     },
@@ -80,6 +90,28 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
         s.refresh();
       });
 
+
+
+		$('button#show_pages').click(function() {
+			sigma.parsers.json(
+				  datasources[0],
+				  s,
+				  function() {
+					s.refresh();
+				  }
+				);
+	});
+	
+$('button#show_options').click(function() {
+		sigma.parsers.json(
+				  datasources[1],
+				  s,
+				  function() {
+					s.refresh();
+				  }
+				);
+	});
+	
       // When the stage is clicked, we just color each
       // node and edge with its original color.
       s.bind('clickStage', function(e) {
@@ -101,5 +133,7 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
     }
 	
   );
+  
+  
   
   });
