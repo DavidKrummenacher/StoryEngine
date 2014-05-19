@@ -11,14 +11,33 @@ if(isset($flash)) {?>
         	<input type="text" class="form-control" name="<?php echo $story_title['key']; ?>" value="<?php echo $story_title['value']; ?>"/>
 		</div><!-- /input-group -->
 	</div>
+    
+ <!-- Select Image -->
+    <div class="form-group">
+                         <span class="input-group-addon" style="float:left;width:120px;">Cover Image</span>
+
+		<div class="input-group">                     
+			<select name="<?php echo $story_cover['key']; ?>" id="default_icon" class="form-control">
+				<option value="null" <?php if ($story_cover['value'] == null) { ?> selected="selected"<?php } ?>><?php echo lang('page_options_noimage'); ?></option>
+				<?php foreach ($page_images as $i) { ?>
+				<option value="<?php echo $i['id']; ?>" data-img-src="<?php echo base_url();?>assets/page_images/mobile/<?php echo $i['mobile_uri']; ?>" <?php if ($i['id'] == $story_cover['value']) { ?> selected="selected"<?php } ?>>
+					<?php echo $i['name']; ?>
+				</option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
+    
+    <!-- //END Select Image -->
 <?php foreach($settings as $set) {?>
+
+
 
 <?php if($set['key'] == 'default_icon') { ?>
 <!-- Select Image -->
     <div class="form-group">
                          <span class="input-group-addon" style="float:left;width:120px;"><?php echo ucfirst(str_replace('_', ' ',$set['key'])); ?></span>
 
-		<!-- <label for="default_icon" class="col-sm-2 control-label"><?php echo lang('page_options_icon'); ?></label> -->
 		<div class="input-group">                     
 			<select name="default_icon" id="default_icon" class="form-control">
 				<option value="null" <?php if ($set['value'] == null) { ?> selected="selected"<?php } ?>><?php echo lang('page_options_noimage'); ?></option>
@@ -33,7 +52,7 @@ if(isset($flash)) {?>
     
     <!-- //END Select Image -->
 	
-<?php	} else {?>
+<?php	} else { ?>
 
 <div class="form-group">
 

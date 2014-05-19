@@ -20,7 +20,8 @@ class Story extends MY_Controller {
 	
 	public function register() {
 		$this->data['title'] = "Create User";
-		
+		$cover = $this->display_model->get_display_settings('cover_image');
+		$this->data['cover_image'] = $this->assets_model->get_page_image($cover);
 		//validate form input
 		$this->form_validation->set_rules('username', 'Username', 'required|is_unique[auth_users.username]');
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
@@ -91,10 +92,12 @@ class Story extends MY_Controller {
 		if ($this->ion_auth->logged_in()) { redirect('page', 'refresh'); }
 		
 		$this->data['title'] = "Login";
-
 		//validate form input
 		$this->form_validation->set_rules('identity', 'Identity', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
+		
+		$cover = $this->display_model->get_display_settings('cover_image');
+		$this->data['cover_image'] = $this->assets_model->get_page_image($cover);
 
 		if ($this->form_validation->run() == true) {
 			//check to see if the user is logging in
@@ -116,7 +119,7 @@ class Story extends MY_Controller {
 			//the user is not logging in so display the login page
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
+			
 			$this->data['identity'] = array('name' => 'identity',
 				'id' => 'identity',
 				'type' => 'text',
@@ -287,11 +290,9 @@ class Story extends MY_Controller {
 	public function page_nodes_only() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
 		
-		
 		//Prepare PageNodes
 		$nodes = $this->story_model->get_pages();
 		$nodes = array_map(function($nodes) {
-		
 		
 					return array(
 						'label' => utf8_encode($nodes['title']),
@@ -303,8 +304,7 @@ class Story extends MY_Controller {
 					);
 				}, $nodes);
 				
-	
-
+		
 		
 		//Get Edges / Connections
 		
@@ -319,6 +319,7 @@ class Story extends MY_Controller {
 					}, $edges);
 					
 		
+		//Set Color of StartNode
 		
 		
 		$this->output
@@ -334,6 +335,8 @@ class Story extends MY_Controller {
 	
 	public function overview() {
 		if (!$this->ion_auth->is_author()) { redirect('admin/login', 'refresh'); }
+		$this->data['start_page'] = $this->settings_model->get_value('start_page');
+
 		$this->_render_page('story/overview', $this->data);
 	}
 	
@@ -356,7 +359,7 @@ class Story extends MY_Controller {
 		if ($this->input->post() != null) {
 			$p = $this->input->post();
 			foreach($p as $key=>$value) {
-				if ($key == 'story_title') {
+				if ($key == 'story_title' || $key == 'cover_image') {
 					$this->display_model->set_display_setting($key, $value);
 				} else {
 					$this->settings_model->set_story_setting($key, $value);
@@ -370,7 +373,10 @@ class Story extends MY_Controller {
 		// TODO: Implement settings
 		$this->data['settings'] = $this->settings_model->get_story_settings();
 		$this->data['story_title'] = $this->display_model->get_display_setting('story_title');
+		$this->data['story_cover'] = $this->display_model->get_display_setting('cover_image');
+		
 		$this->data['icons'] = $this->assets_model->get_icons();
+		$this->data['page_images'] = $this->assets_model->get_page_images();
 		$this->_render_page('story/settings', $this->data);
 	}
 	

@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-	
+
 
 var datasources = new Array();
 
@@ -9,7 +9,9 @@ datasources[1] = '../story/pages_and_options';
 
 
 currentdatasource = datasources[0];
-	
+
+  
+	  	
 sigma.classes.graph.addMethod('neighbors', function(nodeId) {
     var k,
         neighbors = {},
@@ -41,21 +43,24 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
     function(s) {
       // We first need to save the original colors of our
       // nodes and edges, like this:
-	  var firstnode = 0;
-      s.graph.nodes().forEach(function(n) {
-		  if(firstnode != 0) {
-        	n.originalColor = n.color;
-		  } else {
-			  firstnode = 1;
-			  n.color = "rgb(200,0,0)";
-			  n.originalColor = n.color;
-
+	
+	  s.graph.nodes().forEach(function(n) {
+		  
+		  if(n.id == "page"+$("input#start_page").val()) 
+		  {
+			  n.color = "rgb(180,10,10)";
 		  }
+	
+        	n.originalColor = n.color;
+		  
       });
+	 
       s.graph.edges().forEach(function(e) {
         e.originalColor = e.color;
       });
-
+	
+	 
+	  
       // When a node is clicked, we check for each node
       // if it is a neighbor of the clicked one. If not,
       // we set its color as grey, and else, it takes its
@@ -87,6 +92,7 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
         // Since the data has been modified, we need to
         // call the refresh method to make the colors
         // update effective.
+	
         s.refresh();
       });
 
@@ -107,6 +113,7 @@ $('button#show_options').click(function() {
 				  datasources[1],
 				  s,
 				  function() {
+					  
 					s.refresh();
 				  }
 				);
@@ -125,7 +132,7 @@ $('button#show_options').click(function() {
         });
 
         // Same as in the previous event:
-
+		
 		s.refresh();
 		
 
