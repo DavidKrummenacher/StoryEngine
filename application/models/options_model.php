@@ -21,6 +21,23 @@ class Options_model extends CI_Model {
 		
 		return $query->result_array();
 		}
+		
+	public function get_lose_connections() {
+		$this->db->select('story_options.id AS option_id,
+						   story_options.source_page AS option_source,
+						   story_options.text AS option_text,
+						   story_option_targets.id,
+						   story_option_targets.option,
+						   story_option_targets.target_page,
+						   story_option_targets.fail');
+		$this->db->from('story_options');
+		$this->db->join('story_option_targets', 'story_option_targets.option = story_options.id','left');
+		//$query = $this->db->get_where('story_option_targets',array('fail' => 1));
+		$query = $this->db->get();
+
+		
+		return $query->result_array();
+		}
 	
 	public function get_options_for_page($page) {
 		$query = $this->db->get_where('story_options', array('source_page' => $page));

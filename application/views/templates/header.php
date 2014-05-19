@@ -73,12 +73,19 @@
 							<li><?php echo anchor('asset', '<span class="glyphicon glyphicon-picture"></span> '. lang('assets_manage')); ?></a></li>
 							<li><?php echo anchor('achievement', '<span class="glyphicon glyphicon-bookmark"></span> '.lang('achievement_manage')); ?></a></li>
 							<li class="divider"></li>
-							<li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-flash"></span> Debugging'); ?></li>
+							
 							<li class="divider"></li>
 							<li><?php echo anchor('display/edit', '<span class="glyphicon glyphicon-th-large"></span> Design'); ?></li>
 							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>
+                        
 					</li>
+                    <li class="dropdown">	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash"></span> Debugging <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-flash"></span>Assets'); ?></li>
+                                    <li><?php echo anchor('story/debugoptions', '<span class="glyphicon glyphicon-flash"></span>Options'); ?></li>
+                                 </ul>
+                    </li>
 					<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
 					<li><?php echo anchor('page/edit/'.$page['id'], '<span class="glyphicon glyphicon-pencil"></span> '.lang('menu_edit_page')); ?></li>
 					<?php if($page['id'] != $this->settings_model->get_value('start_page')) { ?>
@@ -148,7 +155,7 @@
 	<section class="container">
 		<?php if ($this->ion_auth->logged_in()) { ?>
 		<?php if(($this->router->class == "page" && $this->router->method == "show" && $page) || ($this->router->class == "achievement" && $this->router->method == "show")) { ?>
-		<nav class="navbar" role="navigation">
+		<nav class="navbar user-nav" role="navigation">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav">
 					<li class="dropdown">

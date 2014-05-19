@@ -218,25 +218,7 @@ class Story extends MY_Controller {
 					}, $optionnodes);
 					
 					
-		//Prepare Check	Nodes	
-		/*$checknodes = $this->options_model->get_checks();
-		$checknodes = array_map(function($checknodes) {
-						return array(
-							'label' => "Check",
-							'id' => "check".$checknodes['id'],
-							'color' => "rgb(10,180,10)",
-							'size' => 1.0,
-							'x' => rand()/100,
-							'y' => rand()/100
-							);
-					}, $checknodes);
-		*/			
-					
-		
-					
-					
-		//Merge NodeTypes
-		//$nodes = array_merge($pages,$optionnodes,$checknodes);
+	
 		$nodes = array_merge($pages,$optionnodes);
 
 		
@@ -261,20 +243,7 @@ class Story extends MY_Controller {
 							);
 					}, $optionedges);
 					
-		/*
-		$checkedges = $this->options_model->get_checks();
-		$checkedges = array_map(function($checkedges) {
-						return array(
-							'source' => "option".$checkedges['option'],
-							'target' => "check".$checkedges['id'],
-							'id' => "checkedge".$checkedges['id']
-							);
-					}, $checkedges);
-					
-					*/
 		
-		//Merge EdgeTypes
-		//$edges = array_merge($targetedges,$optionedges,$checkedges);
 		$edges = array_merge($targetedges,$optionedges);
 		
 		$this->output
@@ -390,6 +359,18 @@ class Story extends MY_Controller {
 		$this->data['attributes'] = $this->attributes_model->get_all();
 		$this->data['user_attributes'] = $this->attributes_model->get_all_for_user($this->ion_auth->user()->row()->id);
 		$this->_render_page('story/debug', $this->data);
+	}
+	
+	public function debugoptions() {
+		if (!$this->ion_auth->logged_in()) { redirect('admin/login', 'refresh'); }
+		if (!$this->ion_auth->is_author()) { show_error('You need author rights to do this!'); }
+		
+		$this->data['options'] = $this->options_model->get_lose_connections();
+
+		//$this->load->model('attributes_model');
+		
+		
+		$this->_render_page('story/debugoptions', $this->data);
 	}
 	
 	protected function _render_page($view, $data = null, $render = false) {

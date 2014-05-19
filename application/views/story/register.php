@@ -1,5 +1,5 @@
 			<div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-<?php if($cover_image != null) { ?> <img src="<?php echo base_url()."assets/page_images/mobile/".$cover_image['mobile_uri'] ?>" alt="Story Logo" class="img-responsive"/> <?php  } ?>				<div class="panel panel-default">
+<?php if($cover_image != null) { ?> <img src="<?php echo base_url()."assets/page_images/mobile/".$cover_image['mobile_uri'] ?>" alt="Story Logo" class="img-responsive cover-image"/> <?php  } ?>				<div class="panel panel-default">
 					<div class="panel-heading">Register</div>
 					
 					<div class="panel-body">
