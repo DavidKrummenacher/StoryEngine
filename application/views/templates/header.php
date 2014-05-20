@@ -80,8 +80,8 @@
 					</li>
                     <li class="dropdown">	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash"></span> Debugging <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-tasks"></span>Attributes'); ?></li>
-                                    <li><?php echo anchor('story/debugoptions', '<span class="glyphicon glyphicon-link"></span>Options'); ?></li>
+                                    <li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-tasks"></span> Attributes'); ?></li>
+                                    <li><?php echo anchor('story/debugoptions', '<span class="glyphicon glyphicon-link"></span> Options'); ?></li>
                                  </ul>
                     </li>
 					<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
