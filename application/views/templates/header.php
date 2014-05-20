@@ -73,8 +73,6 @@
 							<li><?php echo anchor('asset', '<span class="glyphicon glyphicon-picture"></span> '. lang('assets_manage')); ?></a></li>
 							<li><?php echo anchor('achievement', '<span class="glyphicon glyphicon-bookmark"></span> '.lang('achievement_manage')); ?></a></li>
 							<li class="divider"></li>
-							
-							<li class="divider"></li>
 							<li><?php echo anchor('display/edit', '<span class="glyphicon glyphicon-th-large"></span> Design'); ?></li>
 							<li><?php echo anchor('story/settings', '<span class="glyphicon glyphicon-cog"></span> '.lang('menu_story_settings')); ?></li>
 						</ul>
@@ -82,8 +80,8 @@
 					</li>
                     <li class="dropdown">	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-flash"></span> Debugging <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-flash"></span>Assets'); ?></li>
-                                    <li><?php echo anchor('story/debugoptions', '<span class="glyphicon glyphicon-flash"></span>Options'); ?></li>
+                                    <li><?php echo anchor('story/debug', '<span class="glyphicon glyphicon-tasks"></span>Attributes'); ?></li>
+                                    <li><?php echo anchor('story/debugoptions', '<span class="glyphicon glyphicon-link"></span>Options'); ?></li>
                                  </ul>
                     </li>
 					<?php if($this->router->class == "page" && $this->router->method == "show" && $page) { ?>
