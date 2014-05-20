@@ -191,7 +191,7 @@ class Story extends MY_Controller {
 			
 			
 					return array(
-						'label' => utf8_encode($pages['title']),
+						'label' => $pages['title'],
 						'id' => "page".$pages['id'],
 						'color' => "rgb(10,10,10)",
 						'size' => 4.0,
@@ -206,9 +206,11 @@ class Story extends MY_Controller {
 		//Prepare OptionNodes		
 		$optionnodes = $this->options_model->get_all();
 		$optionnodes = array_map(function($optionnodes) {
+				$optionlabel = $optionnodes['text'];
+				
 				
 						return array(
-							'label' => "Option: ".utf8_encode($optionnodes['text']),
+							'label' => "Option: ".$optionlabel,
 							'id' => "option".$optionnodes['id'],
 							'color' => "rgb(180,180,180)",
 							'size' => 2.0,
@@ -264,7 +266,7 @@ class Story extends MY_Controller {
 		$nodes = array_map(function($nodes) {
 		
 					return array(
-						'label' => utf8_encode($nodes['title']),
+						'label' => $nodes['title'],
 						'id' => "page".$nodes['id'],
 						'color' => "rgb(10,10,10)",
 						'size' => 4.0,
