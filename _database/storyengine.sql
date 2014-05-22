@@ -335,7 +335,8 @@ INSERT INTO `story_settings` (`key`, `value`) VALUES
 
 INSERT INTO `story_display_settings` (`key`, `value`) VALUES
 ('css', ''),
-('story_title', '');
+('story_title', ''),
+('cover_image', null);
 
 -- ----------------------------------------------------------------------------------------------------------------------------
 -- Table constraints
