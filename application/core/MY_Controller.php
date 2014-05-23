@@ -5,6 +5,6 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
 		
 		$this->load->model('display_model');
-		$this->data['story_title'] = $this->display_model->get_value('story_title');
+		$this->data['header_story_title'] = $this->display_model->get_value('story_title');
     }
 }
