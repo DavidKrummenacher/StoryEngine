@@ -101,7 +101,7 @@ class Achievements_model extends CI_Model {
 	public function set_for_user($user, $id) {
 		$data = array(
 			'user' => $user,
-			'attribute' => $id
+			'achievement' => $id
 		);
 		
 		$this->db->insert('story_users_achievements', $data);
