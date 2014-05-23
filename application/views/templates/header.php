@@ -161,10 +161,10 @@
                        </span></a>
 						<ul class="dropdown-menu">
 							<li>
-								<?php echo anchor('menu/new_game', '<span class="glyphicon glyphicon-repeat"></span> Start new game'.lang('user_new_game')); ?>
+								<?php echo anchor('menu/new_game', '<span class="glyphicon glyphicon-repeat"></span> '.lang('user_new_game')); ?>
 							</li>
 							<li>
-								<?php echo anchor('menu/continue_game', '<span class="glyphicon glyphicon-refresh"></span> Continue game'.lang('user_continue_game')); ?>
+								<?php echo anchor('menu/continue_game', '<span class="glyphicon glyphicon-refresh"></span> '.lang('user_continue_game')); ?>
 							</li>
 							<li>
 								<?php echo anchor('story/logout', '<span class="glyphicon glyphicon-log-out"></span> '.lang('menu_account_logout')); ?>
