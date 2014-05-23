@@ -148,5 +148,5 @@ $lang['story_list_actions']				= 'Aktionen';
 
 $lang['story_overview']					= 'Visuelle Übersicht der Story';
 $lang['story_search']					= 'Seiten durchsuchen';
-$lang['story_settings']					= 'Eins	tellungen';
+$lang['story_settings']					= 'Einstellungen';
 

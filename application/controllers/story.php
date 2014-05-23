@@ -343,7 +343,7 @@ class Story extends MY_Controller {
 		// TODO: Fix settings
 		// TODO: Implement settings
 		$this->data['settings'] = $this->settings_model->get_story_settings();
-		$this->data['story_title'] = $this->display_model->get_display_setting('story_title');
+		$this->data['story_title'] = $this->display_model->get_display_settings('story_title');
 		$this->data['story_cover'] = $this->display_model->get_display_setting('cover_image');
 		
 		$this->data['icons'] = $this->assets_model->get_icons();
