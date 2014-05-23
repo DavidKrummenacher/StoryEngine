@@ -36,8 +36,25 @@ class Achievement extends MY_Controller {
 	
 	public function show() {
 		if (!$this->ion_auth->logged_in()) { redirect('story/login', 'refresh'); }
+		$user = $this->ion_auth->user()->row()->id;
 		
-		$this->data['achievements'] = $this->achievements_model->get_all();
+		$achievements = $this->achievements_model->get_all();
+		$user_achievements = $this->achievements_model->get_all_for_user($user);
+		
+		$achievement_list = array();
+		
+		foreach ($achievements as $achievement) {
+			$achievement['unlocked'] = false;
+			foreach ($user_achievements as $user_achievement) {
+				if ($achievement['id'] == $user_achievement['achievement']) {
+					$achievement['unlocked'] = true;
+					break;
+				}
+			}
+			array_push($achievement_list, $achievement);
+		}
+		
+		$this->data['achievements'] = $achievement_list;
 		$this->_render_page('achievements/show', $this->data);
 	}
 	
