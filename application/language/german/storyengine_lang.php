@@ -150,3 +150,6 @@ $lang['story_overview']					= 'Visuelle Übersicht der Story';
 $lang['story_search']					= 'Seiten durchsuchen';
 $lang['story_settings']					= 'Einstellungen';
 
+$lang['user_new_game']					= 'Neues Spiel starten';
+$lang['user_continue_game']				= 'Spiel fortsetzen';
+$lang['user_achievements']				= 'Meine Erfolge';

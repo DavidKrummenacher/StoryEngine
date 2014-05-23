@@ -1,4 +1,4 @@
-<h1>My Achievements</h1>
+<h1><?php echo lang('user_achievements'); ?></h1>
 
 <div class="row">
 	<?php foreach ($achievements as $achievement) { ?>

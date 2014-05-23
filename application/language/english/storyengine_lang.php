@@ -149,3 +149,6 @@ $lang['story_overview']					= 'Visual overview of all pages';
 $lang['story_search']					= 'Search pages';
 $lang['story_settings']					= 'Settings';
 
+$lang['user_new_game']					= 'Start new game';
+$lang['user_continue_game']				= 'Continue game';
+$lang['user_achievements']				= 'My achievements';
