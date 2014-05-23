@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `story_options` (
   `source_page` int(11) NOT NULL,
   `order` int(11) NOT NULL,
   `icon` int(11) DEFAULT NULL,
-  `text` varchar(120) NOT NULL,
+  `text` varchar(512) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
