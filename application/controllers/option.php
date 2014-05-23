@@ -46,7 +46,7 @@ class Option extends MY_Controller {
 					$success = ($value <= $check_value); break;
 			}
 			
-			if (!success) { break; }
+			if (!$success) { break; }
 		}
 		
 		// Choose random page based on success (story_option_targets)
