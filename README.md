@@ -15,11 +15,15 @@ The initial version of the engine was created during a multi-linear storytelling
 8. The installation is complete and you can now log into the engine with the default account (username: `administrator`, password: `password`)
 
 ##Using the engine
+###User management
 - Only administrators can manage users
 - Only authors can manage the story
-- Create pages and add options to the pages
+
+###Story management
+- Create pages and add options to the pages to build your story
 - Pages can have consequences that affect the attributes you defined
-- Options can have conditions. If a condition is not met the option will not be displayed
+- Options can have conditions based on the defined attributes. If any condition is not met the option will not be displayed
 - Options can have consequences that affect the attributes you defined
-- Options can have checks based on attributes or random checks. If these checks are met a random success page will be chosen to go to. If they're not met a random fail page will be chosen
+- Options can have checks based on attributes or random checks. If these checks are met a random success page will be chosen to go to. If they're not met a random fail page will be chosen.
+- Options without checks will always go to a random success page.
 - Add achievements based on the attributes you defined
